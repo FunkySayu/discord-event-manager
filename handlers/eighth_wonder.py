@@ -1,4 +1,4 @@
-"""Implements the Discord bot handlers."""
+"""Reveals a true beauty on your discord channel."""
 
 __LICENSE__ = """
 Copyright 2019 Google LLC
@@ -16,6 +16,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import handlers.help
-import handlers.registry
-import handlers.eighth_wonder
+from typing import List
+
+import discord
+
+from .registry import handles, DEFAULT_REGISTRY
+
+@handles('eighth_wonder')
+async def command_eighth_wonder(message: discord.Message):
+    """You just can't handle it"""
+    with open("assets/eighth_wonder") as f:
+        await message.channel.send(
+          '```\n' +
+          f.read() +
+          '```\n')

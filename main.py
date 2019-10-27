@@ -48,6 +48,6 @@ async def on_message(message):
 if __name__ == '__main__':
     try:
         with open('token.txt') as f:
-            client.run(f.read())
+            client.run(f.read().strip())
     except FileNotFoundError:
         print('guess you forgot to create token.txt')

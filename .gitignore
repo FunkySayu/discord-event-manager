@@ -1,2 +1,4 @@
 token.txt
 .idea
+*.swp
+*.pyc
