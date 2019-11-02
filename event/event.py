@@ -1,5 +1,3 @@
-\usepackage{ulem}
-
 """Definition of an event."""
 
 from __future__ import annotations
