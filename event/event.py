@@ -18,16 +18,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime, timedelta
 from pytz import timezone
 
+from database.database import DbRecord, Serializable
+
 # Europe timezone for WoW servers
-# TODO(funkysayu): move that somewhere else
 EUROPE = timezone("Europe/Paris")
+UTC = timezone("UTC")
 
 
-class Event:
+class Event(Serializable):
     """An event, possibly repeated in time.
 
     Note the provided date MUST be associated to a timezone (aka aware date
@@ -51,14 +53,18 @@ class Event:
     :attr date:         The date of the event. In the case of a repeated event,
                         the initial date of the event.
     :attr repetition:   A timedelta providing the repetition period.
+    :attr parent:       If the event is repeated, parent is the very first
+                        event created.
     """
     title: str
     date: datetime
     description: str
     repetition: Optional[timedelta]
+    parent: Optional[datetime]
 
     def __init__(self, title: str, date: datetime, description: str = "",
-                 repetition: Optional[timedelta] = None):
+                 repetition: Optional[timedelta] = None,
+                 parent: Optional[datetime] = None):
         if date.tzinfo is None:
             raise ValueError(
                 "The provided date is not associated with a timezone "
@@ -67,10 +73,33 @@ class Event:
         self.date = date
         self.description = description
         self.repetition = repetition
+        self.parent = parent
 
     def __repr__(self):
         """Returns a debugging representation of the event."""
         return f'<Event "{self.title}" {self.date.isoformat()}>'
+
+    def serialize(self) -> DbRecord:
+        """Serializes the event into a database record."""
+        data = {
+            'date': self.date,
+            'title': self.title,
+            'description': self.description,
+            'repetition': self.repetition,
+        }
+        if self.parent:
+            data.parent = data.parent.date.isoformat()
+        return data
+
+    @classmethod
+    def deserialize(cls, dbrecord: DbRecord) -> Event:
+        """Deserializes the database record into an event."""
+        return cls(
+            dbrecord.get('title'),
+            dbrecord.get('date'),
+            dbrecord.get('description'),
+            dbrecord.get('repetition'),
+            dbrecord.get('parent'))
 
     def next(self) -> Event:
         """Returns the next event occurring after this one.
@@ -86,4 +115,29 @@ class Event:
         # associated). This operation will not modify the original hour of the
         # event.
         next_date = self.date + self.repetition
-        return Event(self.title, next_date, self.description, self.repetition)
+
+        # Ensure the parent is stable within all the events.
+        parent = None
+        if self.parent is not None:
+            parent = self.parent.date
+
+        return Event(self.title, next_date, self.description, self.repetition,
+                     parent)
+
+    def all_within(self, start: datetime, end: datetime) -> List[Event]:
+        """Returns all occurences of the event within the provided timerange.
+
+        If the event is not recuring, returns either a list of itself if the
+        event is happening within the provided range or an empty list.
+        """
+        if self.repetition is None:
+            if start <= self.date <= end:
+                return [self]
+            return []
+
+        result, current = [], self
+        while current.date <= end:
+            if start <= current.date:
+                result.append(start)
+            current = current.next()
+        return result
