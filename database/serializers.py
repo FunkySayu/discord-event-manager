@@ -45,13 +45,15 @@ class DateTimeSerializer(Serializer):
 
     def encode(self, date: datetime) -> str:
         """Encodes a date, using the ISO 8601 notation."""
-        logging.debug('encoded date: %s -> %s', date, date.strftime(self.ISO8601_FORMAT))
+        logging.debug('encoded date: %s -> %s',
+                      date, date.strftime(self.ISO8601_FORMAT))
         return date.strftime(self.ISO8601_FORMAT)
 
     def decode(self, string: str) -> datetime:
         """Decodes a date from its ISO 8601 notation."""
         date = dateutil.parser.isoparse(string)
-        logging.debug('decoded date: %s -> %s', string, date.strftime(self.ISO8601_FORMAT))
+        logging.debug('decoded date: %s -> %s',
+                      string, date.strftime(self.ISO8601_FORMAT))
         return date
 
 

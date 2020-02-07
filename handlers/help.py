@@ -33,5 +33,6 @@ async def command_help(message: discord.Message):
         if doc is None:
             help_text.append(':: %s' % command)
         else:
-            help_text.append(':: %s\n%s' % (command, DEFAULT_REGISTRY.commands[command].__doc__))
+            help_text.append(':: %s\n%s' % (
+                command, DEFAULT_REGISTRY.commands[command].__doc__))
     await message.channel.send("\n\n".join(help_text))

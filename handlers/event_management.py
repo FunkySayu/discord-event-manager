@@ -21,7 +21,6 @@ import discord
 import shlex
 import sys
 
-from typing import List
 from datetime import datetime
 
 from database.database import Database
@@ -70,7 +69,7 @@ class ArgumentParser(argparse.ArgumentParser):
 def format_event(event: Event) -> str:
     date = event.date.astimezone(DEFAULT_TIMEZONE.value)
     text = "%s %s: **%s**" % (date.strftime(DAY_FORMAT),
-                                 date.strftime(TIME_FORMAT), event.title)
+                              date.strftime(TIME_FORMAT), event.title)
     if event.description is not None:
         text += "\n" + "\n".join(
             "> %s" % line for line in event.description.splitlines())

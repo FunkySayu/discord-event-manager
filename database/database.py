@@ -3,9 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from datetime import datetime
-from tinydb import TinyDB, Query
-from tinydb_serialization import SerializationMiddleware, Serializer
+from tinydb import TinyDB
 from typing import TypeVar, NewType
 
 from database.serializers import all_serializers
@@ -61,7 +59,6 @@ class Serializable(ABC):
     def deserialize(cls, record: DbRecord) -> Serializable:
         """Deserializes the database record into an instance of the class."""
         pass
-
 
 
 class Database:
