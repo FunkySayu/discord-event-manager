@@ -7,6 +7,8 @@ additional serializers able to encode such objects.
 """
 
 from __future__ import annotations
+import dateutil.parser
+import logging
 
 from datetime import datetime
 from tinydb_serialization import SerializationMiddleware, Serializer
@@ -43,11 +45,13 @@ class DateTimeSerializer(Serializer):
 
     def encode(self, date: datetime) -> str:
         """Encodes a date, using the ISO 8601 notation."""
+        logging.debug('encoded date: %s -> %s', date, date.strftime(self.ISO8601_FORMAT))
         return date.strftime(self.ISO8601_FORMAT)
 
     def decode(self, string: str) -> datetime:
         """Decodes a date from its ISO 8601 notation."""
-        date = datetime.strptime(string, self.ISO8601_FORMAT)
+        date = dateutil.parser.isoparse(string)
+        logging.debug('decoded date: %s -> %s', string, date.strftime(self.ISO8601_FORMAT))
         return date
 
 

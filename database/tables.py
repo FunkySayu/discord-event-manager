@@ -8,7 +8,7 @@ from typing import List, Optional, Tuple
 from datetime import datetime, timedelta
 from pytz import timezone
 
-from event.event import Event, UTC
+from event.event import Event, StandardTimezone
 from database.database import Database, Query
 
 
@@ -70,7 +70,7 @@ class EventsTable:
         self.db = db
 
     def weekly(self, week: Optional[int] = None, year: Optional[int] = None,
-               tz: timezone = UTC) -> List[Event]:
+               tz: StandardTimezone = StandardTimezone.utc) -> List[Event]:
         """Returns the list of event happening during the request week.
 
         If no specific week is requested, this will return the events happening
@@ -88,7 +88,7 @@ class EventsTable:
         if not week:
             week = now.isocalendar()[1]
 
-        start, end = week_time_range(year, week, tz)
+        start, end = week_time_range(year, week, tz.value)
         events = self._list_events(start, end, generate=True)
         logging.debug("weekly: [%d, %d] -> [%s - %s]: %s",
                       year, week, start.isoformat(), end.isoformat(), events)

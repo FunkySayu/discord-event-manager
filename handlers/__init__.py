@@ -18,3 +18,4 @@ limitations under the License.
 
 import handlers.help
 import handlers.registry
+import handlers.event_management

@@ -18,15 +18,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from typing import Optional, List
 from datetime import datetime, timedelta
+from enum import Enum
 from pytz import timezone
+from typing import Optional, List
 
 from database.database import DbRecord, Serializable
 
-# Europe timezone for WoW servers
-EUROPE = timezone("Europe/Paris")
-UTC = timezone("UTC")
+
+class StandardTimezone(Enum):
+    """A list of supported timezones for the server."""
+    utc = timezone("UTC")
+    europe = timezone("Europe/Paris")
+    america = timezone("America/Los_angeles")
+
+    def __str__(self):
+        return self.name.lower()
+
+    @classmethod
+    def from_string(cls, string: str) -> StandardTimezone:
+        try:
+            return cls[string]
+        except KeyError:
+            raise ValueError("Timezone %s is not supported." % string)
 
 
 class Event(Serializable):
