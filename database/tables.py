@@ -7,9 +7,11 @@ import logging
 from typing import List, Optional, Tuple
 from datetime import datetime, timedelta
 from pytz import timezone
+from threading import Lock
+from tinydb import Query
 
 from event.event import Event, StandardTimezone
-from database.database import Database, Query
+from database.database import Database
 
 
 __LICENSE__ = """
@@ -65,6 +67,8 @@ class EventsTable:
         'parent': Optional[datetime],
     }
 
+    write_lock = Lock()
+
     def __init__(self, db: Database):
         """Constructor."""
         self.db = db
@@ -102,12 +106,15 @@ class EventsTable:
 
         :param event: Event to be stored.
         """
-        if event.parent is not None:
-            if self.get(event.parent) is None:
-                raise AttributeError(
-                    "Event %s referes to an inexistent parent: %s" % (
-                        repr(event), event.parent))
-        self._save_record(event)
+        with self.write_lock:
+            if event.parent is not None:
+                if self.get(event.parent) is None:
+                    raise AttributeError(
+                        "Event %s referes to an inexistent parent: %s" % (
+                            repr(event), event.parent))
+            if self.get(event.date) is not None:
+                raise ValueError("Duplicated event: %s")
+            self._save_record(event)
 
     # Table handlers.
 
