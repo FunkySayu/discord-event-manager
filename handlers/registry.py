@@ -19,7 +19,7 @@ limitations under the License.
 import discord
 
 from inspect import getframeinfo, stack
-from typing import Callable, Dict, List
+from typing import Callable, Dict
 
 CommandCallable = Callable[[discord.Message], None]
 
@@ -31,12 +31,14 @@ class CommandRegistry:
     def register(self, name: str, command: CommandCallable):
         """Associates a command name to a handler.
 
-        :raises ValueError: If a command with the same name was already registered.
+        :raises ValueError: If a command with the same name was already
+                            registered.
         """
         if name in self.commands:
             caller = getframeinfo(stack()[1][0])
             raise ValueError(
-                "%s command name is already registered; last registered at %s:%d" %
+                "%s command name is already registered; "
+                "last registered at %s:%d" %
                 (name, caller.filename, caller.lineno))
         self.commands[name] = command
 

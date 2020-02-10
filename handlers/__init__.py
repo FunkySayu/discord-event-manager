@@ -16,5 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+# Disable flake8 import checker, as we need to load these modules at init.
+# flake8: noqa: F401
+
 import handlers.help
 import handlers.registry
+import handlers.event_management
