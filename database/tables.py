@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 from datetime import datetime, timedelta
 from pytz import timezone
 from threading import Lock

@@ -1,6 +1,8 @@
 from database.database import Database
 from database.tables import EventsTable
 from event.event import Event, StandardTimezone
+from config.base import ConfigVariable, BaseConfig
+from database.tables import ConfigsTable
 
 from datetime import datetime
 import logging
@@ -41,16 +43,11 @@ print(events)
 deserialized = events[0]
 print(deserialized.date.astimezone(StandardTimezone.america.value))
 
-
-
-from config.base import ConfigVariable, BaseConfig
-from database.tables import ConfigsTable
-
 config_table = ConfigsTable(db)
 
 
 class MyConfig(BaseConfig):
-    CONFIGURATION_NAME  = "testing"
+    CONFIGURATION_NAME = "testing"
     timezone = ConfigVariable(
         key="timezone",
         name="Default timezone used for this server.",

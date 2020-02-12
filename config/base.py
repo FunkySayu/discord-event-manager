@@ -1,11 +1,14 @@
 """Base configuration holder."""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional, TypeVar, Callable
 
 if TYPE_CHECKING:
     # Avoid cyclic imports used for typing only.
     from database.tables import ConfigsTable
+
+
+T = TypeVar("T")
 
 
 class ConfigVariable():
@@ -113,7 +116,7 @@ class BaseConfig():
 
     CONFIGURATION_NAME = ""
 
-    def __init__(self, table: ConfigTable, id: str):
+    def __init__(self, table: ConfigsTable, id: str):
         if self.CONFIGURATION_NAME == "":
             raise NotImplementedError(
                 "Configuration name was left undefined for this class.")
