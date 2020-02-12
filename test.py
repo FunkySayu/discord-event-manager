@@ -40,3 +40,33 @@ events = table.weekly()
 print(events)
 deserialized = events[0]
 print(deserialized.date.astimezone(StandardTimezone.america.value))
+
+
+
+from config.base import ConfigVariable, BaseConfig
+from database.tables import ConfigsTable
+
+config_table = ConfigsTable(db)
+
+
+class MyConfig(BaseConfig):
+    CONFIGURATION_NAME  = "testing"
+    timezone = ConfigVariable(
+        key="timezone",
+        name="Default timezone used for this server.",
+        description=(
+            "This timezone will be used for any events created on the server. "
+            "We provide timezones for the World of Warcraft servers in EU and "
+            "NA, alternatively UTC."),
+        values=list(StandardTimezone),
+        default=StandardTimezone.america.name,
+        constructor=StandardTimezone.from_string)
+
+
+funkysayu = MyConfig(config_table, "FunkySayu")
+assert funkysayu.timezone == StandardTimezone.america
+funkysayu.timezone = StandardTimezone.europe
+assert funkysayu.timezone == StandardTimezone.europe
+
+another_funkysayu = MyConfig(config_table, "FunkySayu")
+assert another_funkysayu.timezone == StandardTimezone.europe

@@ -146,3 +146,35 @@ class EventsTable:
         query = Query()
         records = table.search((query.date > start) & (end > query.date))
         return [Event.deserialize(e) for e in records]
+
+
+# Prefix for all configuration tables.
+CONFIG_TABLES_PREFIX = "configs"
+
+
+class ConfigsTable:
+    """Stores the configurations."""
+
+    def __init__(self, db: Database):
+        self.db = db
+
+    def get(self, config_name: str,
+            config_id: str) -> Optional[Dict[str, str]]:
+        """Retrieves a specific config entry."""
+        table = self.db.get_table(f"{CONFIG_TABLES_PREFIX}/{config_name}")
+        query = Query()
+        entries = table.search(query.id == config_id)
+        if len(entries) > 1:
+            raise ValueError(
+                "Inconsistent database: got multiple records for config id %s"
+                % config_id)
+        return len(entries) == 1 and entries[0] or None
+
+    def save(self, config_name: str, config: Dict[str, str]):
+        """Saves a configuration entry."""
+        if "id" not in config:
+            raise ValueError(
+                "The provided configuration does not have an id.")
+        table = self.db.get_table(f"{CONFIG_TABLES_PREFIX}/{config_name}")
+        query = Query()
+        table.upsert(config, query.id == config["id"])
