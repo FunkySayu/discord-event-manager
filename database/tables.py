@@ -6,7 +6,7 @@ import logging
 
 from typing import List, Optional, Tuple, Dict
 from datetime import datetime, timedelta
-from pytz import timezone
+from pytz import timezone, BaseTzInfo
 from threading import Lock
 from tinydb import Query
 
@@ -32,7 +32,7 @@ limitations under the License.
 
 
 def week_time_range(year: int, week: int,
-                    tz: timezone) -> Tuple[datetime, datetime]:
+                    tz: BaseTzInfo) -> Tuple[datetime, datetime]:
     """Given a year and a week number, returns the time range corresponding.
 
     Note the returned end date matches exactly the start date of the next week
