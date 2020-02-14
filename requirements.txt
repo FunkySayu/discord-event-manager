@@ -1,4 +1,8 @@
 datetime
+python-dateutil
 pytz
 tinydb_serialization
 tinydb
+
+# Testing / typing checks
+mypy

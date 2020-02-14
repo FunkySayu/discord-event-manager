@@ -1,7 +1,7 @@
 """Base configuration holder."""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, List, Optional, TypeVar, Callable
+from typing import TYPE_CHECKING, List, Optional, TypeVar, Callable, Union
 
 if TYPE_CHECKING:
     # Avoid cyclic imports used for typing only.
@@ -49,7 +49,7 @@ class ConfigVariable():
 
     def __init__(self, *, key: str, name: str, description: str = "",
                  values: Optional[List[str]] = None,
-                 constructor: Optional[Callable[str, T]] = None,
+                 constructor: Optional[Callable[[str], T]] = None,
                  default: Optional[str] = None):
         self.key = key
         self.name = name
@@ -67,10 +67,14 @@ class ConfigVariable():
                 f"[{', '.join(self.values)}]")
         config._set(self.key, str(value))
 
-    def __get__(self, config: BaseConfig, objtype=None) -> T:
+    def __get__(self, config: BaseConfig, objtype=None) -> Union[T, str]:
         """Calls BaseConfig._get, retrieving it from the database."""
         constructor = self.constructor or str
         value = config._get(self.key) or self.default
+        if value is None:
+            raise KeyError(
+                f"No value assigned for the key {self.key} and no default "
+                "either.")
         return constructor(value)
 
 

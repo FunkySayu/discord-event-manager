@@ -1,4 +1,5 @@
 token.txt
 */__pycache__
+.env
 .mypy_cache
 .idea

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from tinydb import TinyDB
-from typing import TypeVar, NewType
+from typing import TypeVar, NewType, Dict, Any
 
 from database.serializers import all_serializers
 
@@ -28,7 +28,7 @@ limitations under the License.
 TableDef = TypeVar("TableDef")
 
 # A database record
-DbRecord = NewType("DbRecord", dict)
+DbRecord = NewType("DbRecord", Dict[str, Any])
 
 
 class Serializable(ABC):
