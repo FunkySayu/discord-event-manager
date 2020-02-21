@@ -25,4 +25,4 @@ RUN apk add --no-cache --virtual build-dependencies musl-dev gcc \
     && apk del build-dependencies
 
 # Run the program as main.py
-ENTRYPOINT ["python","/discord-event-manager/main.py"]
+CMD ["python","/discord-event-manager/main.py"]

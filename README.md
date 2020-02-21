@@ -66,6 +66,12 @@ To run the container, just run
 docker run --rm -e DISCORD_TOKEN=$(cat token.txt) -d discord-event-manager:1.0
 ```
 
+If you want to run the tests, just modify the CMD
+
+```
+docker run --rm -e DISCORD_TOKEN=$(cat token.txt) -d discord-event-manager:1.0 python test.py
+```
+
 The token is not inside the container for security reasons, you have to set it as an environment variable.
 
 # Acknowledgement
