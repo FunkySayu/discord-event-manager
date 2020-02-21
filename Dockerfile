@@ -16,13 +16,20 @@ FROM python:3.7-alpine3.10
 
 # Set the default working directory
 WORKDIR /discord-event-manager
-# Copy the code directory into the container
-COPY . /discord-event-manager
+# Copy requirements.txt for depencency resolution
+COPY requirements.txt /discord-event-manager
 
 # Installing gcc and headers for pip lib building, then installing requirements, then removing gcc
 RUN apk add --no-cache --virtual build-dependencies musl-dev gcc \
     && pip install -r requirements.txt \
     && apk del build-dependencies
+
+# Copy file to working directory
+# The reason why this section isn't merged with the requirement copy is
+# because if we change something in the files, it'll invalidate all subsequent
+# layers. We don't want that when it comes to dependencies download, so we put
+# the "copy all files" layer after the dependency one
+COPY . /discord-event-manager
 
 # Run the program as main.py
 CMD ["python","/discord-event-manager/main.py"]
