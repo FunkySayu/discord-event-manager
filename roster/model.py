@@ -33,10 +33,18 @@ class CharacterRole(Enum):
 
 class CharacterClass(Enum):
     """List of supported classes in the game."""
-    WARRIOR = 1
-    PALADIN = 2
-    HUNTER = 3
-    # TODO(funkysayu): add others
+    DEATH_KNIGHT = "Death Knight"
+    DEMON_HUNTER = "Demon Hunter"
+    DRUID = "Druid"
+    HUNTER = "Hunter"
+    MAGE = "Mage"
+    MONK = "Monk"
+    PALADIN = "Paladin"
+    PRIEST = "Priest"
+    ROGUE = "Rogue"
+    SHAMAN = "Shaman"
+    WARLOCK = "Warlock"
+    WARRIOR = "Warrior"
 
     @staticmethod
     def get_all_roles(klass: 'CharacterClass') -> List[CharacterRole]:
@@ -47,9 +55,18 @@ class CharacterClass(Enum):
 
 # List of roles supported by class.
 _CLASS_SUPPORTED_ROLES: Dict[CharacterClass, CharacterRole] = {
-    CharacterClass.WARRIOR: [CharacterRole.TANK, CharacterRole.DPS],
-    CharacterClass.PALADIN: [CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.DEATH_KNIGHT: [CharacterRole.TANK, CharacterRole.DPS],
+    CharacterClass.DEMON_HUNTER: [CharacterRole.TANK, CharacterRole.DPS],
+    CharacterClass.DRUID: [CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
     CharacterClass.HUNTER: [CharacterRole.DPS],
+    CharacterClass.MAGE: [ CharacterRole.DPS],
+    CharacterClass.MONK: [CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.PALADIN: [CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.PRIEST: [CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.ROGUE: [CharacterRole.DPS],
+    CharacterClass.SHAMAN: [CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.WARLOCK: [CharacterRole.DPS],
+    CharacterClass.WARRIOR: [CharacterRole.TANK, CharacterRole.DPS],
 }
 
 class Character:
