@@ -18,42 +18,39 @@ limitations under the License.
 
 from unittest.mock import MagicMock
 
+from roster.model import Player, Character, CharacterClass
 from roster.sheet_integration import RosterSpreadsheet
 
 
-def fake_cursor(results):
-    """Creates a fake spreadsheet cursor returning the provided results."""
-    mock = MagicMock()
-    mock.execute.return_value = {'values': results}
-    return mock
-
-
 class RosterSpreadsheetTest(unittest.IsolatedAsyncioTestCase):
+    SHEET_METADATA = {'sheets': [{'properties': {'title': 'sheet name', 'sheetId': 133713371337}}]}
+
+    def setUp(self):
+        """Ensures we resolve the sheetId."""
+        self.handler_mock = MagicMock()
+        self.handler_mock.get().execute.return_value = self.SHEET_METADATA
+        self.spreadsheet = RosterSpreadsheet(self.handler_mock, 'spreadsheetId', 'sheet name')
 
     async def test_supports_multiple_characters(self):
         """Computes a single player having two characters."""
-        handler_mock = MagicMock()
-        handler_mock.values().get.return_value = fake_cursor([
-            ['FooBar#1234', '1', 'server', 'Alice', 'Hunter'],
-            ['FooBar#1234', '1', 'server', 'Bob', 'Warrior'],
-        ])
+        self.handler_mock.values().get().execute.return_value = {'values': [
+            ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
+            ['Foo#1234', '1', 'server', 'Bob', 'Warrior'],
+        ]}
 
-        spreadsheet = RosterSpreadsheet(handler_mock, '', '')
-        players = await spreadsheet.get_players()
+        players = await self.spreadsheet.get_players()
 
         self.assertEqual(len(players), 1)
         self.assertEqual(len(players[0].characters), 2)
 
     async def test_supports_multiple_players(self):
         """Computes two player, each having one character."""
-        handler_mock = MagicMock()
-        handler_mock.values().get.return_value = fake_cursor([
+        self.handler_mock.values().get().execute.return_value = {'values': [
             ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
             ['Bar#4321', '2', 'server', 'Bob', 'Warrior'],
-        ])
+        ]}
 
-        spreadsheet = RosterSpreadsheet(handler_mock, '', '')
-        players = await spreadsheet.get_players()
+        players = await self.spreadsheet.get_players()
 
         self.assertEqual(len(players), 2)
         self.assertEqual(len(players[0].characters), 1)
@@ -61,17 +58,130 @@ class RosterSpreadsheetTest(unittest.IsolatedAsyncioTestCase):
 
     async def test_ignores_partial_data(self):
         """Computes a single player having two characters."""
-        handler_mock = MagicMock()
-        handler_mock.values().get.return_value = fake_cursor([
+        self.handler_mock.values().get().execute.return_value = {'values': [
             ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
             ['Omega#1111', '', '', 'Bleh', 'Hunter'],
-        ])
+        ]}
 
-        spreadsheet = RosterSpreadsheet(handler_mock, '', '')
-        players = await spreadsheet.get_players()
+        print('test_ignores_partial_data')
+        players = await self.spreadsheet.get_players()
+        print(players)
 
         self.assertEqual(len(players), 1)
         self.assertEqual(len(players[0].characters), 1)
+
+    async def test_update_deletes_previous_entries(self):
+        """Computes a single player having two characters.
+
+        An important part of this test is to ensure the deleted entries are in
+        reverse order of the line number, as we do not want to deal with offsetting
+        over our deletion.
+        """
+        self.handler_mock.values().get().execute.return_value = {'values': [
+            ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
+            ['Bar#1111', '2', 'server', 'Bob', 'Demon Hunter'],
+            ['Foo#1234', '1', 'server', 'Richard', 'Demon Hunter'],
+        ]}
+
+        player = Player('Foo#1234', '1')
+        await self.spreadsheet.update_player(player)
+
+        self.handler_mock.batchUpdate.assert_called_with(
+            spreadsheetId='spreadsheetId',
+            body={
+                'requests': [
+                    {'deleteDimension': {'range': {
+                        'sheetId': 133713371337,
+                        'dimension': 'ROWS',
+                        'startIndex': 4,  # Line offset + target - 1
+                        'endIndex': 5  # Line offset + target
+                    }}},
+                    {'deleteDimension': {'range': {
+                        'sheetId': 133713371337,
+                        'dimension': 'ROWS',
+                        'startIndex': 2,  # Line offset + target - 1
+                        'endIndex': 3,  # Line offset + target
+                    }}}
+                ]
+            })
+
+    async def test_update_deletes_nothing_on_new_player(self):
+        """Ensure we do not delete anything if we're adding a new player."""
+        self.handler_mock.values().get().execute.return_value = {'values': [
+            ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
+            ['Bar#1111', '2', 'server', 'Bob', 'Demon Hunter'],
+            ['Foo#1234', '1', 'server', 'Richard', 'Demon Hunter'],
+        ]}
+
+        player = Player('New#1234', '3')
+        await self.spreadsheet.update_player(player)
+
+        self.handler_mock.batchUpdate.assert_not_called()
+
+    async def test_update_without_appends(self):
+        """Ensure we do not try to add characters if the player don't own any."""
+        self.handler_mock.values().get().execute.return_value = {'values': []}
+
+        player = Player('New#1234', '3')
+        await self.spreadsheet.update_player(player)
+
+        self.handler_mock.values().append.assert_not_called()
+
+    async def test_update_unregistered_player(self):
+        """Insertion with a completely new player."""
+        self.handler_mock.values().get().execute.return_value = {'values': [
+            ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
+        ]}
+
+        player = Player('New#1234', '2', characters=[
+            Character('server', 'Richard', CharacterClass.MAGE),
+        ])
+        await self.spreadsheet.update_player(player)
+
+        self.handler_mock.batchUpdate.assert_not_called()
+        self.handler_mock.values().append.assert_called_with(
+            spreadsheetId="spreadsheetId",
+            range="sheet name!A3:F1000",
+            valueInputOption="USER_ENTERED",
+            body={'values': [
+                ['New#1234', '2', 'server', 'Richard', 'Mage']
+            ]}
+        )
+
+    async def test_update_new_alt_player(self):
+        """Insertion with a completely new player."""
+        self.handler_mock.values().get().execute.return_value = {'values': [
+            ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
+            ['Bar#1111', '2', 'server', 'Bob', 'Demon Hunter'],
+        ]}
+
+        player = Player('Foo#1234', '1', characters=[
+            Character('server', 'Alice', CharacterClass.HUNTER),
+            Character('server', 'Richard', CharacterClass.MAGE),
+        ])
+        await self.spreadsheet.update_player(player)
+
+        self.handler_mock.batchUpdate.assert_called_with(
+            spreadsheetId='spreadsheetId',
+            body={
+                'requests': [
+                    {'deleteDimension': {'range': {
+                        'sheetId': 133713371337,
+                        'dimension': 'ROWS',
+                        'startIndex': 2,  # Line offset + target - 1
+                        'endIndex': 3  # Line offset + target
+                    }}},
+                ]
+            })
+        self.handler_mock.values().append.assert_called_with(
+            spreadsheetId="spreadsheetId",
+            range="sheet name!A3:F1000",
+            valueInputOption="USER_ENTERED",
+            body={'values': [
+                ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
+                ['Foo#1234', '1', 'server', 'Richard', 'Mage']
+            ]}
+        )
 
 
 if __name__ == '__main__':
