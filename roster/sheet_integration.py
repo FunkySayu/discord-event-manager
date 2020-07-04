@@ -32,29 +32,33 @@ from roster.model import Player, Character, CharacterClass
 class RosterSpreadsheet:
     """Interface to the roster spreadsheet.
 
-    :attr _SPREADSHEET_ID: The Google spreadsheet ID to retrieve information from.
-    :attr _ROSTER_SHEET: The Spreadsheet tab to edit / pull data from.
-    :attr _LINE_START_OFFSET: Beginning of the player list (i.e. without the headers).
+    :attr LINE_START_OFFSET: Exact line the content of the spreadsheet starts.
+    :attr _spreadsheet_id: The spreadsheet ID to retrieve information from.
+    :attr _roster_a1_selector: The sheet tab name to edit / pull data from.
+    :attr _handler:
     """
 
     LINE_START_OFFSET = 3
 
-    _SPREADSHEET_ID: string
-    _ROSTER_SHEET_A1_SELECTOR: string
+    _spreadsheet_id: str
+    _roster_a1_selector: str
 
     def __init__(self, handler, spreadsheet_id, roster_sheet_name):
-        self._SPREADSHEET_ID = spreadsheet_id
-        self._ROSTER_SHEET_A1_SELECTOR = f'{roster_sheet_name}!A{self.LINE_START_OFFSET}:F1000'
+        self._spreadsheet_id = spreadsheet_id
+        self._roster_a1_selector = (
+            f'{roster_sheet_name}!A{self.LINE_START_OFFSET}:F1000')
         self._handler = handler
         self._mutex = threading.Lock()
 
-        # Google Spreadsheets API have two different notations to access a specific
-        # sheet in a spreadsheet: using the A1 notation (for range of values selection),
-        # the name of the spreadsheet needs to be used, while some other endpoints
-        # may require the sheet ID (int32).
-        # So we need to resolve what's the sheet ID associated to the sheet name
-        # provided as argument. That's quite stupid but I'm getting used to that.
-        spreadsheet_metadata = self._handler.get(spreadsheetId=self._SPREADSHEET_ID).execute()
+        # Google Spreadsheets API have two different notations to access a
+        # specific sheet in a spreadsheet: using the A1 notation (for range
+        # of values selection), the name of the spreadsheet needs to be used,
+        # while some other endpoints may require the sheet ID (int32).
+        # So we need to resolve what's the sheet ID associated to the sheet
+        # name provided as argument. That's quite stupid but I'm getting used
+        # to that.
+        spreadsheet_metadata = self._handler.get(
+            spreadsheetId=self._spreadsheet_id).execute()
         self._ROSTER_SHEET_ID = None
         for sheet_metadata in spreadsheet_metadata.get('sheets', []):
             if 'properties' not in sheet_metadata:
@@ -64,14 +68,15 @@ class RosterSpreadsheet:
                 continue
             self._ROSTER_SHEET_ID = properties.get('sheetId')
         if self._ROSTER_SHEET_ID is None:
-            raise KeyError('Sheet name {} is missing in the spreadsheet {}'.format(
-                roster_sheet_name, self._SPREADSHEET_ID))
+            raise KeyError(
+                'Sheet name {} is missing in the spreadsheet {}'.format(
+                    roster_sheet_name, self._spreadsheet_id))
 
     async def get_players(self) -> List[Player]:
         """Retrieves the list of players as configured in the spreadsheet."""
         cursor = self._handler.values().get(
-            spreadsheetId=self._SPREADSHEET_ID,
-            range=self._ROSTER_SHEET_A1_SELECTOR)
+            spreadsheetId=self._spreadsheet_id,
+            range=self._roster_a1_selector)
 
         with self._mutex:
             data = await self._execute(cursor)
@@ -89,15 +94,16 @@ class RosterSpreadsheet:
             if uid not in player_by_uid:
                 player_by_uid[uid] = Player(handle, uid)
             player = player_by_uid[uid]
-            player.characters.append(Character(server, name, CharacterClass(klass_name)))
+            player.characters.append(Character(
+                server, name, CharacterClass(klass_name)))
         return list(player_by_uid.values())
 
     async def update_player(self, player: Player):
         """Updates the list of characters for the given player."""
         with self._mutex:
             cursor = self._handler.values().get(
-                spreadsheetId=self._SPREADSHEET_ID,
-                range=self._ROSTER_SHEET_A1_SELECTOR)
+                spreadsheetId=self._spreadsheet_id,
+                range=self._roster_a1_selector)
             data = await self._execute(cursor)
 
             # Iterate in reverse order, so we can remove the rows without
@@ -111,15 +117,16 @@ class RosterSpreadsheet:
                         self.LINE_START_OFFSET+index,
                         player.discord_handle)
                     delete_requests.append({"deleteDimension": {"range": {
-                        "sheetId": self._ROSTER_SHEET_ID,
-                        "dimension": "ROWS",
-                        "startIndex": self.LINE_START_OFFSET+ index-1,
-                        "endIndex": self.LINE_START_OFFSET+index,
-                    }}})
+                            "sheetId": self._ROSTER_SHEET_ID,
+                            "dimension": "ROWS",
+                            "startIndex": self.LINE_START_OFFSET + index-1,
+                            "endIndex": self.LINE_START_OFFSET + index,
+                        },
+                    }})
 
             if delete_requests:
                 cursor = self._handler.batchUpdate(
-                    spreadsheetId=self._SPREADSHEET_ID,
+                    spreadsheetId=self._spreadsheet_id,
                     body={'requests': delete_requests})
                 await self._execute(cursor)
 
@@ -141,13 +148,13 @@ class RosterSpreadsheet:
                 len(new_rows),
                 tabulate(new_rows))
             cursor = self._handler.values().append(
-                spreadsheetId=self._SPREADSHEET_ID,
-                range=self._ROSTER_SHEET_A1_SELECTOR,
+                spreadsheetId=self._spreadsheet_id,
+                range=self._roster_a1_selector,
                 valueInputOption="USER_ENTERED",
                 body={'values': new_rows})
             await self._execute(cursor)
 
-    async def _execute(self, cursor) -> Dict[string, Any]:
+    async def _execute(self, cursor) -> Dict[str, Any]:
         """Wraps cursor execution in an asyncio call."""
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(None, cursor.execute)
@@ -160,4 +167,6 @@ THE_UNIQUE_ROSTER_SHEET = "ROSTER"
 
 def get_default_sheet_handler():
     """Returns the default spreadsheet to use in this context."""
-    return RosterSpreadsheet(get_handler().spreadsheets(), THE_UNIQUE_SPREADSHEET_ID, THE_UNIQUE_ROSTER_SHEET)
+    return RosterSpreadsheet(get_handler().spreadsheets(),
+                             THE_UNIQUE_SPREADSHEET_ID,
+                             THE_UNIQUE_ROSTER_SHEET)

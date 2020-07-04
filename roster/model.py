@@ -21,7 +21,7 @@ limitations under the License.
 import re
 
 from enum import Enum
-from typing import Set, List, Dict
+from typing import Set, List, Dict, Optional
 
 
 class CharacterRole(Enum):
@@ -54,20 +54,29 @@ class CharacterClass(Enum):
 
 
 # List of roles supported by class.
-_CLASS_SUPPORTED_ROLES: Dict[CharacterClass, CharacterRole] = {
-    CharacterClass.DEATH_KNIGHT: [CharacterRole.TANK, CharacterRole.DPS],
-    CharacterClass.DEMON_HUNTER: [CharacterRole.TANK, CharacterRole.DPS],
-    CharacterClass.DRUID: [CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+_CLASS_SUPPORTED_ROLES: Dict[CharacterClass, List[CharacterRole]] = {
+    CharacterClass.DEATH_KNIGHT: [
+        CharacterRole.TANK, CharacterRole.DPS],
+    CharacterClass.DEMON_HUNTER: [
+        CharacterRole.TANK, CharacterRole.DPS],
+    CharacterClass.DRUID: [
+        CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
     CharacterClass.HUNTER: [CharacterRole.DPS],
-    CharacterClass.MAGE: [ CharacterRole.DPS],
-    CharacterClass.MONK: [CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
-    CharacterClass.PALADIN: [CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
-    CharacterClass.PRIEST: [CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.MAGE: [CharacterRole.DPS],
+    CharacterClass.MONK: [
+        CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.PALADIN: [
+        CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.PRIEST: [
+        CharacterRole.HEALER, CharacterRole.DPS],
     CharacterClass.ROGUE: [CharacterRole.DPS],
-    CharacterClass.SHAMAN: [CharacterRole.HEALER, CharacterRole.DPS],
+    CharacterClass.SHAMAN: [
+        CharacterRole.HEALER, CharacterRole.DPS],
     CharacterClass.WARLOCK: [CharacterRole.DPS],
-    CharacterClass.WARRIOR: [CharacterRole.TANK, CharacterRole.DPS],
+    CharacterClass.WARRIOR: [
+        CharacterRole.TANK, CharacterRole.DPS],
 }
+
 
 class Character:
     """Represents a character owned by a player.
@@ -77,20 +86,23 @@ class Character:
     :attr klass: Character class
     :attr playable_roles: Roles the player is able to play.
     """
-    server: string
-    name: string
+    server: str
+    name: str
     klass: CharacterClass
     playable_roles: List[CharacterRole]
 
-    def __init__(self, server: string, name: string, klass: CharacterClass, playable_roles: List[CharacterRole] = None):
+    def __init__(self, server: str, name: str, klass: CharacterClass,
+                 playable_roles: Optional[List[CharacterRole]] = None):
         self.server = server
         self.name = name
         self.klass = klass
-        self.playable_roles = playable_roles is not None and playable_roles or CharacterClass.get_all_roles(klass)
+        self.playable_roles = (playable_roles is not None
+                               and playable_roles
+                               or CharacterClass.get_all_roles(klass))
 
     def __repr__(self):
         """Returns a debugging representation of the character."""
-        return f'<Character %s/%s>'
+        return f'<Character {self.server}/{self.name} ({self.klass.value})>'
 
 
 _DISCORD_HANDLE_RE = re.compile(r'^[a-zA-Z]+#\d{4}$')
@@ -102,13 +114,16 @@ class Player:
     :attr discord_handle: A discord handle, matching DISCORD_HANDLE_RE
     :attr discord_uuid: The UUID of the player
     :attr characters: List of characters the player is able to play."""
-    discord_handle: string  #
-    discord_uuid: string  # The UUID of the player
+    discord_handle: str  #
+    discord_uuid: str  # The UUID of the player
     characters: List[Character]  # List of character this player owns.
 
-    def __init__(self, discord_handle: string, discord_uuid: string, characters: List[Character] = None):
+    def __init__(self, discord_handle: str, discord_uuid: str,
+                 characters: List[Character] = None):
         if not _DISCORD_HANDLE_RE.match(discord_handle):
-            raise ValueError("The provided discord_handle is not matching a valid handle: {}".format(discord_handle))
+            raise ValueError((
+                "The provided discord_handle is not matching a valid"
+                "handle: {}").format(discord_handle))
         self.discord_handle = discord_handle
         self.discord_uuid = discord_uuid
         self.characters = characters is not None and characters or []

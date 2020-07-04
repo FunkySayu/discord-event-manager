@@ -24,7 +24,9 @@ from roster.sheet_integration import get_default_sheet_handler
 
 
 async def main():
-    """Fairly simple script retrieving all the players from the configured
+    """Pulls the list of players present in the spreadsheet.
+
+    Fairly simple script retrieving all the players from the configured
     spreadsheet and displaying them in a table. Useful to manually test
     integration with the spreadsheet.
     """

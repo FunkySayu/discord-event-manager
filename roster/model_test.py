@@ -18,6 +18,7 @@ limitations under the License.
 
 from roster.model import Player, Character, CharacterClass, CharacterRole
 
+
 class TestPlayer(unittest.TestCase):
 
     def test_good_discord_handle(self):
@@ -36,7 +37,9 @@ class TestPlayer(unittest.TestCase):
             Character("server", "Alice", CharacterClass.HUNTER),
             Character("server", "Bob", CharacterClass.WARRIOR),
         ])
-        self.assertEqual(player.get_playable_roles(), {CharacterRole.DPS, CharacterRole.TANK})
+        self.assertEqual(player.get_playable_roles(),
+                         {CharacterRole.DPS, CharacterRole.TANK})
+
 
 if __name__ == '__main__':
     unittest.main()

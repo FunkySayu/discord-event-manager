@@ -23,13 +23,15 @@ from roster.sheet_integration import RosterSpreadsheet
 
 
 class RosterSpreadsheetTest(unittest.IsolatedAsyncioTestCase):
-    SHEET_METADATA = {'sheets': [{'properties': {'title': 'sheet name', 'sheetId': 133713371337}}]}
+    SHEET_METADATA = {'sheets': [
+        {'properties': {'title': 'sheet name', 'sheetId': 133713371337}}]}
 
     def setUp(self):
         """Ensures we resolve the sheetId."""
         self.handler_mock = MagicMock()
         self.handler_mock.get().execute.return_value = self.SHEET_METADATA
-        self.spreadsheet = RosterSpreadsheet(self.handler_mock, 'spreadsheetId', 'sheet name')
+        self.spreadsheet = RosterSpreadsheet(
+            self.handler_mock, 'spreadsheetId', 'sheet name')
 
     async def test_supports_multiple_characters(self):
         """Computes a single player having two characters."""
@@ -74,8 +76,8 @@ class RosterSpreadsheetTest(unittest.IsolatedAsyncioTestCase):
         """Computes a single player having two characters.
 
         An important part of this test is to ensure the deleted entries are in
-        reverse order of the line number, as we do not want to deal with offsetting
-        over our deletion.
+        reverse order of the line number, as we do not want to deal with
+        offsetting over our deletion.
         """
         self.handler_mock.values().get().execute.return_value = {'values': [
             ['Foo#1234', '1', 'server', 'Alice', 'Hunter'],
@@ -119,7 +121,7 @@ class RosterSpreadsheetTest(unittest.IsolatedAsyncioTestCase):
         self.handler_mock.batchUpdate.assert_not_called()
 
     async def test_update_without_appends(self):
-        """Ensure we do not try to add characters if the player don't own any."""
+        """Ensure we do not add characters if the player don't own any."""
         self.handler_mock.values().get().execute.return_value = {'values': []}
 
         player = Player('New#1234', '3')
