@@ -1,4 +1,5 @@
 datetime
+discord
 pytz
 tinydb_serialization
 tinydb
