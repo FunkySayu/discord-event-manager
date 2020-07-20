@@ -55,8 +55,7 @@ class RosterSpreadsheet:
         # of values selection), the name of the spreadsheet needs to be used,
         # while some other endpoints may require the sheet ID (int32).
         # So we need to resolve what's the sheet ID associated to the sheet
-        # name provided as argument. That's quite stupid but I'm getting used
-        # to that.
+        # name provided as argument.
         spreadsheet_metadata = self._handler.get(
             spreadsheetId=self._spreadsheet_id).execute()
         self._ROSTER_SHEET_ID = None
