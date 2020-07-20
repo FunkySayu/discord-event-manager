@@ -33,12 +33,14 @@ class RosterSpreadsheet:
     """Interface to the roster spreadsheet.
 
     :attr LINE_START_OFFSET: Exact line the content of the spreadsheet starts.
+    :attr MANAGED_COLUMNS: Amount of columns managed by the handler.
     :attr _spreadsheet_id: The spreadsheet ID to retrieve information from.
     :attr _roster_a1_selector: The sheet tab name to edit / pull data from.
     :attr _handler:
     """
 
     LINE_START_OFFSET = 3
+    MANAGED_COLUMNS = 5
 
     _spreadsheet_id: str
     _roster_a1_selector: str
@@ -83,7 +85,7 @@ class RosterSpreadsheet:
 
         player_by_uid = {}
         for row in data['values']:
-            if len(row) < 5:
+            if len(row) < self.MANAGED_COLUMNS:
                 # Incomplete inputs.
                 continue
             [handle, uid, server, name, klass_name] = row

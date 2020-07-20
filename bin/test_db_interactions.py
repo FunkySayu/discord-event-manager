@@ -57,9 +57,9 @@ def main():
         pass
 
     table.save(Event(
-        "Jesus' weird shit",
+        "Guild Master's weird raid event",
         today.replace(hour=23, minute=15),
-        description="""Yet another day where Jesus wants to do weird shit."""))
+        description="""Yet another day where the GM wants to do weird stuff."""))
 
     events = table.weekly()
     print(events)
