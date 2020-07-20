@@ -39,6 +39,7 @@ def main():
     description = """Bring your flasks and consumables.
 
     Also bring your happiness. And don't stand in tornadoes ffs."""
+
     event = Event(
         "Mythic Raiding",
         today.replace(hour=20, minute=45),
