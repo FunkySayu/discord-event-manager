@@ -56,25 +56,40 @@ class CharacterClass(Enum):
 # List of roles supported by class.
 _CLASS_SUPPORTED_ROLES: Dict[CharacterClass, List[CharacterRole]] = {
     CharacterClass.DEATH_KNIGHT: [
-        CharacterRole.TANK, CharacterRole.DPS],
+        CharacterRole.TANK,
+        CharacterRole.DPS],
     CharacterClass.DEMON_HUNTER: [
-        CharacterRole.TANK, CharacterRole.DPS],
+        CharacterRole.TANK,
+        CharacterRole.DPS],
     CharacterClass.DRUID: [
-        CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
-    CharacterClass.HUNTER: [CharacterRole.DPS],
-    CharacterClass.MAGE: [CharacterRole.DPS],
+        CharacterRole.TANK,
+        CharacterRole.HEALER,
+        CharacterRole.DPS],
+    CharacterClass.HUNTER: [
+        CharacterRole.DPS],
+    CharacterClass.MAGE: [
+        CharacterRole.DPS],
     CharacterClass.MONK: [
-        CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+        CharacterRole.TANK,
+        CharacterRole.HEALER,
+        CharacterRole.DPS],
     CharacterClass.PALADIN: [
-        CharacterRole.TANK, CharacterRole.HEALER, CharacterRole.DPS],
+        CharacterRole.TANK,
+        CharacterRole.HEALER,
+        CharacterRole.DPS],
     CharacterClass.PRIEST: [
-        CharacterRole.HEALER, CharacterRole.DPS],
-    CharacterClass.ROGUE: [CharacterRole.DPS],
+        CharacterRole.HEALER,
+        CharacterRole.DPS],
+    CharacterClass.ROGUE: [
+        CharacterRole.DPS],
     CharacterClass.SHAMAN: [
-        CharacterRole.HEALER, CharacterRole.DPS],
-    CharacterClass.WARLOCK: [CharacterRole.DPS],
+        CharacterRole.HEALER,
+        CharacterRole.DPS],
+    CharacterClass.WARLOCK: [
+        CharacterRole.DPS],
     CharacterClass.WARRIOR: [
-        CharacterRole.TANK, CharacterRole.DPS],
+        CharacterRole.TANK,
+        CharacterRole.DPS],
 }
 
 
