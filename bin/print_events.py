@@ -21,7 +21,7 @@ import logging
 
 from tabulate import tabulate
 
-from event.sheet_integration import get_default_sheet_handler
+from event.sheet_integration import get_default_event_sheet_handler
 
 
 async def main():
@@ -33,13 +33,18 @@ async def main():
     """
     logging.getLogger().setLevel(logging.DEBUG)
 
-    handler = get_default_sheet_handler()
-    events = await handler.get_events()
+    handler = get_default_event_sheet_handler()
+    attendances = await handler.get_all_attendances()
     data = []
-    for event in events:
-        data.append([event.date.isoformat(), event.title, event.description])
+    for attendance in attendances:
+        data.append([
+            attendance.event.date.isoformat(),
+            attendance.event.title,
+            attendance.event.description,
+            attendance.availabilities,
+        ])
 
-    print(tabulate(data, headers=["Date", "Title", "Description"]))
+    print(tabulate(data, headers=["Date", "Title", "Description", "Availabilities"]))
 
 
 if __name__ == "__main__":

@@ -88,7 +88,7 @@ class RosterSpreadsheet:
             if len(row) < self.MANAGED_COLUMNS:
                 # Incomplete inputs.
                 continue
-            [handle, uid, server, name, klass_name] = row[:5]
+            handle, uid, server, name, klass_name = row[:self.MANAGED_COLUMNS]
             if not (handle and uid and server and name and klass_name):
                 # Incomplete inputs.
                 continue
@@ -166,7 +166,7 @@ THE_UNIQUE_SPREADSHEET_ID = "1ej9FnOtxSjNSMEzYAZUwWx9hIAIrhw-5G6l8w_GoXnU"
 THE_UNIQUE_ROSTER_SHEET = "ROSTER"
 
 
-def get_default_sheet_handler():
+def get_default_roster_sheet_handler():
     """Returns the default spreadsheet to use in this context."""
     return RosterSpreadsheet(get_sheets_handler().spreadsheets(),
                              THE_UNIQUE_SPREADSHEET_ID,
