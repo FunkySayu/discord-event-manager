@@ -1,5 +1,6 @@
 # Database
 datetime
+python-dateutil
 discord
 pytz
 tinydb_serialization
