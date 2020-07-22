@@ -18,6 +18,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import dateutil.parser
+
 from datetime import datetime, timedelta
 from enum import Enum
 from pytz import timezone
@@ -41,6 +43,12 @@ class StandardTimezone(Enum):
             return cls[string]
         except KeyError:
             raise ValueError("Timezone %s is not supported." % string)
+
+
+def date_from_string(date_str: str, time_str: str, tz = StandardTimezone.utc):
+    """Creates an aware datetime object from a date and time string."""
+    unaware_date = dateutil.parser.parse(f'{date_str} {time_str}')
+    return tz.value.localize(unaware_date)
 
 
 class Event(Serializable):
