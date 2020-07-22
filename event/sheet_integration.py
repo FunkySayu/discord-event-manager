@@ -23,18 +23,13 @@ import threading
 import string
 import logging
 
-from enum import Enum
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Union
 
 from google_integration.handler import get_handler
 from event.event import Event, StandardTimezone, date_from_string
-
-
-class Availability(Enum):
-    """Availability of a player for a given event."""
-    signed = "SIGNED"
-    unavailable = "UNAVAILABLE"
-    unknown = "UNKNOWN"
+from event.attendance import Attendance, Availability
+from roster.sheet_integration import RosterSpreadsheet, get_default_roster_sheet_handler
+from roster.model import Player
 
 
 def column_offset(column: str) -> int:
@@ -56,8 +51,9 @@ class EventSpreadsheet:
     COLUMN_START_PLAYER_STATUS = column_offset('H')
     TIMEZONE = StandardTimezone.europe
 
-    def __init__(self, handler, spreadsheet_id, event_sheet_name):
+    def __init__(self, handler, roster_sheet: RosterSpreadsheet, spreadsheet_id, event_sheet_name):
         self._spreadsheet_id = spreadsheet_id
+        self._roster_sheet = roster_sheet
         self._events_a1_selector = (
             f'{event_sheet_name}!A1:Z1000')
         self._handler = handler
@@ -84,7 +80,7 @@ class EventSpreadsheet:
                 'Sheet name {} is missing in the spreadsheet {}'.format(
                     event_sheet_name, self._spreadsheet_id))
 
-    async def get_events(self) -> List[Event]:
+    async def get_all_attendances(self) -> List[Attendance]:
         """Retrieves the list of events as configured in the spreadsheet."""
         cursor = self._handler.values().get(
             spreadsheetId=self._spreadsheet_id, range=self._events_a1_selector)
@@ -96,42 +92,48 @@ class EventSpreadsheet:
         # First row contains the list of players, which is then used to read there
         # statuses.
         headers = data['values'].pop(0)
-        player_uids = headers[self.COLUMN_START_PLAYER_STATUS:]
+        player_uids = await self._resolve_players(headers[self.COLUMN_START_PLAYER_STATUS:])
 
-        events = []
-        attendance_by_events = {}
+        attendances = []
         for i, row in enumerate(data['values']):
-            if len(row) < self.COLUMN_START_PLAYER_STATUS:
+            if len(row) < self.COLUMN_END_METADATA:
                 logging.warning(
                     'Skipping row %s with invalid content: expected %s '
                     'values, got: %s',
                     i, self.COLUMN_START_PLAYER_STATUS, row)
                 continue
-            metadata, player_status = row[:self.COLUMN_END_METADATA], row[self.COLUMN_START_PLAYER_STATUS:]
+            metadata = row[:self.COLUMN_END_METADATA]
+            player_status = []
+            if len(row) >= self.COLUMN_START_PLAYER_STATUS:
+                player_status = row[self.COLUMN_START_PLAYER_STATUS:]
             date_str, time_str, title, desc = metadata
             date = date_from_string(date_str, time_str)
 
             # TODO(funkysayu): support repetition of events.
             event = Event(title, date, desc)
-            events.append(event)
 
             # Get the status of each players for this event.
-            # TODO(funkysayu): use these values.
-            attendance = {}
+            availabilities: Dict[Player, Availability] = {}
             for uid, status in zip(player_uids, player_status):
                 if not player_uids or not player_status:
                     continue
                 try:
-                    attendance[uid] = Availability(status)
+                    availabilities[uid] = Availability(status)
                 except ValueError:
                     logging.error(
                         "Invalid availability for player %s on event %s: got %s. "
                         "Falling back to the default.",
                         uid, event, status)
-                    attendance[uid] = Availability.unknown
-            attendance_by_events[event] = attendance
-            logging.info("Attendance for event %s: %s", event, attendance)
-        return events
+                    availabilities[uid] = Availability.unknown
+            attendances.append(Attendance(event, availabilities))
+            logging.info("Attendance for event %s: %s", event, availabilities)
+        return attendances
+
+    async def _resolve_players(self, player_uids: List[str]) -> List[Union[Player, None]]:
+        """Given a list of UIDs, get the player from the roster sheet."""
+        all_players = await self._roster_sheet.get_players()
+        by_uid = {player.discord_handle: player for player in all_players}
+        return [by_uid.get(uid, None) for uid in player_uids]
 
     async def _execute(self, cursor) -> Dict[str, Any]:
         """Wraps cursor execution in an asyncio call."""
@@ -144,8 +146,9 @@ THE_UNIQUE_SPREADSHEET_ID = "1ej9FnOtxSjNSMEzYAZUwWx9hIAIrhw-5G6l8w_GoXnU"
 THE_UNIQUE_ROSTER_SHEET = "EVENTS"
 
 
-def get_default_sheet_handler() -> EventSpreadsheet:
+def get_default_event_sheet_handler() -> EventSpreadsheet:
     """Returns the default spreadsheet to use in this context."""
     return EventSpreadsheet(get_handler().spreadsheets(),
+                            get_default_roster_sheet_handler(),
                             THE_UNIQUE_SPREADSHEET_ID,
                             THE_UNIQUE_ROSTER_SHEET)

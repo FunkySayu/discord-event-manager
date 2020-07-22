@@ -20,7 +20,7 @@ import asyncio
 
 from tabulate import tabulate
 
-from roster.sheet_integration import get_default_sheet_handler
+from roster.sheet_integration import get_default_roster_sheet_handler
 
 
 async def main():
@@ -30,7 +30,7 @@ async def main():
     spreadsheet and displaying them in a table. Useful to manually test
     integration with the spreadsheet.
     """
-    handler = get_default_sheet_handler()
+    handler = get_default_roster_sheet_handler()
     players = await handler.get_players()
     data = []
     for player in players:

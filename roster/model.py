@@ -143,6 +143,10 @@ class Player:
         self.discord_uuid = discord_uuid
         self.characters = characters is not None and characters or []
 
+    def __repr__(self):
+        return '<Player {} ({} characters)>'.format(
+            self.discord_handle, len(self.characters))
+
     def get_playable_roles(self) -> Set[CharacterRole]:
         """Returns all the roles the player is able to play."""
         roles = set()
