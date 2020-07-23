@@ -5,3 +5,4 @@ token.txt
 credentials.json
 secrets.cfg
 generated.cfg
+venv/*

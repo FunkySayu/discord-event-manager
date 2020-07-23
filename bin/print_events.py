@@ -34,6 +34,9 @@ async def main():
     logging.getLogger().setLevel(logging.DEBUG)
 
     handler = get_default_event_sheet_handler()
+    new_players = await handler.resync_player_list()
+    if new_players:
+        print("New players added from the roster: ", new_players)
     attendances = await handler.get_all_attendances()
     data = []
     for attendance in attendances:
