@@ -48,12 +48,13 @@ class EventSpreadsheet:
 
     LINE_START_OFFSET = 8
     COLUMN_END_METADATA = column_offset('D') + 1
-    COLUMN_START_PLAYER_STATUS = column_offset('H')
+    COLUMN_START_PLAYER_STATUS = 'H'
     TIMEZONE = StandardTimezone.europe
 
     def __init__(self, handler, roster_sheet: RosterSpreadsheet, spreadsheet_id, event_sheet_name):
         self._spreadsheet_id = spreadsheet_id
         self._roster_sheet = roster_sheet
+        self._sheet_name = event_sheet_name
         self._events_a1_selector = (
             f'{event_sheet_name}!A1:Z1000')
         self._handler = handler
@@ -92,7 +93,8 @@ class EventSpreadsheet:
         # First row contains the list of players, which is then used to read there
         # statuses.
         headers = data['values'].pop(0)
-        player_uids = await self._resolve_players(headers[self.COLUMN_START_PLAYER_STATUS:])
+        player_offset = column_offset(self.COLUMN_START_PLAYER_STATUS)
+        player_uids = await self._resolve_players(headers[player_offset:])
 
         attendances = []
         for i, row in enumerate(data['values']):
@@ -100,12 +102,12 @@ class EventSpreadsheet:
                 logging.warning(
                     'Skipping row %s with invalid content: expected %s '
                     'values, got: %s',
-                    i, self.COLUMN_START_PLAYER_STATUS, row)
+                    i, player_offset, row)
                 continue
             metadata = row[:self.COLUMN_END_METADATA]
             player_status = []
-            if len(row) >= self.COLUMN_START_PLAYER_STATUS:
-                player_status = row[self.COLUMN_START_PLAYER_STATUS:]
+            if len(row) >= player_offset:
+                player_status = row[player_offset:]
             date_str, time_str, title, desc = metadata
             date = date_from_string(date_str, time_str)
 
@@ -128,6 +130,43 @@ class EventSpreadsheet:
             attendances.append(Attendance(event, availabilities))
             logging.info("Attendance for event %s: %s", event, availabilities)
         return attendances
+
+    async def resync_player_list(self) -> List[str]:
+        """Updates the list of available players in the event spreadsheet."""
+        # TODO(funkysayu): it would be best to synchronize this once a player
+        # is added in the roster, although it would imply creating a cycle
+        # dependency from the RosterSpreadsheet to the EventSpreadsheet.
+        # For now, stick to the simplest: adding a player will require a resync
+        # in the event spreadsheet.
+        all_players = await self._roster_sheet.get_players()
+
+        # Only get the player headers, as we only care about the player list.
+        a1_headers = f'{self._sheet_name}!{self.COLUMN_START_PLAYER_STATUS}1:AA1'
+        cursor = self._handler.values().get(
+            spreadsheetId=self._spreadsheet_id, range=a1_headers)
+        with self._mutex:
+            data = await self._execute(cursor)
+            assert data.get('values') is not None
+
+            registered_handles = data['values'][0]
+
+            # We only want to add unregistered players, but not remove any players
+            # missing in the roster. This would remove or offset all the data about
+            # availability.
+            players_to_add = set(player.discord_handle for player in all_players)
+            for registered_handle in registered_handles:
+                if registered_handle in players_to_add:
+                    players_to_add.remove(registered_handle)
+
+            cursor = self._handler.values().update(
+                spreadsheetId=self._spreadsheet_id,
+                range=a1_headers,
+                valueInputOption="USER_ENTERED",
+                body={
+                    'values': [registered_handles + list(players_to_add)],
+                })
+            await self._execute(cursor)
+            return list(players_to_add)
 
     async def _resolve_players(self, player_uids: List[str]) -> List[Union[Player, None]]:
         """Given a list of UIDs, get the player from the roster sheet."""
