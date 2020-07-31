@@ -3,3 +3,4 @@ token.txt
 .mypy_cache
 .idea
 credentials.json
+generated.cfg
