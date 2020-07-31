@@ -1,6 +1,6 @@
 # Discord event manager's UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.4.
 
 ## Development server
 
@@ -28,9 +28,9 @@ Use `gts` to check for style compliance and auto-format:
 
 If the `bin/frontend` crashes on build, follow this procedure:
  - ensure your packages are well installed: `cd web && npm install`
- - ensure your Angular CLI is at its latest version: `sudo npm i --global @angular/cli@latest`
+ - ensure your Angular CLI is at 10.0.4: `sudo npm i --global @angular/cli@10.0.4`
 
-## Angular cheatsheet
+## Angular cheat sheet
 
 ### Code scaffolding
 

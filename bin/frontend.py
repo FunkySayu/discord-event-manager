@@ -26,7 +26,7 @@ from ui.build import build_angular
 parser = argparse.ArgumentParser(
   description='Flask application serving the event manager UI.')
 parser.add_argument('-p', '--port', dest='port', type=int,
-                    help='an integer for the accumulator')
+                    help='application serving port')
 parser.add_argument('-d', '--debug', dest='debug', action='store_true',
                     help='run the application in debug mode')
 parser.add_argument('--no_build', dest='no_build', action='store_true',
