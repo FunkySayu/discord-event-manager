@@ -1,4 +1,4 @@
-"""Flask web application definition."""
+"""Flask web runtime script."""
 
 from __future__ import annotations
 
