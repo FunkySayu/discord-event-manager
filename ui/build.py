@@ -1,4 +1,4 @@
-"""Flask web application definition."""
+"""Angular app building helper."""
 
 from __future__ import annotations
 
@@ -40,11 +40,11 @@ def _command_exists(command_name: str) -> bool:
 
 def build_angular(dev_mode: bool):
     """Builds the Angular application in dev/prod mode."""
-    if subprocess.run(['which', 'npm']).returncode:
+    if _command_exists('npm'):
         raise EnvironmentError(
             'npm CLI was not found and is required to build '
             'an Angular application')
-    if subprocess.run(['which', 'ng']).returncode:
+    if _command_exists('ng'):
         raise EnvironmentError(
             'ng CLI was not found and is required to build '
             'an Angular application.\n'

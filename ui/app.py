@@ -25,9 +25,11 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def root():
+    """Serves the root index file."""
     return render_template('index.html')
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
+    """Friendly wrapper around a 500 error."""
     return render_template('500.html', error=repr(e)), 500
