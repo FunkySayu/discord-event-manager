@@ -59,4 +59,4 @@ def callback():
 def discord_logout():
     """Removes the discord tokens from the session."""
     session.pop('discord_oauth2_token')
-    return redirect(url_for('/'))
+    return redirect(url_for('root'))

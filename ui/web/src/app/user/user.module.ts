@@ -15,20 +15,21 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
-import { UserService } from './user/user.service';
+import {UserService} from './user.service';
 
-/** Base component of the application. */
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+
+@NgModule({
+  declarations: [],
+  imports: [
+    BrowserModule,
+    CommonModule,
+    HttpClientModule,
+  ],
+  providers: [UserService],
 })
-export class AppComponent {
-  title = 'web';
-
-  constructor(private readonly userService: UserService) { }
-
-  profile$ = this.userService.getUserProfile();
-}
+export class UserModule { }

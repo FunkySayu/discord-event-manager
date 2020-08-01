@@ -1,3 +1,6 @@
 <a href="/auth/discord/oauth" target="_blank">Auth on Discord</a>
 <br />
 <a href="/auth/discord/logout" target="_blank">Logout</a>
+
+
+<pre *ngIf="profile$ | async as profile">{{profile | json}}</pre>

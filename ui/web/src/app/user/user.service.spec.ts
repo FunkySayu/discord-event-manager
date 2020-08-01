@@ -15,20 +15,19 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-import { UserService } from './user/user.service';
+import { UserService } from './user.service';
 
-/** Base component of the application. */
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
-})
-export class AppComponent {
-  title = 'web';
+describe('UserService', () => {
+  let service: UserService;
 
-  constructor(private readonly userService: UserService) { }
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(UserService);
+  });
 
-  profile$ = this.userService.getUserProfile();
-}
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

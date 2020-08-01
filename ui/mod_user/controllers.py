@@ -1,4 +1,4 @@
-"""Flask web application definition."""
+"""Provides access to user data."""
 
 from __future__ import annotations
 
@@ -18,25 +18,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import Flask, render_template
+from flask import Blueprint, jsonify
 
-from config.flask import secret_key
-from ui.mod_auth.controllers import mod_auth
-from ui.mod_user.controllers import mod_user
+from config.discord import api_base_url
+from ui.mod_auth.session import get_discord_session
 
-app = Flask(__name__)
-app.secret_key = secret_key
-app.register_blueprint(mod_auth)
-app.register_blueprint(mod_user)
+mod_user = Blueprint('user', __name__, url_prefix='/api/user')
 
 
-@app.route('/', methods=['GET'])
-def root():
-    """Serves the root index file."""
-    return render_template('index.html')
-
-
-@app.errorhandler(500)
-def internal_server_error(e):
-    """Friendly wrapper around a 500 error."""
-    return render_template('500.html', error=repr(e)), 500
+@mod_user.route('/')
+def user():
+    """Returns the Discord information about this user."""
+    discord = get_discord_session()
+    user = discord.get(api_base_url + '/users/@me').json()
+    guilds = discord.get(api_base_url + '/users/@me/guilds').json()
+    return jsonify(user=user, guilds=guilds)

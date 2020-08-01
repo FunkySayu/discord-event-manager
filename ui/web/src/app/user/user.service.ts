@@ -15,20 +15,26 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import { UserService } from './user/user.service';
 
-/** Base component of the application. */
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+/** High level information about an user. */
+export interface UserProfile {
+  // TODO(funkysayu): fill this interface.
+}
+
+
+/** Accesses the general profile of the user. */
+@Injectable({
+  providedIn: 'root'
 })
-export class AppComponent {
-  title = 'web';
+export class UserService {
+  constructor(private readonly http: HttpClient) { }
 
-  constructor(private readonly userService: UserService) { }
-
-  profile$ = this.userService.getUserProfile();
+  /** Returns the high level user profile. */
+  getUserProfile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>('/api/user');
+  }
 }
