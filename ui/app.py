@@ -18,7 +18,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 from config.flask import secret_key
 from ui.mod_auth.controllers import mod_auth
@@ -30,10 +30,14 @@ app.register_blueprint(mod_auth)
 app.register_blueprint(mod_user)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/<path:path>', methods=['GET'])
+def frontend_proxy(path):
+    return send_from_directory('./web/dist', path)
+
+
+@app.route('/')
 def root():
-    """Serves the root index file."""
-    return render_template('index.html')
+    return send_from_directory('./web/dist', 'index.html')
 
 
 @app.errorhandler(500)
