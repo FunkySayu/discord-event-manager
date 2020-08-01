@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
-import { UserProfile } from 'src/app/user/user.service';
+import { UserProfile, Guild } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -26,12 +26,23 @@ import { UserProfile } from 'src/app/user/user.service';
 })
 export class HeaderComponent implements OnChanges {
   @Input() profile?: UserProfile;
-
-  selected?: any;
+  @Input() selectedGuild?: Guild;
+  @Output() selectedGuildChange = new EventEmitter<Guild>();
 
   ngOnChanges() {
-    if (this.profile && !this.selected) {
-      this.selected = this.profile.guilds[0];
+    if (this.profile && !this.selectedGuild) {
+      this.selectedGuild = this.profile.guilds[0];
+      // Emit the automatic selection on the next cycle.
+      setTimeout(() => {
+        this.selectedGuildChange.emit(this.selectedGuild);
+      });
+    }
+  }
+
+  onGuildSelected(guild: Guild) {
+    if (this.selectedGuild?.id !== guild.id) {
+      this.selectedGuild = guild;
+      this.selectedGuildChange.emit(guild);
     }
   }
 

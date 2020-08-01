@@ -17,26 +17,14 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-
-import { DiscordModule } from '../discord/discord.module';
-
-import { HeaderComponent } from './header.component';
+import { IconComponent } from './icon.component';
 
 
 @NgModule({
-  declarations: [HeaderComponent],
-  exports: [HeaderComponent],
+  declarations: [IconComponent],
+  exports: [IconComponent],
   imports: [
-    CommonModule,
-    DiscordModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatToolbarModule,
+    CommonModule
   ]
 })
-export class HeaderModule { }
+export class DiscordModule { }

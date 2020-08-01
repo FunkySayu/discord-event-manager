@@ -20,7 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { catchError, shareReplay } from 'rxjs/operators';
 
-import { UserService } from './user/user.service';
+import { UserService, Guild } from './user/user.service';
 
 /** Base component of the application. */
 @Component({
@@ -29,12 +29,12 @@ import { UserService } from './user/user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'web';
+  selectedGuild?: Guild;
 
   constructor(private readonly userService: UserService) { }
 
   profile$ = this.userService.getUserProfile().pipe(
-    // In case of error, check if it's a 401 and emit null.
+    // Emit null if the user is not logged.
     catchError(error => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
         return of(null);

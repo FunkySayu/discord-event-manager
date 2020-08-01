@@ -1,8 +1,10 @@
-<app-header [profile]="profile$ | async"></app-header>
+<app-header [profile]="profile$ | async" [(selectedGuild)]="selectedGuild"></app-header>
 
 <a href="/auth/discord/oauth" target="_blank">Auth on Discord</a>
 <br />
 <a href="/auth/discord/logout" target="_blank">Logout</a>
 
-
-<pre *ngIf="profile$ | async as profile">{{profile | json}}</pre>
+<h1>User info</h1>
+<pre *ngIf="profile$ | async as profile">{{profile.user | json}}</pre>
+<h1>Selected guild</h1>
+<pre *ngIf="selectedGuild">{{selectedGuild | json}}</pre>

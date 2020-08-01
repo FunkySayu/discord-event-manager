@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-mat-toolbar .spacer {
-  flex-grow: 1;
-}
+import { Component, Input } from '@angular/core';
 
-.guild-display {
-  display: flex;
-  align-items: center;
+const DISCORD_CDN = 'https://cdn.discordapp.com'
 
-  discord-icon {
-    margin: 0 6px 0 -4px;
-    width: 24px;
-    height: 24px;
-  }
+@Component({
+  selector: 'discord-icon',
+  templateUrl: './icon.component.html',
+  styleUrls: ['./icon.component.scss']
+})
+export class IconComponent {
+  @Input() type?: 'icons'|'avatars';
+  @Input() id?: string;
+  @Input() icon?: string;
 
-  mat-icon {
-    margin: 0 -4px 0 6px;
+  get src(): string|undefined {
+    if (!this.type || !this.id || !this.icon) {
+      return;
+    }
+    return `${DISCORD_CDN}/${this.type}/${this.id}/${this.icon}.png`;
   }
 }

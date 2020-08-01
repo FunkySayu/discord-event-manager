@@ -15,21 +15,12 @@
  * limitations under the License.
  */
 
-mat-toolbar .spacer {
-  flex-grow: 1;
+:host {
+  line-height: normal;
 }
 
-.guild-display {
-  display: flex;
-  align-items: center;
-
-  discord-icon {
-    margin: 0 6px 0 -4px;
-    width: 24px;
-    height: 24px;
-  }
-
-  mat-icon {
-    margin: 0 -4px 0 6px;
-  }
+img {
+  width: inherit;
+  height: inherit;
+  border-radius: 100px;
 }

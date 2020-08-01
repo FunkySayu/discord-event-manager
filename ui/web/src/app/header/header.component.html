@@ -3,15 +3,22 @@
   <span class="spacer"></span>
 
   <ng-container *ngIf="profile">
-    <button mat-button class="guild-selection">
-      <span>{{ selected.name }}</span>
-      <mat-icon>expand</mat-icon>
+    <button mat-button [matMenuTriggerFor]="menu" class="guild-selection">
+      <span class="guild-display">
+        <discord-icon type="icons" [id]="selectedGuild?.id" [icon]="selectedGuild?.icon"></discord-icon>
+        <span>{{ selectedGuild?.name }}</span>
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </span>
     </button>
     <mat-menu #menu="matMenu">
       <button *ngFor="let guild of profile.guilds; trackBy: trackByGuildId"
+              (click)="onGuildSelected(guild)"
               mat-menu-item
               class="guild-selection">
-        <span>{{ guild.name }}</span>
+        <span class="guild-display">
+          <discord-icon type="icons" [id]="guild.id" [icon]="guild.icon"></discord-icon>
+          <span>{{ guild.name }}</span>
+        </span>
       </button>
     </mat-menu>
   </ng-container>
