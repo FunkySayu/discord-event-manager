@@ -39,37 +39,37 @@ scopes = [
     config.get(USER_SECTION, 'scopes', fallback='').splitlines() if scope]
 
 
-credentials = None
+token = None
 
 
-def save_credentials(new_credentials):
+def save_google_token(new_token):
     """Saves the generated credential token in the configuration file."""
     config[GENERATED_SECTION]['auth_token'] = codecs.encode(
-        pickle.dumps(new_credentials), "base64").decode()
-    global credentials
-    credentials = new_credentials
+        pickle.dumps(new_token), "base64").decode()
+    global token
+    token = new_token
     save_generated_config()
 
 
-_base64_credentials = config.get(GENERATED_SECTION, 'auth_token', fallback=None)
-if _base64_credentials:
+_base64_token = config.get(GENERATED_SECTION, 'auth_token', fallback=None)
+if _base64_token:
     try:
-        credentials = pickle.loads(
-            codecs.decode(_base64_credentials.encode(), "base64"))
+        token = pickle.loads(
+            codecs.decode(_base64_token.encode(), "base64"))
     except (EOFError, pickle.UnpicklingError):
         # Simply assume the authentication token is null and move on.
         logging.warning(
                 'An authentication token to Google server was provided but '
                 'is invalid and cannot be used.')
-        credentials = None
+        token = None
 
     # Sometimes tokens needs to be renewed. This is generally a one time,
     # fairly trivial operation and a one time. Make it happen at the
     # initialization.
-    if credentials and not credentials.valid:
-        if credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-            save_credentials(credentials)
+    if token and not token.valid:
+        if token.expired and token.refresh_token:
+            token.refresh(Request())
+            save_google_token(token)
         else:
             logging.error(
                 'An authentication token to Google server was provided but '
@@ -86,10 +86,10 @@ def get_sheets_handler():
     if _service is not None:
         return _service
 
-    if credentials is None:
+    if token is None:
         raise ConfigurationError(
             'Attempted to get a Google Sheets API handler without the '
             'appropriates API tokens. Use the script bin/generate_tokens.py '
             'to create the access tokens.')
-    _service = build('sheets', 'v4', credentials=credentials)
+    _service = build('sheets', 'v4', credentials=token)
     return _service

@@ -21,7 +21,7 @@ limitations under the License.
 import argparse
 import sys
 
-from config.google import scopes, save_credentials
+from config.google import scopes, save_google_token
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 
@@ -43,14 +43,14 @@ def main():
             'Provide the path to your Google credentials.json file:')
     flow = InstalledAppFlow.from_client_secrets_file(
         google_credentials_path, scopes)
-    google_credentials = flow.run_local_server(port=0)
+    google_token = flow.run_local_server(port=0)
 
-    if not google_credentials:
+    if not google_token:
         print('Failed to generate a Google token.')
         sys.exit(1)
 
     print('Successfully generated your Google token!')
-    save_credentials(google_credentials)
+    save_google_token(google_token)
 
 
 if __name__ == '__main__':
