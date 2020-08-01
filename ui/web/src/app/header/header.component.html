@@ -1,0 +1,20 @@
+<mat-toolbar>
+  <span>WoW event organizer</span>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="profile">
+    <button mat-button class="guild-selection">
+      <span>{{ selected.name }}</span>
+      <mat-icon>expand</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button *ngFor="let guild of profile.guilds; trackBy: trackByGuildId"
+              mat-menu-item
+              class="guild-selection">
+        <span>{{ guild.name }}</span>
+      </button>
+    </mat-menu>
+  </ng-container>
+
+  <mat-icon>open_in_new</mat-icon>
+</mat-toolbar>

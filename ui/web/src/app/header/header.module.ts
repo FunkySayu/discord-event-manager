@@ -15,28 +15,25 @@
  * limitations under the License.
  */
 
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
-import { UserModule } from './user/user.module';
-import { HeaderModule } from './header/header.module';
+import { HeaderComponent } from './header.component';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [HeaderComponent],
+  exports: [HeaderComponent],
   imports: [
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    HeaderModule,
-    UserModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule,
+  ]
 })
-export class AppModule { }
+export class HeaderModule { }

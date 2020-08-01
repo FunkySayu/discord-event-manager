@@ -16,6 +16,9 @@
  */
 
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of, throwError } from 'rxjs';
+import { catchError, shareReplay } from 'rxjs/operators';
 
 import { UserService } from './user/user.service';
 
@@ -30,5 +33,14 @@ export class AppComponent {
 
   constructor(private readonly userService: UserService) { }
 
-  profile$ = this.userService.getUserProfile();
+  profile$ = this.userService.getUserProfile().pipe(
+    // In case of error, check if it's a 401 and emit null.
+    catchError(error => {
+      if (error instanceof HttpErrorResponse && error.status === 401) {
+        return of(null);
+      }
+      return throwError(error);
+    }),
+    // Share the result of the profile.
+    shareReplay(1));
 }
