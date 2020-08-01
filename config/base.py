@@ -1,11 +1,16 @@
 """Simple wrapper around the core configuration file.
 
-Bot configuration is split in two parts: the user configuration and the
-generated tokens. This file offers an API to read from both file and save
+Bot configuration is split in three parts:
+ - the standard configuration which is user defined and public
+ - the secrets configuration containing non-public tokens
+ - the generated configuration containing generated tokens.
+
+This file offers an API to read from all three sources and allow to commit
 generated content easily.
 
-We never want to change the user configuration, as not only it will remove any
-comments but it is also a source of truth and should be considered immutable.
+We never want to change the user (standard and secret) configuration, as not
+only it will remove any comments but it is also a source of truth and
+should be considered immutable.
 """
 
 from __future__ import annotations
@@ -36,11 +41,25 @@ class ConfigurationError(ValueError):
 
 USER_CONFIGURATION_FILE = 'config.cfg'
 GENERATED_CONFIGURATION_FILE = 'generated.cfg'
+SECRETS_CONFIGURATION_FILE = 'secrets.cfg'
 
 if not os.path.exists(USER_CONFIGURATION_FILE):
     raise ConfigurationError(f'Configuration file not found: {USER_CONFIGURATION_FILE}')
+if not os.path.exists(SECRETS_CONFIGURATION_FILE):
+    raise ConfigurationError(
+        f'Configuration file not found: {SECRETS_CONFIGURATION_FILE}; '
+        'You likely want to make a copy of the secrets.sample.cfg file '
+        'and fill the blanks.')
+
 
 config = configparser.ConfigParser()
+
+# Read the generated configuration first (if any) and let the
+# user defined one overwrite its data.
+if os.path.exists(GENERATED_CONFIGURATION_FILE):
+    config.read(GENERATED_CONFIGURATION_FILE)
+config.read(USER_CONFIGURATION_FILE)
+config.read(SECRETS_CONFIGURATION_FILE)
 
 
 def save_generated_config():
@@ -60,10 +79,3 @@ def save_generated_config():
 
     with open(GENERATED_CONFIGURATION_FILE, 'w') as f:
         new_generated.write(f)
-
-
-# Read the generated configuration first (if any) and let the
-# user defined one overwrite its data.
-if os.path.exists(GENERATED_CONFIGURATION_FILE):
-    config.read(GENERATED_CONFIGURATION_FILE)
-config.read(USER_CONFIGURATION_FILE)
