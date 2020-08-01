@@ -18,9 +18,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, make_response
 
-from config.flask import secret_key
+from config.flask import secret_key, debug
 from ui.mod_auth.controllers import mod_auth
 from ui.mod_user.controllers import mod_user
 
@@ -28,6 +28,17 @@ app = Flask(__name__)
 app.secret_key = secret_key
 app.register_blueprint(mod_auth)
 app.register_blueprint(mod_user)
+
+
+# Prevent cached response when running in debug mode, so we can easily
+# rebuild on change and see the differences.
+if debug:
+    @app.after_request
+    def after_request(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
+        response.headers["Expires"] = 0
+        response.headers["Pragma"] = "no-cache"
+        return response
 
 
 @app.route('/<path:path>', methods=['GET'])

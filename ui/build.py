@@ -52,7 +52,7 @@ def build_angular(dev_mode: bool):
 
     # Build the angular application in dev/prod mode.
     args = [
-        'ng', 'build', '--build-optimizer', '--aot', '--baseHref=/static/']
+        'ng', 'build', '--build-optimizer', '--aot']
     if not dev_mode:
         args.append('--prod')
     build = subprocess.run(args, cwd=WEB_DIRECTORY)
