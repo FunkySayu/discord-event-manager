@@ -20,7 +20,12 @@ limitations under the License.
 
 from flask import Flask, render_template
 
+from config.flask import secret_key
+from ui.mod_auth.controllers import mod_auth
+
 app = Flask(__name__)
+app.secret_key = secret_key
+app.register_blueprint(mod_auth)
 
 
 @app.route('/', methods=['GET'])
