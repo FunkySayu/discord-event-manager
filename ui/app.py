@@ -20,7 +20,21 @@ limitations under the License.
 
 from flask import Flask, render_template, send_from_directory
 
+from config.flask import secret_key, debug
+
 app = Flask(__name__)
+app.secret_key = secret_key
+
+
+# Prevent cached response when running in debug mode, so we can easily
+# rebuild on change and see the differences.
+if debug:
+    @app.after_request
+    def after_request(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
+        response.headers["Expires"] = 0
+        response.headers["Pragma"] = "no-cache"
+        return response
 
 
 @app.route('/<path:path>', methods=['GET'])
