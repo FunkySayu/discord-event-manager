@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
-
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,27 @@
  */
 
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { of, throwError } from 'rxjs';
+import { catchError, shareReplay, switchMap } from 'rxjs/operators';
 
+import { UserService, Guild } from './user/user.service';
+
+/** Base component of the application. */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'web';
+  selectedGuild?: Guild;
+
+  constructor(private readonly userService: UserService) { }
+
+  profile$ = this.userService.isAuthenticated().pipe(
+    // Emit null if the user is not authenticated, otherwise get its profile.
+    switchMap(logged =>
+        logged ? this.userService.getUserProfile() : of(null)),
+    // Share the result of the profile.
+    shareReplay(1));
 }
