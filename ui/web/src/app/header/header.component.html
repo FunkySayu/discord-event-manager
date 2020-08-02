@@ -1,0 +1,50 @@
+<mat-toolbar>
+  <span>WoW event organizer</span>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="profile">
+    <button mat-button [matMenuTriggerFor]="guildMenu" class="guild-selection">
+      <div class="button-wrapper">
+        <discord-icon type="icons" [id]="selectedGuild?.id" [icon]="selectedGuild?.icon"></discord-icon>
+        <span>{{ selectedGuild?.name }}</span>
+        <mat-icon class="subtle">keyboard_arrow_down</mat-icon>
+      </div>
+    </button>
+    <mat-menu #guildMenu="matMenu">
+      <button *ngFor="let guild of profile.guilds; trackBy: trackByGuildId"
+              (click)="onGuildSelected(guild)"
+              mat-menu-item>
+        <div class="button-wrapper">
+          <discord-icon type="icons" [id]="guild.id" [icon]="guild.icon"></discord-icon>
+          <span>{{ guild.name }}</span>
+        </div>
+      </button>
+    </mat-menu>
+  </ng-container>
+
+  <ng-container *ngIf="profile; else login">
+    <button mat-button [matMenuTriggerFor]="userMenu" class="user-profile">
+      <div class="button-wrapper">
+        <discord-icon type="avatars" [id]="profile.user?.id" [icon]="profile.user?.avatar"></discord-icon>
+        <mat-icon class="subtle">keyboard_arrow_down</mat-icon>
+      </div>
+    </button>
+
+    <mat-menu #userMenu="matMenu">
+      <a mat-menu-item href="/auth/discord/logout" class="warning">
+        <div class="button-wrapper">
+          <mat-icon>power_settings_new</mat-icon>
+          <span>Logout</span>
+        </div>
+      </a>
+    </mat-menu>
+  </ng-container>
+  <ng-template #login>
+    <a mat-button href="/auth/discord/oauth" class="login">
+      <div class="button-wrapper">
+        <img src="assets/logos/discord-white.png" alt="discord logo" />
+        <span>Log in</span>
+      </div>
+    </a>
+  </ng-template>
+</mat-toolbar>

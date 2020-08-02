@@ -24,11 +24,19 @@ import { map, mapTo } from 'rxjs/operators';
 export interface Guild {
   id?: string;
   name?: string;
+  icon?: string;
+}
+
+/** A Discord user information. */
+export interface User {
+  id?: string;
+  avatar?: string;
 }
 
 /** High level information about an user. */
 export interface UserProfile {
   guilds?: Guild[];
+  user?: User;
 }
 
 /** Response to the authentication check. */
