@@ -18,7 +18,7 @@
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
-import { catchError, shareReplay } from 'rxjs/operators';
+import { catchError, shareReplay, switchMap } from 'rxjs/operators';
 
 import { UserService, Guild } from './user/user.service';
 
@@ -33,14 +33,10 @@ export class AppComponent {
 
   constructor(private readonly userService: UserService) { }
 
-  profile$ = this.userService.getUserProfile().pipe(
-    // Emit null if the user is not logged.
-    catchError(error => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
-        return of(null);
-      }
-      return throwError(error);
-    }),
+  profile$ = this.userService.isAuthenticated().pipe(
+    // Emit null if the user is not authenticated, otherwise get its profile.
+    switchMap(logged =>
+        logged ? this.userService.getUserProfile() : of(null)),
     // Share the result of the profile.
     shareReplay(1));
 }

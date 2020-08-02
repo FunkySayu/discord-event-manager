@@ -15,11 +15,38 @@
  * limitations under the License.
  */
 
-mat-toolbar .spacer {
-  flex-grow: 1;
+$discord-color: #7289DA;
+$white: #fff;
+$red: #F44336;
+$grey: #888;
+
+mat-toolbar {
+
+  .spacer {
+    flex-grow: 1;
+  }
+
+  .login {
+    background-color: $discord-color;
+    color: $white;
+
+    img {
+      margin: 0 6px 0 -4px;
+      height: 30px;
+      width: 30px;
+    }
+  }
 }
 
-.guild-display {
+.warning {
+  color: $red;
+
+  mat-icon {
+    color: rgba($red, 0.7);
+  }
+}
+
+.button-wrapper {
   display: flex;
   align-items: center;
 
@@ -30,6 +57,26 @@ mat-toolbar .spacer {
   }
 
   mat-icon {
-    margin: 0 -4px 0 6px;
+    margin: 0 6px 0 6px;
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+
+    &.subtle {
+      color: $grey;
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+    }
+  }
+
+  discord-icon:last-child,
+  mat-icon:last-child {
+    margin-right: -4px;
+  }
+
+  discord-icon:first-child,
+  mat-icon:first-child {
+    margin-left: -4px;
   }
 }

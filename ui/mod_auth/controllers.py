@@ -18,10 +18,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import Blueprint, request, session, redirect, url_for
+from flask import Blueprint, request, session, redirect, url_for, jsonify
 
 from config.discord import api_base_url, oauth2_client_secret
-from ui.mod_auth.session import make_session
+from ui.mod_auth.session import make_session, get_discord_session, RequireAuthenticationError
 
 
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -53,6 +53,16 @@ def callback():
         authorization_response=request.url)
     session['discord_oauth2_token'] = token
     return redirect(url_for('root'))
+
+
+@mod_auth.route('/discord/is_authenticated')
+def check_authentication():
+    """Returns a boolean indicating if the user is authenticated."""
+    try:
+        get_discord_session()
+        return jsonify({'authenticated': True})
+    except RequireAuthenticationError:
+        return jsonify({'authenticated': False})
 
 
 @mod_auth.route('/discord/logout')

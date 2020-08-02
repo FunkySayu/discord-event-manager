@@ -18,6 +18,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map, mapTo } from 'rxjs/operators';
 
 /** A Discord guild information. */
 export interface Guild {
@@ -28,6 +29,11 @@ export interface Guild {
 /** High level information about an user. */
 export interface UserProfile {
   guilds?: Guild[];
+}
+
+/** Response to the authentication check. */
+interface AuthCheckResponse {
+  authenticated?: boolean;
 }
 
 
@@ -41,5 +47,16 @@ export class UserService {
   /** Returns the high level user profile. */
   getUserProfile(): Observable<UserProfile> {
     return this.http.get<UserProfile>('/api/user');
+  }
+
+  /** Checks if the user is currently authenticated. */
+  isAuthenticated(): Observable<boolean> {
+    return this.http.get<AuthCheckResponse>('/auth/discord/is_authenticated').pipe(
+      map(response => !!response?.authenticated));
+  }
+
+  /** Logs out the user. */
+  logout(): Observable<void> {
+    return this.http.get('/auth/discord/logout').pipe(mapTo(undefined));
   }
 }

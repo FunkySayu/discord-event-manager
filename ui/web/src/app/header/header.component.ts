@@ -16,8 +16,9 @@
  */
 
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { UserProfile, Guild } from 'src/app/user/user.service';
+import { UserService, UserProfile, Guild } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +29,8 @@ export class HeaderComponent implements OnChanges {
   @Input() profile?: UserProfile;
   @Input() selectedGuild?: Guild;
   @Output() selectedGuildChange = new EventEmitter<Guild>();
+
+  constructor(private readonly router: Router, private readonly userService: UserService) { }
 
   ngOnChanges() {
     if (this.profile && !this.selectedGuild) {
@@ -44,6 +47,12 @@ export class HeaderComponent implements OnChanges {
       this.selectedGuild = guild;
       this.selectedGuildChange.emit(guild);
     }
+  }
+
+  logoutUser() {
+    this.userService.logout().subscribe(() => {
+      this.router.navigate(['/'], {queryParams: {'refresh': 1}});
+    });
   }
 
   trackByGuildId(index: number, guild: any): string {
