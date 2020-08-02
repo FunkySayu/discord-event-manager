@@ -20,15 +20,14 @@ limitations under the License.
 
 import argparse
 
+from config.flask import port, debug
 from ui.app import app
 from ui.build import build_angular
 
 parser = argparse.ArgumentParser(
   description='Flask application serving the event manager UI.')
 parser.add_argument('-p', '--port', dest='port', type=int,
-                    help='application serving port')
-parser.add_argument('-d', '--debug', dest='debug', action='store_true',
-                    help='run the application in debug mode')
+                    default=port, help='web application serving port')
 parser.add_argument('--no_build', dest='no_build', action='store_true',
                     help='do not build the Angular application')
 
@@ -37,9 +36,10 @@ def main():
     """Builds and runs the UI server."""
     args = parser.parse_args()
     if not args.no_build:
-        build_angular(args.debug)
-    host = args.debug and '127.0.0.1' or '0.0.0.0'
-    app.run(host=host, port=args.port, debug=args.debug)
+        print('Building Angular...')
+        build_angular(debug)
+    host = debug and '127.0.0.1' or '0.0.0.0'
+    app.run(host=host, port=args.port, debug=debug)
 
 
 if __name__ == '__main__':

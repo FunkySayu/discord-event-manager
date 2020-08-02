@@ -25,7 +25,7 @@ import threading
 from tabulate import tabulate
 from typing import List, Dict, Any
 
-from google_integration.handler import get_handler
+from config.google import get_sheets_handler
 from roster.model import Player, Character, CharacterClass
 
 
@@ -88,7 +88,7 @@ class RosterSpreadsheet:
             if len(row) < self.MANAGED_COLUMNS:
                 # Incomplete inputs.
                 continue
-            [handle, uid, server, name, klass_name] = row
+            [handle, uid, server, name, klass_name] = row[:5]
             if not (handle and uid and server and name and klass_name):
                 # Incomplete inputs.
                 continue
@@ -168,6 +168,6 @@ THE_UNIQUE_ROSTER_SHEET = "ROSTER"
 
 def get_default_sheet_handler():
     """Returns the default spreadsheet to use in this context."""
-    return RosterSpreadsheet(get_handler().spreadsheets(),
+    return RosterSpreadsheet(get_sheets_handler().spreadsheets(),
                              THE_UNIQUE_SPREADSHEET_ID,
                              THE_UNIQUE_ROSTER_SHEET)
