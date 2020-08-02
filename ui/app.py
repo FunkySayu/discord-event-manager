@@ -23,10 +23,12 @@ from flask import send_from_directory, render_template
 from config.flask import debug
 from ui.base import app, db
 from ui.mod_auth.controllers import mod_auth
+from ui.mod_user.controllers import mod_user
 from ui.mod_guild.controllers import mod_guild
 
 db.init_app(app)
 app.register_blueprint(mod_auth)
+app.register_blueprint(mod_user)
 app.register_blueprint(mod_guild)
 
 
