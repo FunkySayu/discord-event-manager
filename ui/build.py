@@ -52,7 +52,7 @@ def build_angular(dev_mode: bool):
 
     # Build the angular application in dev/prod mode.
     args = [
-        'ng', 'build', '--build-optimizer', '--aot', '--baseHref=/static/']
+        'ng', 'build', '--build-optimizer', '--aot']
     if not dev_mode:
         args.append('--prod')
     build = subprocess.run(args, cwd=WEB_DIRECTORY)
@@ -60,8 +60,3 @@ def build_angular(dev_mode: bool):
         raise RuntimeError(
             'Failed to build the Angular application. Check the above '
             'logs for further details.')
-
-    # Finally, move the generated index.html file in the templates.
-    static_index_file = os.path.join(THIS_DIRECTORY, 'static', 'index.html')
-    template_index_file = os.path.join(THIS_DIRECTORY, 'templates', 'index.html')
-    os.replace(static_index_file, template_index_file)
