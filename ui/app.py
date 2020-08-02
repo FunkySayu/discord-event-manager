@@ -18,15 +18,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
+@app.route('/<path:path>', methods=['GET'])
+def frontend_proxy(path):
+    """Serves the unbound paths from the Angular compiled directory."""
+    return send_from_directory('./web/dist', path)
+
+
+@app.route('/')
 def root():
     """Serves the root index file."""
-    return render_template('index.html')
+    return send_from_directory('./web/dist', 'index.html')
 
 
 @app.errorhandler(500)
