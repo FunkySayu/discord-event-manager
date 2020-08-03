@@ -64,6 +64,23 @@ if _base64_token:
                 'is invalid and cannot be used.')
         token = None
 
+
+# The google sheets service handler.
+_service = None
+
+
+def get_sheets_handler():
+    """Returns a unique service handler to Google services."""
+    global _service, token
+    if _service is not None:
+        return _service
+
+    if token is None:
+        raise ConfigurationError(
+            'Attempted to get a Google Sheets API handler without the '
+            'appropriates API tokens. Use the script bin/generate_tokens.py '
+            'to create the access tokens.')
+
     # Sometimes tokens needs to be renewed. This is generally a one time,
     # fairly trivial operation and a one time. Make it happen at the
     # initialization.
@@ -82,20 +99,5 @@ if _base64_token:
                 'is invalid and cannot be refreshed; Google integration is '
                 'likely to have troubles.')
 
-# The google sheets service handler.
-_service = None
-
-
-def get_sheets_handler():
-    """Returns a unique service handler to Google services."""
-    global _service
-    if _service is not None:
-        return _service
-
-    if token is None:
-        raise ConfigurationError(
-            'Attempted to get a Google Sheets API handler without the '
-            'appropriates API tokens. Use the script bin/generate_tokens.py '
-            'to create the access tokens.')
     _service = build('sheets', 'v4', credentials=token)
     return _service

@@ -36,7 +36,11 @@ def column_offset(column: str) -> int:
     """Returns the column offset from the column A of the spreadsheet."""
     index = 0
     for i, c in enumerate(reversed(column)):
-        index += 26 ** i * string.ascii_uppercase.index(column.upper())
+        letter_offset = string.ascii_uppercase.index(c.upper())
+        if i > 0:
+            index += 26 ** i * (letter_offset + 1)
+        else:
+            index += string.ascii_uppercase.index(c.upper())
     return index
 
 
