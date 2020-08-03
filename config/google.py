@@ -24,6 +24,7 @@ import logging
 
 from config.base import config, save_generated_config, ConfigurationError
 from google.auth.transport.requests import Request
+from google.auth.exceptions import RefreshError
 from googleapiclient.discovery import build
 
 if 'google' not in config:
@@ -67,10 +68,15 @@ if _base64_token:
     # fairly trivial operation and a one time. Make it happen at the
     # initialization.
     if token and not token.valid:
+        refresh_successful = False
         if token.expired and token.refresh_token:
-            token.refresh(Request())
-            save_google_token(token)
-        else:
+            try:
+                token.refresh(Request())
+                save_google_token(token)
+                refresh_successful = True
+            except RefreshError:
+                token = None
+        if not refresh_successful:
             logging.error(
                 'An authentication token to Google server was provided but '
                 'is invalid and cannot be refreshed; Google integration is '
