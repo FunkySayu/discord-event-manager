@@ -25,7 +25,7 @@ import logging
 
 from typing import List, Dict, Any, Union
 
-from google_integration.handler import get_handler
+from config.google import get_sheets_handler
 from event.event import Event, StandardTimezone, date_from_string
 from event.attendance import Attendance, Availability
 from roster.sheet_integration import RosterSpreadsheet, get_default_roster_sheet_handler
@@ -187,7 +187,7 @@ THE_UNIQUE_ROSTER_SHEET = "EVENTS"
 
 def get_default_event_sheet_handler() -> EventSpreadsheet:
     """Returns the default spreadsheet to use in this context."""
-    return EventSpreadsheet(get_handler().spreadsheets(),
+    return EventSpreadsheet(get_sheets_handler().spreadsheets(),
                             get_default_roster_sheet_handler(),
                             THE_UNIQUE_SPREADSHEET_ID,
                             THE_UNIQUE_ROSTER_SHEET)
