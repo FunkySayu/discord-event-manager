@@ -37,7 +37,7 @@ if debug:
         return response
 
 
-@app.route('/<path:path>', methods=['GET'])
+@app.route('/<path:path>')
 def frontend_proxy(path):
     """Serves the unbound paths from the Angular compiled directory."""
     return send_from_directory('./web/dist', path)
