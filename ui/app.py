@@ -21,8 +21,10 @@ limitations under the License.
 from flask import Flask, render_template, send_from_directory
 
 from config.flask import secret_key, debug
+from ui.mod_wow.controllers import mod_wow
 
 app = Flask(__name__)
+app.register_blueprint(mod_wow)
 app.secret_key = secret_key
 
 
