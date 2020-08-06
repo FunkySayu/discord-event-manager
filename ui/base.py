@@ -23,8 +23,21 @@ limitations under the License.
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_serializer import SerializerMixin
 
 from config.flask import secret_key, database_uri
+
+
+class BaseSerializerMixin(SerializerMixin):
+    """General mixin to use for model serialization in this application.
+
+    This class defines how some special types can be transformed to a simple
+    string representing them.
+    """
+    serialize_types = (
+        # Add types and serialization methods here, such as:
+        #     (FieldType, lambda (t: FieldType) -> str: ...)
+    )
 
 
 db = SQLAlchemy()
