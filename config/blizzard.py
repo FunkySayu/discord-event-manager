@@ -44,7 +44,7 @@ client_secret = config[USER_SECTION]['client_secret']
 _service = None
 
 
-def get_handler() -> WowApi:
+def get_wow_handler() -> WowApi:
     """Returns a configured handler to reach the Blizzard API."""
     global _service
     if _service is not None:

@@ -16,9 +16,11 @@ limitations under the License.
 """
 
 from flask import Blueprint, jsonify
+from typing import Optional
 
-from config.blizzard import get_handler
-from ui.mod_wow.guild import Region
+from config.blizzard import get_wow_handler
+from ui.base import db
+from ui.mod_guild.guild import Region, WowGuild
 
 
 def slugify(name: str) -> str:
@@ -30,18 +32,23 @@ def slugify(name: str) -> str:
     return name.lower().replace(' ', '-')
 
 
-mod_wow = Blueprint('wow', __name__, url_prefix='/api/wow')
+mod_guild = Blueprint('wow', __name__, url_prefix='/api/guilds')
 
 
-@mod_wow.route('/guilds/<region>/<server>/<name>')
-def get_guild(region: str, server: str, name: str):
+@mod_guild.route('/wow/<region>/<realm>/<name>')
+def get_wow_guild(region: str, realm: str, name: str):
     try:
         region = Region(region)
     except ValueError:
         return jsonify({'error': 'Invalid region provided'}), 401
 
-    wow = get_handler()
-    guild = wow.get_guild(
-        region.value, region.profile_namespace,
-        slugify(server), slugify(name))
-    return jsonify(guild)
+    guild: Optional[WowGuild] = WowGuild.query.filter_by(
+        region=region, realm_slug=slugify(realm),
+        name_slug=slugify(name)).one_or_none()
+    if guild is None:
+        guild = WowGuild.create_from_api(
+            get_wow_handler(), region, slugify(realm), slugify(name))
+        db.session.add(guild)
+        db.session.commit()
+
+    return jsonify(guild.to_dict())
