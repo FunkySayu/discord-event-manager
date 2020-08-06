@@ -19,17 +19,23 @@ limitations under the License.
 """
 
 import argparse
+import os
 
-from config.flask import port, debug
-from ui.app import app
+from config.flask import port, debug, database_file
+from ui.app import app, db
 from ui.build import build_angular
 
 parser = argparse.ArgumentParser(
   description='Flask application serving the event manager UI.')
-parser.add_argument('-p', '--port', dest='port', type=int,
-                    default=port, help='web application serving port')
-parser.add_argument('--no_build', dest='no_build', action='store_true',
-                    help='do not build the Angular application')
+parser.add_argument(
+    '-p', '--port', dest='port', type=int, default=port,
+    help='web application serving port')
+parser.add_argument(
+    '--no_build', dest='no_build', action='store_true',
+    help='do not build the Angular application')
+parser.add_argument(
+    '--recreate_database', dest='recreate_database', action='store_true',
+    help='if present, removes the previous database file')
 
 
 def main():
@@ -38,6 +44,14 @@ def main():
     if not args.no_build:
         print('Building Angular...')
         build_angular(debug)
+
+    if os.path.exists(database_file) and args.recreate_database:
+        print('Clearing previous database')
+        os.remove(database_file)
+    if not os.path.exists(database_file):
+        print('Creating database')
+        db.create_all()
+
     host = debug and '127.0.0.1' or '0.0.0.0'
     app.run(host=host, port=args.port, debug=debug)
 

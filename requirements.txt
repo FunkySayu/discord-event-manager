@@ -16,6 +16,7 @@ python-wowapi
 
 # For web
 flask
+flask_sqlalchemy
 
 # For scripts
 tabulate
