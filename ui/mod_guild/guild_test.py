@@ -16,14 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import json
 import tempfile
 import os
+import unittest.mock
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 from ui.base import db
-from ui.mod_wow.guild import Guild, WowGuild, Region, Faction
+from ui.mod_guild.guild import Guild, WowGuild, Region, Faction
 
 
 class DatabaseTestFixture:
@@ -56,8 +58,23 @@ class DatabaseTestFixture:
         self.db.drop_all()
 
 
+TESTDATA_DIR = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)),
+    'testdata')
+
+
 class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
     """Ensure consistency of the model."""
+
+    @classmethod
+    def setUpClass(cls):
+        """Load test data."""
+        with open(os.path.join(TESTDATA_DIR,
+                               'get_guild.json')) as f:
+            cls.GET_GUILD_DATA = json.load(f)
+        with open(os.path.join(TESTDATA_DIR,
+                               'get_guild_crest_emblem_media.json')) as f:
+            cls.GET_GUILD_CREST_EMBLEM_MEDIA = json.load(f)
 
     def test_create_guild(self):
         """Creates and registers a guild in a database."""
@@ -76,6 +93,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         wow_guild.faction = Faction.horde
         wow_guild.realm_name = 'Argent Dawn'
         wow_guild.name = 'Some Guild'
+
         self.db.session.add(wow_guild)
         self.db.session.commit()
 
@@ -93,11 +111,36 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         self.db.session.add(wow_guild)
         guild = Guild(123)
         guild.wow_guild = wow_guild
+
         self.db.session.add(guild)
         self.db.session.commit()
 
         wow_queried: WowGuild = WowGuild.query.filter_by(id=321).first()
         self.assertEqual(wow_queried.guild, guild)
-
         queried: Guild = Guild.query.filter_by(id=123).first()
         self.assertEqual(queried.wow_guild, wow_guild)
+
+    def test_create_from_api(self):
+        """Test creation from the WoW API results."""
+        mock = unittest.mock.MagicMock()
+        mock.get_guild.return_value = self.GET_GUILD_DATA
+        mock.get_guild_crest_emblem_media.return_value = \
+            self.GET_GUILD_CREST_EMBLEM_MEDIA
+
+        guild = WowGuild.create_from_api(mock, Region.eu,
+                                         'argent-dawn', 'negative-waves')
+
+        mock.get_guild.assert_called_with(
+            'eu', 'profile-eu', 'argent-dawn', 'negative-waves', locale='en_US')
+        mock.get_guild_crest_emblem_media.assert_called_with(
+            'eu', 'static-eu', 114)
+        self.assertEqual(guild.id, 49392850)
+        self.assertEqual(guild.region, Region.eu)
+        self.assertEqual(guild.name, 'Negative Waves')
+        self.assertEqual(guild.name_slug, 'negative-waves')
+        self.assertEqual(guild.realm_name, 'Argent Dawn')
+        self.assertEqual(guild.realm_slug, 'argent-dawn')
+        self.assertEqual(guild.faction, Faction.alliance)
+        self.assertEqual(guild.icon_href,
+                         'https://render-eu.worldofwarcraft.com/'
+                         'guild/tabards/emblem_114.png')

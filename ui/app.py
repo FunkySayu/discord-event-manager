@@ -22,10 +22,10 @@ from flask import send_from_directory, render_template
 
 from config.flask import debug
 from ui.base import app, db
-from ui.mod_wow.controllers import mod_wow
+from ui.mod_guild.controllers import mod_guild
 
 db.init_app(app)
-app.register_blueprint(mod_wow)
+app.register_blueprint(mod_guild)
 
 
 # Prevent cached response when running in debug mode, so we can easily

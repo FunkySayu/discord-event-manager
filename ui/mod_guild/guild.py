@@ -16,10 +16,11 @@ limitations under the License.
 """
 
 from enum import Enum
+from wowapi import WowApi
 
 from flask_sqlalchemy import BaseQuery
 
-from ui.base import db
+from ui.base import db, BaseSerializerMixin
 
 
 class Region(Enum):
@@ -90,7 +91,7 @@ class Guild(db.Model):
         self.id = id
 
 
-class WowGuild(db.Model):
+class WowGuild(db.Model, BaseSerializerMixin):
     """A World of Warcraft guild.
 
     This object contains a refined version of the object returned by the
@@ -116,6 +117,9 @@ class WowGuild(db.Model):
     # Automatically created by db.Model but clarifying existence for mypy.
     query: BaseQuery
 
+    # Serialization options
+    serialize_rules = ('-id', '-guild',)  # Avoid circular dependencies
+
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(
         db.DateTime,
@@ -127,7 +131,7 @@ class WowGuild(db.Model):
 
     region = db.Column(db.Enum(Region))
     realm_slug = db.Column(db.String)
-    guild_slug = db.Column(db.String)
+    name_slug = db.Column(db.String)
 
     realm_name = db.Column(db.String)
     name = db.Column(db.String)
@@ -137,12 +141,34 @@ class WowGuild(db.Model):
     guild = db.relationship('Guild', uselist=False, back_populates='wow_guild')
 
     def __init__(self, id: int, region: Region,
-                 realm_slug: str, guild_slug: str):
+                 realm_slug: str, name_slug: str):
         self.id = id
         self.region = region
         self.realm_slug = realm_slug
-        self.guild_slug = guild_slug
+        self.name_slug = name_slug
 
     def __repr__(self):
         return '<Guild %r/%r/%r (#%r)>' % (self.region, self.realm_slug,
-                                           self.guild_slug, self.id)
+                                           self.name_slug, self.id)
+
+    def json(self) -> str:
+        """Returns the json form of the guild."""
+
+    @classmethod
+    def create_from_api(cls, handler: WowApi, region: Region,
+                        realm_slug: str, name_slug: str) -> WowGuild:
+        """Creates a WowGuild object from the API endpoint."""
+        data = handler.get_guild(
+            region.value, region.profile_namespace, realm_slug, name_slug,
+            locale='en_US')
+        guild = cls(data['id'], region, realm_slug, name_slug)
+        guild.faction = Faction(data['faction']['type'])
+        guild.name = data['name']
+        guild.realm_name = data['realm']['name']
+
+        crest_data = handler.get_guild_crest_emblem_media(
+            region.value, region.static_namespace,
+            data['crest']['emblem']['id'])
+        guild.icon_href = crest_data['assets'][0]['value']
+
+        return guild
