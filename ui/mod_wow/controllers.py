@@ -15,34 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from enum import Enum
 from flask import Blueprint, jsonify
 
 from config.blizzard import get_handler
-
-
-class WowRegions(Enum):
-    """All valid wow regions, supported by the bot.
-
-    We do not support China, as the whole endpoint mechanism would change.
-    """
-    eu = 'eu'
-    na = 'na'
-
-    @property
-    def dynamic_namespace(self):
-        """Returns the dynamic namespace for this region."""
-        return f'dynamic-{self.value}'
-
-    @property
-    def static_namespace(self):
-        """Returns the static namespace for this region."""
-        return f'static-{self.value}'
-
-    @property
-    def profile_namespace(self):
-        """Returns the profile namespace for this region."""
-        return f'profile-{self.value}'
+from ui.mod_wow.guild import Region
 
 
 def slugify(name: str) -> str:
@@ -60,7 +36,7 @@ mod_wow = Blueprint('wow', __name__, url_prefix='/api/wow')
 @mod_wow.route('/guilds/<region>/<server>/<name>')
 def get_guild(region: str, server: str, name: str):
     try:
-        region = WowRegions(region)
+        region = Region(region)
     except ValueError:
         return jsonify({'error': 'Invalid region provided'}), 401
 
