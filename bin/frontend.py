@@ -50,7 +50,8 @@ def main():
         os.remove(database_file)
     if not os.path.exists(database_file):
         print('Creating database')
-        db.create_all()
+        with app.app_context():
+            db.create_all()
 
     host = debug and '127.0.0.1' or '0.0.0.0'
     app.run(host=host, port=args.port, debug=debug)
