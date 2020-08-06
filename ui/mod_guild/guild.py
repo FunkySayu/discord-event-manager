@@ -84,6 +84,9 @@ class Guild(db.Model):
         onupdate=db.func.current_timestamp())
     discord_name = db.Column(db.String)
 
+    # TODO(funkysayu): add further fields when we'll start linking wow guilds
+    #                  and discord servers.
+
     wow_guild_id = db.Column(db.Integer, db.ForeignKey('wow_guild.id'))
     wow_guild = db.relationship('WowGuild', uselist=False, back_populates='guild')
 
