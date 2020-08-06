@@ -45,6 +45,7 @@ def get_wow_guild(region: str, realm: str, name: str):
     guild: Optional[WowGuild] = WowGuild.query.filter_by(
         region=region, realm_slug=slugify(realm),
         name_slug=slugify(name)).one_or_none()
+    # TODO(funkysayu): implement cache invalidation.
     if guild is None:
         guild = WowGuild.create_from_api(
             get_wow_handler(), region, slugify(realm), slugify(name))
