@@ -106,11 +106,12 @@ class WowGuild(db.Model, BaseSerializerMixin):
     :attr date_modified: The last update performed on our storage.
     :attr region: The guild's region (eu, na...).
     :attr realm_slug: The slug name of the guild's realm.
-    :attr guild_slug: The slug name of the guild.
+    :attr name_slug: The slug name of the guild.
     :attr realm_name: The localized version of the guild's realm.
     :attr name: The localized version of the guild name.
     :attr faction: Faction the guild is into.
     :attr icon_href: Address of the icon of this guild.
+    :attr guild: back populated guild associated to this wow guild.
     """
     __tablename__ = 'wow_guild'
 
@@ -138,7 +139,8 @@ class WowGuild(db.Model, BaseSerializerMixin):
     faction = db.Column(db.Enum(Faction))
     icon_href = db.Column(db.String)
 
-    guild = db.relationship('Guild', uselist=False, back_populates='wow_guild')
+    guild = db.relationship('Guild', uselist=False,
+                            back_populates='wow_guild')
 
     def __init__(self, id: int, region: Region,
                  realm_slug: str, name_slug: str):
@@ -150,9 +152,6 @@ class WowGuild(db.Model, BaseSerializerMixin):
     def __repr__(self):
         return '<Guild %r/%r/%r (#%r)>' % (self.region, self.realm_slug,
                                            self.name_slug, self.id)
-
-    def json(self) -> str:
-        """Returns the json form of the guild."""
 
     @classmethod
     def create_from_api(cls, handler: WowApi, region: Region,
