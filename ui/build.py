@@ -31,8 +31,9 @@ if not os.path.exists(WEB_DIRECTORY):
 
 def _command_exists(command_name: str) -> bool:
     """Checks if a command exists in the environment."""
+    check_cli = os.name == 'nt' and 'where' or 'which'
     result = subprocess.run(
-        ['which', command_name],
+        [check_cli, command_name],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL)
     return result.returncode != 0
@@ -55,7 +56,7 @@ def build_angular(dev_mode: bool):
         'ng', 'build', '--build-optimizer', '--aot']
     if not dev_mode:
         args.append('--prod')
-    build = subprocess.run(args, cwd=WEB_DIRECTORY)
+    build = subprocess.run(args, cwd=WEB_DIRECTORY, shell=True)
     if build.returncode:
         raise RuntimeError(
             'Failed to build the Angular application. Check the above '
