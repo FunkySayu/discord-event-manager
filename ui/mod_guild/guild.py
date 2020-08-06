@@ -1,4 +1,4 @@
-"""Database model declaration for the guild."""
+"""Database model declaration for a guild and a WoW guild."""
 
 from __future__ import annotations
 
@@ -118,7 +118,7 @@ class WowGuild(db.Model, BaseSerializerMixin):
     query: BaseQuery
 
     # Serialization options
-    serialize_rules = ('-id', '-guild',)  # Avoid circular dependencies
+    serialize_rules = ('-id', '-guild')  # Avoid circular dependencies
 
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(
