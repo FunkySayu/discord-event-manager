@@ -1,0 +1,14 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://eu.api.blizzard.com/data/wow/media/guild-crest/emblem/114?namespace=static-8.3.7_35114-eu"
+    }
+  },
+  "assets": [
+    {
+      "key": "image",
+      "value": "https://render-eu.worldofwarcraft.com/guild/tabards/emblem_114.png"
+    }
+  ],
+  "id": 114
+}

@@ -1,0 +1,82 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://eu.api.blizzard.com/data/wow/guild/argent-dawn/negative-waves?namespace=profile-eu"
+    }
+  },
+  "id": 49392850,
+  "name": "Negative Waves",
+  "faction": {
+    "type": "ALLIANCE",
+    "name": "Alliance"
+  },
+  "achievement_points": 2345,
+  "member_count": 254,
+  "realm": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/realm/536?namespace=dynamic-eu"
+    },
+    "name": "Argent Dawn",
+    "id": 536,
+    "slug": "argent-dawn"
+  },
+  "crest": {
+    "emblem": {
+      "id": 114,
+      "media": {
+        "key": {
+          "href": "https://eu.api.blizzard.com/data/wow/media/guild-crest/emblem/114?namespace=static-8.3.7_35114-eu"
+        },
+        "id": 114
+      },
+      "color": {
+        "id": 16,
+        "rgba": {
+          "r": 223,
+          "g": 165,
+          "b": 90,
+          "a": 1
+        }
+      }
+    },
+    "border": {
+      "id": 3,
+      "media": {
+        "key": {
+          "href": "https://eu.api.blizzard.com/data/wow/media/guild-crest/border/3?namespace=static-8.3.7_35114-eu"
+        },
+        "id": 3
+      },
+      "color": {
+        "id": 16,
+        "rgba": {
+          "r": 249,
+          "g": 204,
+          "b": 48,
+          "a": 1
+        }
+      }
+    },
+    "background": {
+      "color": {
+        "id": 45,
+        "rgba": {
+          "r": 35,
+          "g": 35,
+          "b": 35,
+          "a": 1
+        }
+      }
+    }
+  },
+  "roster": {
+    "href": "https://eu.api.blizzard.com/data/wow/guild/argent-dawn/negative-waves/roster?namespace=profile-eu"
+  },
+  "achievements": {
+    "href": "https://eu.api.blizzard.com/data/wow/guild/argent-dawn/negative-waves/achievements?namespace=profile-eu"
+  },
+  "created_timestamp": 1486166920000,
+  "activity": {
+    "href": "https://eu.api.blizzard.com/data/wow/guild/argent-dawn/negative-waves/activity?namespace=profile-eu"
+  }
+}
