@@ -77,3 +77,8 @@ if secret_key is None:
         'generating a random key for local development, but this option '
         'is required for production mode.')
     secret_key = "".join(random.choice(string.ascii_letters) for _ in range(10))
+
+database_file = os.path.join(
+    os.getcwd(),
+    config.get(USER_SECTION, 'database_file', fallback='app.db'))
+database_uri = f'sqlite:///{database_file}'

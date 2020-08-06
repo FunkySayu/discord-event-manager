@@ -18,14 +18,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import Flask, render_template, send_from_directory
+from flask import send_from_directory, render_template
 
-from config.flask import secret_key, debug
+from config.flask import debug
+from ui.base import app, db
 from ui.mod_wow.controllers import mod_wow
 
-app = Flask(__name__)
+db.init_app(app)
 app.register_blueprint(mod_wow)
-app.secret_key = secret_key
 
 
 # Prevent cached response when running in debug mode, so we can easily
