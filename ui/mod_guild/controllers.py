@@ -1,4 +1,4 @@
-"""Controller utilities for accessing WoW informations."""
+"""Controller utilities for accessing guild information."""
 
 from __future__ import annotations
 
