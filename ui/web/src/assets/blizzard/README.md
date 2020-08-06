@@ -1,5 +1,5 @@
-The images contained in this directories and sub-directories are the property
-of Blizzard Entertainment, Inc.
+The images contained in these sub-directories are the property of Blizzard
+Entertainment, Inc.
 
 Usage is tolerated as per [their official guidelines][legal-faq]:
 
