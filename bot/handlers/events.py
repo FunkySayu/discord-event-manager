@@ -23,21 +23,14 @@ import sys
 
 from datetime import datetime
 
+from bot.handlers.base import CommandHandler
 from database.database import Database
 from database.tables import EventsTable
 from event.event import Event, StandardTimezone
-from handlers.registry import handles
 
 
-# TODO(funkysayu): Really ugly, although this is a quick and dirty way to have
-#                  results. Ideally, we want to have a server-wide context
-#                  associated with a specific database/table, abstracting the
-#                  handler which one it should chose.
+# TODO(funkysayu): Integrate with the Flask database.
 EVENTS_TABLE = EventsTable(Database())
-
-
-DAY_FORMAT = "%a %d %b"
-TIME_FORMAT = "%H:%M (%Z)"
 DEFAULT_TIMEZONE = StandardTimezone.utc
 
 
@@ -66,43 +59,47 @@ class ArgumentParser(argparse.ArgumentParser):
         super(ArgumentParser, self).error(message)
 
 
-def format_event(event: Event) -> str:
-    date = event.date.astimezone(DEFAULT_TIMEZONE.value)
-    text = "%s %s: **%s**" % (date.strftime(DAY_FORMAT),
-                              date.strftime(TIME_FORMAT), event.title)
-    if event.description is not None:
-        text += "\n" + "\n".join(
-            "> %s" % line for line in event.description.splitlines())
-    return text
-
-
-@handles("weekly")
-async def command_weekly(message: discord.Message):
+class CommandWeekly(CommandHandler):
     """Lists the events happening this week."""
-    events = [format_event(event) for event in EVENTS_TABLE.weekly()]
-    await message.channel.send("\n\n".join(events))
+
+    COMMAND = 'weekly'
+    DAY_FORMAT, TIME_FORMAT = "%a %d %b", "%H:%M (%Z)"
+
+    async def handle(self, message: discord.Message):
+        """Lists the events happening this week."""
+        events = [self.format_event(event) for event in EVENTS_TABLE.weekly()]
+        await message.channel.send("\n\n".join(events))
+
+    def format_event(self, event: Event) -> str:
+        """Formats an event to send it in a Discord message."""
+        date = event.date.astimezone(DEFAULT_TIMEZONE.value)
+        text = "%s %s: **%s**" % (date.strftime(self.DAY_FORMAT),
+                                  date.strftime(self.TIME_FORMAT), event.title)
+        if event.description is not None:
+            text += "\n" + "\n".join(
+                "> %s" % line for line in event.description.splitlines())
+        return text
 
 
-@handles("set_timezone")
-async def command_set_timezone(message: discord.Message):
+class CommandSetTimezone(CommandHandler):
     """Sets the timezone for all events managed by this server."""
-    # TODO(funkysayu): actually make it server dependent
-    parser = ArgumentParser()
-    parser.add_argument('timezone', type=StandardTimezone.from_string,
-                        choices=list(StandardTimezone))
-    try:
-        opts = parser.parse_args(shlex.split(message.content)[1:])
-    except argparse.ArgumentError as exc:
-        await message.channel.send("Failed: " + exc.message)
-        return
 
-    global DEFAULT_TIMEZONE
-    DEFAULT_TIMEZONE = opts.timezone
-    await message.channel.send("Done: timezone was modified to %s (%s)" % (
-        DEFAULT_TIMEZONE.name,
-        datetime.now().astimezone(DEFAULT_TIMEZONE.value).strftime("UTC%z")))
+    COMMAND = 'set_timezone'
 
+    async def handle(self, message: discord.Message):
+        """Sets the timezone for all events managed by this server."""
+        # TODO(funkysayu): actually make it server dependent
+        parser = ArgumentParser()
+        parser.add_argument('timezone', type=StandardTimezone.from_string,
+                            choices=list(StandardTimezone))
+        try:
+            opts = parser.parse_args(shlex.split(message.content)[1:])
+        except argparse.ArgumentError as exc:
+            await message.channel.send("Failed: " + exc.message)
+            return
 
-@handles("add")
-async def command_add(message: discord.Message):
-    """Adds an event."""
+        global DEFAULT_TIMEZONE
+        DEFAULT_TIMEZONE = opts.timezone
+        await message.channel.send("Done: timezone was modified to %s (%s)" % (
+            DEFAULT_TIMEZONE.name,
+            datetime.now().astimezone(DEFAULT_TIMEZONE.value).strftime("UTC%z")))
