@@ -70,6 +70,7 @@ class Guild(db.Model, BaseSerializerMixin):
     :attr date_created: The moment the guild was registered in our storage.
     :attr date_modified: The last update performed on our storage.
     :attr discord_name: The name of the guild as per Discord.
+    :attr icon_href: Address of the Discord Icon representing this server.
     """
     __tablename__ = 'guild'
 
@@ -87,10 +88,9 @@ class Guild(db.Model, BaseSerializerMixin):
         db.DateTime,
         default=db.func.current_timestamp(),
         onupdate=db.func.current_timestamp())
-    discord_name = db.Column(db.String)
 
-    # TODO(funkysayu): add further fields when we'll start linking wow guilds
-    #                  and discord servers.
+    discord_name = db.Column(db.String)
+    icon_href = db.Column(db.String)
 
     wow_guild_id = db.Column(db.Integer, db.ForeignKey('wow_guild.id'))
     wow_guild = db.relationship('WowGuild', uselist=False, back_populates='guild')
@@ -102,6 +102,7 @@ class Guild(db.Model, BaseSerializerMixin):
         """Gets the values from the Discord record of a guild."""
         self.id = discord_guild.id
         self.discord_name = discord_guild.name
+        self.icon_href = str(discord_guild.icon_url)
 
 
 class WowGuild(db.Model, BaseSerializerMixin):
