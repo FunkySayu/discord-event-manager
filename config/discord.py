@@ -42,6 +42,11 @@ if 'oauth2_client_secret' not in config[USER_SECTION]:
     raise ConfigurationError(
         'Missing OAuth2 client secret in the [discord] section. '
         'Ensure you made a copy of the secrets.sample.cfg file.')
+if 'bot_token' not in config[USER_SECTION]:
+    raise ConfigurationError(
+        'Missing the bot token in the [discord] section. '
+        'Ensure you made a copy of the secrets.sample.cfg file.')
 
 oauth2_client_id = config[USER_SECTION]['oauth2_client_id']
 oauth2_client_secret = config[USER_SECTION]['oauth2_client_secret']
+bot_token = config[USER_SECTION]['bot_token']

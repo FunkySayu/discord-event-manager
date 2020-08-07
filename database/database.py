@@ -2,12 +2,6 @@
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from tinydb import TinyDB
-from typing import TypeVar, NewType
-
-from database.serializers import all_serializers
-
 
 __LICENSE__ = """
 Copyright 2019 Google LLC
@@ -24,6 +18,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
+
+import tempfile
+
+from abc import ABC, abstractmethod
+from tinydb import TinyDB
+from typing import TypeVar, NewType
+
+from database.serializers import all_serializers
 
 TableDef = TypeVar("TableDef")
 
@@ -64,7 +66,7 @@ class Serializable(ABC):
 class Database:
     """Database handler. General interface to all tables."""
 
-    FILEPATH = "/tmp/somepath.json"
+    FILEPATH = tempfile.mkstemp()[1]
 
     def __init__(self):
         """Constructor."""
