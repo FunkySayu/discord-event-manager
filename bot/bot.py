@@ -17,7 +17,6 @@ limitations under the License.
 """
 
 import discord
-import logging
 
 from typing import Dict, Optional, List
 
