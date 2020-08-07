@@ -17,6 +17,7 @@ limitations under the License.
 """
 
 import discord
+import logging
 
 from typing import Dict, Optional, List
 
@@ -68,9 +69,30 @@ class WowrganizerBot(discord.Client):
             for discord_guild in self.guilds:
                 guild = Guild.query.filter_by(id=discord_guild.id).one_or_none()
                 if guild is None:
-                    guild = Guild(discord_guild)
+                    guild = Guild(discord_guild.id)
                 guild.resync_from_discord_guild(discord_guild)
                 db.session.add(guild)
+            db.session.commit()
+
+    async def on_guild_join(self, discord_guild: discord.Guild):
+        """Registers the guild as available in the DB."""
+        logging.info('Joined guild %s', discord_guild.name)
+        with app.app_context():
+            guild = Guild.query.filter_by(id=discord_guild.id).one_or_none()
+            if guild is None:
+                guild = Guild(discord_guild.id)
+            guild.resync_from_discord_guild(discord_guild)
+            db.session.add(guild)
+            db.session.commit()
+
+    async def on_guild_remove(self, discord_guild: discord.Guild):
+        """Un-register the guild as available in the DB."""
+        logging.info('Removed from guild %s', discord_guild.name)
+        with app.app_context():
+            guild = Guild.query.filter_by(id=discord_guild.id).one_or_none()
+            if guild is None:
+                return
+            db.session.delete(guild)
             db.session.commit()
 
     async def on_message(self, message: discord.Message):
