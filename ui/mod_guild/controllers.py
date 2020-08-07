@@ -20,7 +20,7 @@ from typing import Optional
 
 from config.blizzard import get_wow_handler
 from ui.base import db
-from ui.mod_guild.guild import Region, WowGuild
+from ui.mod_guild.guild import Guild, Region, WowGuild
 
 
 def slugify(name: str) -> str:
@@ -33,6 +33,12 @@ def slugify(name: str) -> str:
 
 
 mod_guild = Blueprint('wow', __name__, url_prefix='/api/guilds')
+
+
+@mod_guild.route('/')
+def get_all_guilds():
+    guilds = Guild.query.all()
+    return jsonify(guilds=[g.to_dict() for g in guilds])
 
 
 @mod_guild.route('/wow/<region>/<realm>/<name>')
