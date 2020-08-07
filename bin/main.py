@@ -24,7 +24,7 @@ import logging
 import os
 import threading
 
-from bot.bot import make_bot_instance, WowrganizerBot
+from bot.bot import make_bot_instance
 from config.discord import bot_token
 from config.flask import port, debug, database_file
 from ui.app import app, db
@@ -52,41 +52,39 @@ class DiscordBotRuntimeThread(threading.Thread):
     Creates a wrapper allowing to wait for the bot initialization as well
     as cleanly shut it down.
     """
-    bot: WowrganizerBot
 
     def __init__(self, token: str):
         super().__init__()
         self._token = token
         self._ready = threading.Event()
         self._loop = asyncio.new_event_loop()
-        self.bot = make_bot_instance(loop=self._loop)
 
     def run(self):
         """Runs the thread."""
         asyncio.set_event_loop(self._loop)
+        bot = make_bot_instance(loop=self._loop)
 
         async def runner():
             """Main bot runtime loop."""
             try:
-                await self.bot.start(self._token)
+                await bot.start(self._token)
             finally:
-                await self.bot.close()
+                await bot.close()
 
-        async def readyness_notifier():
+        async def readiness_notifier():
             """Notifies when the bot is ready the threading.Event."""
             try:
-                await self.bot.wait_until_ready()
-                print('bot is ready')
+                await bot.wait_until_ready()
             finally:
                 self._ready.set()
 
         self._loop.create_task(runner(),
                                name='Bot runtime')
-        self._loop.create_task(readyness_notifier(),
+        self._loop.create_task(readiness_notifier(),
                                name='Readyness notifier')
         self._loop.run_forever()
 
-    def wait_readyness(self):
+    def wait_readiness(self):
         """Blocking call waiting for the bot to be fully operational."""
         self._ready.wait()
 
@@ -96,7 +94,7 @@ class DiscordBotRuntimeThread(threading.Thread):
         self.join()
 
 
-async def main():
+def main():
     """Runs the bot with its frontend server."""
     args = parser.parse_args()
     if not args.no_build:
@@ -115,15 +113,16 @@ async def main():
     runner = DiscordBotRuntimeThread(bot_token)
     logging.info('Starting the bot')
     runner.start()
-    runner.wait_readyness()
+    runner.wait_readiness()
     logging.info('Bot started, starting Flask application')
 
     host = debug and '127.0.0.1' or '0.0.0.0'
     try:
-        app.run(host=host, port=args.port, debug=debug)
+        app.run(host=host, port=args.port, debug=debug,
+                use_reloader=False)
     finally:
         runner.clean_stop()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
