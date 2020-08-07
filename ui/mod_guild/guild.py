@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import discord
+
 from enum import Enum
 from wowapi import WowApi
 
@@ -53,7 +55,7 @@ class Faction(Enum):
     alliance = 'ALLIANCE'
 
 
-class Guild(db.Model):
+class Guild(db.Model, BaseSerializerMixin):
     """A Discord server supported by the bot.
 
     The Discord guild (aka server) is the most granular group of player
@@ -74,6 +76,9 @@ class Guild(db.Model):
     # Automatically created by db.Model but clarifying existence for mypy.
     query: BaseQuery
 
+    # Serialization options
+    serialize_rules = ('-wow_guild_id',)  # Avoid circular dependencies
+
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(
         db.DateTime,
@@ -92,6 +97,11 @@ class Guild(db.Model):
 
     def __init__(self, id: int):
         self.id = id
+
+    def resync_from_discord_guild(self, discord_guild: discord.Guild):
+        """Gets the values from the Discord record of a guild."""
+        self.id = discord_guild.id
+        self.discord_name = discord_guild.name
 
 
 class WowGuild(db.Model, BaseSerializerMixin):

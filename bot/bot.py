@@ -23,6 +23,8 @@ from typing import Dict, Optional, List
 from bot.handlers.base import CommandHandler
 from bot.handlers.events import CommandWeekly, CommandSetTimezone
 from bot.handlers.help import CommandHelp
+from ui.base import app, db
+from ui.mod_guild.guild import Guild
 
 
 class WowrganizerBot(discord.Client):
@@ -52,9 +54,24 @@ class WowrganizerBot(discord.Client):
                         self.handlers[handler.COMMAND]))
             self.handlers[handler.COMMAND] = handler
 
+    def _setup_handlers(self) -> List[CommandHandler]:
+        """Called at initialization, sets up the command handlers."""
+        return [
+            CommandWeekly(),
+            CommandSetTimezone(),
+            CommandHelp(self),
+        ]
+
     async def on_ready(self):
         """Notify we are ready to handle requests."""
-        print('Bot is ready to handle requests.')
+        with app.app_context():
+            for discord_guild in self.guilds:
+                guild = Guild.query.filter_by(id=discord_guild.id).one_or_none()
+                if guild is None:
+                    guild = Guild(discord_guild)
+                guild.resync_from_discord_guild(discord_guild)
+                db.session.add(guild)
+            db.session.commit()
 
     async def on_message(self, message: discord.Message):
         """Checks if a command was sent in the message for this bot."""
@@ -68,14 +85,6 @@ class WowrganizerBot(discord.Client):
             await self.handlers[command_name].handle(message)
         else:
             await message.channel.send('Unknown command.')
-
-    def _setup_handlers(self) -> List[CommandHandler]:
-        """Called at initialization, sets up the command handlers."""
-        return [
-            CommandWeekly(),
-            CommandSetTimezone(),
-            CommandHelp(self),
-        ]
 
 
 # Runtime instance management.
