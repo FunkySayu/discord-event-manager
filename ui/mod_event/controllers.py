@@ -56,19 +56,13 @@ def get_next_event(event_id: int):
         return jsonify(error='Event %r not found' % event_id), 404
     next_event = event.create_next_event()
 
-    # Check if the next event already exist in the database.
-    record = Event.query.filter_by(
-        guild_id=next_event.guild_id, date=next_event.date).one_or_none()
-    if record is not None:
-        return jsonify(record)
-
     # Ensure we have an event generation limit.
-    if next_event.date - event.date > MAX_TIMEDELTA_EVENT_GENERATION:
+    if next_event.normalized_date - event.normalized_date > MAX_TIMEDELTA_EVENT_GENERATION:
         return jsonify(
             error='Event is over the maximum generation period',
             max_period=MAX_TIMEDELTA_EVENT_GENERATION), 400
 
-    # Save the new event in the database.
     db.session.add(next_event)
     db.session.commit()
-    return next_event
+
+    return jsonify(next_event.to_dict())
