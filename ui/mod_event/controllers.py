@@ -30,7 +30,7 @@ MAX_TIMEDELTA_EVENT_GENERATION = timedelta(weeks=4)
 @mod_event.route('/')
 def get_all_events():
     """Returns all events in the database."""
-    # TODO(funkysayu): Make sure the user has limited visibility on this rule.
+    # TODO(funkysayu): Implement the user visibility limit.
     events = Event.query.all()
     return jsonify(events=[e.to_dict() for e in events])
 
@@ -38,6 +38,7 @@ def get_all_events():
 @mod_event.route('/<int:event_id>')
 def get_event(event_id: int):
     """Returns one event."""
+    # TODO(funkysayu): Implement the user visibility limit.
     event = Event.query.filter_by(id=event_id).one_or_none()
     if event is None:
         return jsonify(error='Event %r not found' % event_id), 404
@@ -51,13 +52,14 @@ def get_next_event(event_id: int):
     This route may fail if the event is not repeated, or if the event is
     too far ahead in time (to avoid over-generation of events).
     """
+    # TODO(funkysayu): Implement the user visibility limit.
     event = Event.query.filter_by(id=event_id).one_or_none()
     if event is None:
         return jsonify(error='Event %r not found' % event_id), 404
     next_event = event.create_next_event()
 
     # Ensure we have an event generation limit.
-    if next_event.normalized_date - event.normalized_date > MAX_TIMEDELTA_EVENT_GENERATION:
+    if next_event.date - event.date > MAX_TIMEDELTA_EVENT_GENERATION:
         return jsonify(
             error='Event is over the maximum generation period',
             max_period=MAX_TIMEDELTA_EVENT_GENERATION), 400
