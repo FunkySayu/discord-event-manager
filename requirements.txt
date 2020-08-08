@@ -18,6 +18,8 @@ python-wowapi
 flask
 flask_sqlalchemy
 sqlalchemy_serializer
+wtforms
+WTForms-JSON
 werkzeug
 
 # For scripts
