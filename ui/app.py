@@ -24,12 +24,14 @@ from ui.base import app, db
 from ui.mod_auth.controllers import mod_auth
 from ui.mod_frontend.controllers import mod_frontend
 from ui.mod_guild.controllers import mod_guild
+from ui.mod_event.controllers import mod_event
 from ui.mod_user.controllers import mod_user
 
 db.init_app(app)
 app.register_blueprint(mod_auth)
 app.register_blueprint(mod_frontend)
 app.register_blueprint(mod_guild)
+app.register_blueprint(mod_event)
 app.register_blueprint(mod_user)
 
 
