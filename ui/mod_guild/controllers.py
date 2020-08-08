@@ -15,12 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from typing import Optional
+from pytz import utc
+from wtforms import Form, DateTimeField, StringField, SelectField, validators
 
 from config.blizzard import get_wow_handler
 from ui.base import db
 from ui.mod_guild.guild import Guild, Region, WowGuild
+from ui.mod_event.event import Event
 
 
 def slugify(name: str) -> str:
@@ -32,13 +35,69 @@ def slugify(name: str) -> str:
     return name.lower().replace(' ', '-')
 
 
-mod_guild = Blueprint('wow', __name__, url_prefix='/api/guilds')
+mod_guild = Blueprint('guild', __name__, url_prefix='/api/guilds')
 
 
 @mod_guild.route('/')
 def get_all_guilds():
+    """Returns all the guilds the user can see. Events are not returned.
+
+    A guild is visible to the user if:
+     - the user is its Discord owner
+     - the bot is present in the guild as well as himself.
+
+    Events are not returned from this route to lower the size of the response.
+    """
+    # TODO(funkysayu): Implement the visibility limit.
     guilds = Guild.query.all()
-    return jsonify(guilds=[g.to_dict() for g in guilds])
+    return jsonify(guilds=[g.to_dict(rules=('-events',)) for g in guilds])
+
+
+@mod_guild.route('/<int:guild_id>')
+def get_one_guild(guild_id: int):
+    """Returns a guild from its ID as well as its associated events."""
+    # TODO(funkysayu): Implement the visibility limit.
+    guild = Guild.query.filter_by(id=guild_id).one_or_none()
+    if guild is None:
+        return jsonify(error="Guild %s does not exist." % guild_id), 404
+    return jsonify(guild.to_dict())
+
+
+@mod_guild.route('/<int:guild_id>/events')
+def get_guild_events(guild_id: int):
+    """Returns the events scheduled for this guild."""
+    events = Event.query.filter_by(guild_id=guild_id).all()
+    return jsonify(events=[e.to_dict() for e in events])
+
+
+class EventCreationForm(Form):
+    """Field checker for creating an event."""
+    title = StringField('Title', [
+        validators.DataRequired(),
+        validators.Length(min=4, max=32),
+    ])
+    description = StringField('Description', [validators.Length(max=2000)])
+    date = DateTimeField('Date')
+    # TODO(funkysayu): Support the RepetitionFrequency enum field.
+
+
+@mod_guild.route('/<int:guild_id>/events', methods=['PUT'])
+def create_guild_event(guild_id: int):
+    """Creates an event for this guild."""
+    # TODO(funkysayu): Implement the visibility limit.
+    form = EventCreationForm.from_json(request.get_json())
+    if not form.validate():
+        return jsonify(error='Invalid request', form_errors=form.errors), 400
+    guild = Guild.query.filter_by(id=guild_id).one_or_none()
+    if guild is None:
+        return jsonify(error='Guild %r does not exist' % guild_id), 404
+    # TODO(funkysayu): Support the RepetitionFrequency enum field.
+    event = Event(
+        guild, form.title.data, utc.localize(form.date.data),
+        form.description.data)
+    db.session.add(event)
+    db.session.commit()
+    return jsonify(event.to_dict())
 
 
 @mod_guild.route('/wow/<region>/<realm>/<name>')
