@@ -24,7 +24,7 @@ from enum import Enum
 from datetime import datetime, timedelta
 from flask_sqlalchemy import BaseQuery
 from typing import Optional, Any
-from pytz import utc
+from pytz import utc, timezone, tzfile
 
 from ui.base import db, BaseSerializerMixin
 from ui.mod_guild.guild import Guild
@@ -81,7 +81,9 @@ class Event(db.Model, BaseSerializerMixin):
     # Serialization options
     serialize_rules = (
         # Add the timezone informations
-        'date', 'timezone', 'timezone_offset',
+        'date', 'timezone_offset',
+        # Remove internal columns
+        '-_date_utc',
         # Remove circular dependency from the relationships.
         '-guild', '-guild_id',
     )
@@ -97,7 +99,9 @@ class Event(db.Model, BaseSerializerMixin):
 
     title = db.Column(db.String)
     description = db.Column(db.String)
-    date = db.Column(db.DateTime)
+
+    _date_utc = db.Column(db.DateTime)
+    timezone_name = db.Column(db.String)
     repetition = db.Column(db.Enum(RepetitionFrequency))
 
     # Relationships
@@ -107,11 +111,6 @@ class Event(db.Model, BaseSerializerMixin):
     def __init__(self, guild: Guild,
                  title: str, date: datetime, description: str = "",
                  repetition=RepetitionFrequency.not_repeated):
-        if date.tzinfo is None:
-            logging.warning(
-                "The provided date is not associated with a timezone "
-                "which may create side effects; associate a pytz.timezone.")
-            date = utc.normalize(utc.localize(date))
         self.guild = guild
         self.guild_id = guild.id
 
@@ -125,16 +124,31 @@ class Event(db.Model, BaseSerializerMixin):
         return f'<Event "{self.title}" {self.date.isoformat()}>'
 
     @property
-    def normalized_date(self):
-        """Normalizes the date."""
-        if self.date.tzinfo is not None:
-            return self.date
-        return utc.normalize(utc.localize(self.date))
+    def date(self):
+        """Returns the date normalized on the original timezone."""
+        if self._date_utc.tzinfo is None:
+            self._date_utc = utc.localize(self._date_utc)
+        return self.timezone.normalize(self._date_utc)
+
+    @date.setter
+    def date(self, date: datetime):
+        """Updates the internal date of the model."""
+        if date.tzinfo is None:
+            raise ValueError(
+                'The provided date is not associated with a timezone '
+                'which may create side effects; associate a pytz.timezone.')
+        if not hasattr(date.tzinfo, 'zone'):
+            logging.warning(
+                'The associated timezone data %r is not associated with a zone. '
+                'The date will be normalized on UTC.')
+            date = utc.normalize(date)
+        self._date_utc = utc.normalize(date)
+        self.timezone_name = date.tzinfo.zone
 
     @property
-    def timezone(self) -> str:
+    def timezone(self) -> tzfile:
         """Returns the timezone name of the date."""
-        return self.date.tzname()
+        return timezone(self.timezone_name)
 
     @property
     def timezone_offset(self) -> str:

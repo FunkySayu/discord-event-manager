@@ -16,15 +16,13 @@ limitations under the License.
 """
 
 from flask import Blueprint, jsonify, request
-from typing import Optional, Type
-from enum import Enum
-from pytz import utc
-from wtforms import Form, DateTimeField, StringField, SelectField, validators
+from typing import Optional
 
 from config.blizzard import get_wow_handler
 from ui.base import db
+from ui.mod_event.event import Event
 from ui.mod_guild.guild import Guild, Region, WowGuild
-from ui.mod_event.event import Event, RepetitionFrequency
+from ui.mod_guild.forms import EventCreationForm
 
 
 def slugify(name: str) -> str:
@@ -37,24 +35,6 @@ def slugify(name: str) -> str:
 
 
 mod_guild = Blueprint('guild', __name__, url_prefix='/api/guilds')
-
-
-class EnumField(SelectField):
-    """Validates a form field from the possible values of an enum."""
-
-    def __init__(self, *args, enum: Type[Enum], **kwargs):
-        self.enum = enum
-        kwargs['choices'] = self._choices()
-        kwargs['coerce'] = self._coerce
-        super().__init__(*args, **kwargs)
-
-    def _choices(self):
-        """Returns the list of possible values of the enum."""
-        return [(choice, choice.name) for choice in self.enum]
-
-    def _coerce(self, item):
-        """Converts the value to its enum."""
-        return item if isinstance(item, self.enum) else self.enum(item)
 
 
 @mod_guild.route('/')
@@ -85,20 +65,9 @@ def get_one_guild(guild_id: int):
 @mod_guild.route('/<int:guild_id>/events')
 def get_guild_events(guild_id: int):
     """Returns the events scheduled for this guild."""
+    # TODO(funkysayu): Implement the user visibility limit.
     events = Event.query.filter_by(guild_id=guild_id).all()
     return jsonify(events=[e.to_dict() for e in events])
-
-
-class EventCreationForm(Form):
-    """Field checker for creating an event."""
-    title = StringField('Title', [
-        validators.DataRequired(),
-        validators.Length(min=4, max=32),
-    ])
-    description = StringField('Description', [validators.Length(max=2000)])
-    date = DateTimeField('Date')
-    repetition = EnumField('Repetition frequency', enum=RepetitionFrequency,
-                           default=RepetitionFrequency.not_repeated.value)
 
 
 @mod_guild.route('/<int:guild_id>/events', methods=['PUT'])
@@ -111,9 +80,7 @@ def create_guild_event(guild_id: int):
     guild = Guild.query.filter_by(id=guild_id).one_or_none()
     if guild is None:
         return jsonify(error='Guild %r does not exist' % guild_id), 404
-    event = Event(
-        guild, form.title.data, utc.localize(form.date.data),
-        form.description.data, form.repetition.data)
+    event = form.convert_to_event(guild)
     db.session.add(event)
     db.session.commit()
     return jsonify(event.to_dict())
