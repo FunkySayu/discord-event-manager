@@ -26,7 +26,7 @@ import logging
 from typing import List, Dict, Any, Union
 
 from config.google import get_sheets_handler
-from event.event import Event, StandardTimezone, date_from_string
+from ui.mod_event.event import Event, StandardTimezone, date_from_string
 from event.attendance import Attendance, Availability
 from roster.sheet_integration import RosterSpreadsheet, get_default_roster_sheet_handler
 from roster.model import Player

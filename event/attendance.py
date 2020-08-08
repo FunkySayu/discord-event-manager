@@ -21,8 +21,9 @@ limitations under the License.
 from enum import Enum
 from typing import Dict
 
-from event.event import Event
+from ui.mod_event.event import Event
 from roster.model import Player
+
 
 class Availability(Enum):
     """Availability of a player for a given event."""
