@@ -16,6 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import discord
 import json
 import tempfile
 import os
@@ -87,6 +88,25 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         self.assertEqual(len(queried), 1)
         self.assertEqual(queried[0].discord_name, 'test me')
 
+    def test_guild_synchronization_from_discord(self):
+        """Creates a guild and synchronize its field from a Discord one."""
+        guild = Guild(123456789)
+        discord_guild = discord.Guild(state=None, data={
+            'name': 'Beep Beep I am a Sheep',
+            'id': 123456789,
+            'icon': '987654321',
+        })
+
+        guild.resync_from_discord_guild(discord_guild)
+
+        self.assertEqual(guild.discord_name, 'Beep Beep I am a Sheep')
+        self.assertEqual(guild.id, 123456789)
+        self.assertEqual(
+            guild.icon_href,
+            'https://cdn.discordapp.com/icons/123456789/987654321.webp'
+            '?size=1024')
+        self.assertEqual(guild.bot_present, True)
+
     def test_create_wow_guild(self):
         """Creates and register a wow guild in a database."""
         wow_guild = WowGuild(123, Region.eu, 'argent-dawn', 'some-guild')
@@ -120,7 +140,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         queried: Guild = Guild.query.filter_by(id=123).first()
         self.assertEqual(queried.wow_guild, wow_guild)
 
-    def test_create_from_api(self):
+    def test_create_wow_guild_from_api(self):
         """Test creation from the WoW API results."""
         mock = unittest.mock.MagicMock()
         mock.get_guild.return_value = self.GET_GUILD_DATA
