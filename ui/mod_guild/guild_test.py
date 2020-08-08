@@ -18,45 +18,11 @@ limitations under the License.
 
 import discord
 import json
-import tempfile
 import os
 import unittest.mock
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-from ui.base import db
+from ui.common.testing import DatabaseTestFixture
 from ui.mod_guild.guild import Guild, WowGuild, Region, Faction
-
-
-class DatabaseTestFixture:
-    """Fixture setting up a clean database for each test."""
-
-    db: SQLAlchemy
-    app: Flask
-    _testdb_handle: int
-    _testdb_path: str
-    _testdb_uri: str
-
-    def setUp(self):
-        """Sets up a clean database to perform queries on."""
-        self._testdb_handle, self._testdb_path = tempfile.mkstemp()
-        self._testdb_uri = f'sqlite:///{self._testdb_path}'
-        self.app = Flask(__name__)
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = self._testdb_uri
-        self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-        self.db = db
-        self.db.init_app(self.app)
-
-        # Create a fake app context, as if we were in a request.
-        self.app.app_context().push()
-        self.db.create_all()
-        os.close(self._testdb_handle)
-
-    def tearDown(self):
-        """Cleans the database for the next test."""
-        self.db.session.remove()
-        self.db.drop_all()
 
 
 TESTDATA_DIR = os.path.join(
