@@ -1,6 +1,4 @@
 # Database
-discord
-python-dateutil
 datetime
 python-dateutil
 discord
