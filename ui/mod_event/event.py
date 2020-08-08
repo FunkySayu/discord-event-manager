@@ -92,6 +92,7 @@ class Event(db.Model, BaseSerializerMixin):
         db.DateTime,
         default=db.func.current_timestamp(),
         onupdate=db.func.current_timestamp())
+    parent_id = db.Column(db.Integer, db.ForeignKey('event.id'))
 
     title = db.Column(db.String)
     description = db.Column(db.String)
@@ -106,7 +107,8 @@ class Event(db.Model, BaseSerializerMixin):
 
     def __init__(self, guild: Guild,
                  title: str, date: datetime, description: str = "",
-                 repetition=RepetitionFrequency.not_repeated):
+                 repetition=RepetitionFrequency.not_repeated,
+                 parent: Event = None):
         self.guild = guild
         self.guild_id = guild.id
 
@@ -114,6 +116,8 @@ class Event(db.Model, BaseSerializerMixin):
         self.date = date
         self.description = description
         self.repetition = repetition
+        if parent:
+            self.parent_id = parent.id
 
     def __repr__(self):
         """Returns a debugging representation of the event."""
@@ -174,4 +178,4 @@ class Event(db.Model, BaseSerializerMixin):
         next_date = self.date + delta
 
         return Event(self.guild, self.title, next_date,
-                     self.description, self.repetition)
+                     self.description, self.repetition, parent=self)

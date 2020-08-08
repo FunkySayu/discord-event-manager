@@ -21,8 +21,10 @@ limitations under the License.
 import os
 import tempfile
 
-from flask import Flask
+from flask import Flask, Blueprint
+from flask.testing import FlaskClient
 from flask_sqlalchemy import SQLAlchemy
+from typing import List
 
 from ui.base import db
 
@@ -49,9 +51,27 @@ class DatabaseTestFixture:
         # Create a fake app context, as if we were in a request.
         self.app.app_context().push()
         self.db.create_all()
-        os.close(self._testdb_handle)
 
     def tearDown(self):
         """Cleans the database for the next test."""
         self.db.session.remove()
         self.db.drop_all()
+        os.close(self._testdb_handle)
+
+
+class ControllerTestFixture(DatabaseTestFixture):
+    """Fixture setting up a module for testing."""
+
+    BLUEPRINTS: List[Blueprint]
+    client: FlaskClient
+
+    def setUp(self):
+        """Adds the provided blueprint and start serving flask."""
+        super().setUp()
+
+        if self.BLUEPRINTS is None:
+            raise RuntimeError(
+                'You need to add some BLUEPRINTS to setup this fixture.')
+        for blueprint in self.BLUEPRINTS:
+            self.app.register_blueprint(blueprint)
+        self.client = self.app.test_client()
