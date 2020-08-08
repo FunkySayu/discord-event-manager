@@ -53,6 +53,12 @@ def get_next_event(event_id: int):
     too far ahead in time (to avoid over-generation of events).
     """
     # TODO(funkysayu): Implement the user visibility limit.
+
+    # Check if we already created the event.
+    maybe_created = Event.query.filter_by(parent_id=event_id).one_or_none()
+    if maybe_created is not None:
+        return jsonify(maybe_created.to_dict())
+
     event = Event.query.filter_by(id=event_id).one_or_none()
     if event is None:
         return jsonify(error='Event %r not found' % event_id), 404
