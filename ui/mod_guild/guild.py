@@ -71,6 +71,7 @@ class Guild(db.Model, BaseSerializerMixin):
     :attr date_modified: The last update performed on our storage.
     :attr discord_name: The name of the guild as per Discord.
     :attr icon_href: Address of the Discord Icon representing this server.
+    :attr bot_present: Whether the bot is present in the discord guild.
     """
     __tablename__ = 'guild'
 
@@ -92,6 +93,7 @@ class Guild(db.Model, BaseSerializerMixin):
     discord_name = db.Column(db.String)
     icon_href = db.Column(db.String)
 
+    bot_present = db.Column(db.Boolean)
     wow_guild_id = db.Column(db.Integer, db.ForeignKey('wow_guild.id'))
     wow_guild = db.relationship('WowGuild', uselist=False, back_populates='guild')
 
@@ -103,6 +105,7 @@ class Guild(db.Model, BaseSerializerMixin):
         self.id = discord_guild.id
         self.discord_name = discord_guild.name
         self.icon_href = str(discord_guild.icon_url)
+        self.bot_present = True
 
 
 class WowGuild(db.Model, BaseSerializerMixin):
