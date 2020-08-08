@@ -21,6 +21,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import wtforms_json
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
@@ -49,3 +51,6 @@ app.secret_key = secret_key
 # line disables the library warning at runtime.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
+
+# Allow forms to be parsed from JSON.
+wtforms_json.init()
