@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM python:3.7-alpine3.10
+FROM python:3.8.5-alpine3.11
 
 # Set the default working directory
 WORKDIR /discord-event-manager
 # Copy requirements.txt for depencency resolution
 COPY requirements.txt /discord-event-manager
+
+ENV PYTHONPATH /discord-event-manager
 
 # Installing gcc and headers for pip lib building, then installing requirements, then removing gcc
 RUN apk add --no-cache --virtual build-dependencies musl-dev gcc \
@@ -32,4 +34,4 @@ RUN apk add --no-cache --virtual build-dependencies musl-dev gcc \
 COPY . /discord-event-manager
 
 # Run the program as main.py
-CMD ["python","/discord-event-manager/main.py"]
+CMD ["python","/discord-event-manager/bin/main.py", "--no_build"]
