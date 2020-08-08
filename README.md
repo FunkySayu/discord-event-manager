@@ -50,6 +50,30 @@ Apache header:
     See the License for the specific language governing permissions and
     limitations under the License.
 
+## Build and run discord-event-manager as a container
+
+You can use Docker to avoid having to install any requirements on your local machine.
+
+To build the container, just run
+
+```
+docker build . -t discord-event-manager:1.0 --rm
+```
+
+To run the container, just run
+
+```
+docker run --rm -e DISCORD_TOKEN=$(cat token.txt) -d discord-event-manager:1.0
+```
+
+If you want to run the tests, just modify the CMD
+
+```
+docker run --rm -e DISCORD_TOKEN=$(cat token.txt) -d discord-event-manager:1.0 python test.py
+```
+
+The token is not inside the container for security reasons, you have to set it as an environment variable.
+
 # Acknowledgement
 
 This leverages and uses the [Discord.py API][discordpy] under MIT License.
