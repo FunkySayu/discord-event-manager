@@ -69,10 +69,6 @@ class Event(db.Model, BaseSerializerMixin):
     :attr date: The date of the event.
     :attr repetition: A frequency at which the event should be repeated.
     """
-    # TODO(funkysayu): Timezone support looks to be inconsistent in the database.
-    #                  Maybe force all the records to use an utc-normalized time,
-    #                  and recompute the timezone from the provided tzinfo.zone.
-
     __tablename__ = 'event'
 
     # Automatically created by db.Model but clarifying existence for mypy.
@@ -82,9 +78,9 @@ class Event(db.Model, BaseSerializerMixin):
     serialize_rules = (
         # Add the timezone informations
         'date', 'timezone_offset',
-        # Remove internal columns
+        # Remove internal representation of the date, which would be confusing
         '-_date_utc',
-        # Remove circular dependency from the relationships.
+        # Remove circular dependency from the relationships
         '-guild', '-guild_id',
     )
 
