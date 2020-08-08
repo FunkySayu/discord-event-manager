@@ -24,6 +24,7 @@ from enum import Enum
 from datetime import datetime, timedelta
 from flask_sqlalchemy import BaseQuery
 from typing import Optional, Any
+from pytz import utc
 
 from ui.base import db, BaseSerializerMixin
 from ui.mod_guild.guild import Guild
@@ -31,7 +32,7 @@ from ui.mod_guild.guild import Guild
 
 class RepetitionFrequency(Enum):
     """Frequency at which an event should be repeated."""
-    not_repeated = None
+    not_repeated = 'NOT_REPEATED'
     daily = 'DAILY'
     weekly = 'WEEKLY'
 
@@ -42,6 +43,17 @@ class RepetitionFrequency(Enum):
             'invalid frequency provided "%r"; falling back to unrepeated.',
             value)
         return cls.not_repeated
+
+    def to_timedelta(self) -> Optional[timedelta]:
+        """Returns the time delta from the repetition."""
+        if self == RepetitionFrequency.not_repeated:
+            return None
+        if self == RepetitionFrequency.daily:
+            return timedelta(days=1)
+        if self == RepetitionFrequency.weekly:
+            return timedelta(weeks=1)
+        raise NotImplementedError(
+            '%r does not have an associated timedelta.', self)
 
 
 class Event(db.Model, BaseSerializerMixin):
@@ -96,9 +108,10 @@ class Event(db.Model, BaseSerializerMixin):
                  title: str, date: datetime, description: str = "",
                  repetition=RepetitionFrequency.not_repeated):
         if date.tzinfo is None:
-            raise ValueError(
+            logging.warning(
                 "The provided date is not associated with a timezone "
                 "which may create side effects; associate a pytz.timezone.")
+            date = utc.normalize(utc.localize(date))
         self.guild = guild
         self.guild_id = guild.id
 
@@ -110,6 +123,13 @@ class Event(db.Model, BaseSerializerMixin):
     def __repr__(self):
         """Returns a debugging representation of the event."""
         return f'<Event "{self.title}" {self.date.isoformat()}>'
+
+    @property
+    def normalized_date(self):
+        """Normalizes the date."""
+        if self.date.tzinfo is not None:
+            return self.date
+        return utc.normalize(utc.localize(self.date))
 
     @property
     def timezone(self) -> str:
