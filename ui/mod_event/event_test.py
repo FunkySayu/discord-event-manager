@@ -29,8 +29,6 @@ from ui.mod_guild.guild import Guild
 class TestEventModel(DatabaseTestFixture, unittest.TestCase):
     """Ensure consistency of the model."""
 
-    TEST_GUILD = Guild(12345)
-
     def test_instantiation(self):
         """Tests a fairly basic instantiation works."""
         event = Event(
