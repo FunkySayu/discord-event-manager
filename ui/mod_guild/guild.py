@@ -79,7 +79,7 @@ class Guild(db.Model, BaseSerializerMixin):
     query: BaseQuery
 
     # Serialization options
-    serialize_rules = ('-wow_guild_id',)  # Avoid circular dependencies
+    serialize_rules = ('-wow_guild_id',)
 
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(
@@ -92,10 +92,12 @@ class Guild(db.Model, BaseSerializerMixin):
 
     discord_name = db.Column(db.String)
     icon_href = db.Column(db.String)
-
     bot_present = db.Column(db.Boolean)
+
+    # Relationships
     wow_guild_id = db.Column(db.Integer, db.ForeignKey('wow_guild.id'))
     wow_guild = db.relationship('WowGuild', uselist=False, back_populates='guild')
+    events = db.relationship('Event', uselist=True, back_populates='guild')
 
     def __init__(self, id: int):
         self.id = id
@@ -136,7 +138,11 @@ class WowGuild(db.Model, BaseSerializerMixin):
     query: BaseQuery
 
     # Serialization options
-    serialize_rules = ('-id', '-guild')  # Avoid circular dependencies
+    serialize_rules = (
+        '-id',
+        # Remove circular dependency from the relationships.
+        '-guild',
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(
@@ -156,6 +162,7 @@ class WowGuild(db.Model, BaseSerializerMixin):
     faction = db.Column(db.Enum(Faction))
     icon_href = db.Column(db.String)
 
+    # Relationships
     guild = db.relationship('Guild', uselist=False,
                             back_populates='wow_guild')
 
