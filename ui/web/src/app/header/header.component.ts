@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { UserService, UserProfile, Guild, GuildRelationship } from 'src/app/user/user.service';
+import {UserService, UserProfile, Guild, GuildRelationship} from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnChanges {
   @Input() profile?: UserProfile;
   @Input() selectedGuild?: Guild;
   @Output() selectedGuildChange = new EventEmitter<Guild>();
 
-  constructor(private readonly router: Router, private readonly userService: UserService) { }
+  constructor(private readonly router: Router, private readonly userService: UserService) {}
 
   ngOnChanges() {
     const guilds = this.profile?.relationships ?? [];
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnChanges {
 
   onGuildSelected(relationship: GuildRelationship) {
     if (!relationship.guild) {
-       return;
+      return;
     }
     if (this.selectedGuild?.id !== relationship.guild.id) {
       this.selectedGuild = relationship.guild;
@@ -57,7 +57,7 @@ export class HeaderComponent implements OnChanges {
 
   logoutUser() {
     this.userService.logout().subscribe(() => {
-      this.router.navigate(['/'], {queryParams: {'refresh': 1}});
+      this.router.navigate(['/'], {queryParams: {refresh: 1}});
     });
   }
 
