@@ -70,8 +70,10 @@ class User(db.Model, BaseSerializerMixin):
     :attr id: Discord user's unique ID, used as primary key for storage.
     :attr date_created: The moment the guild was registered in our storage.
     :attr date_modified: The last update performed on our storage.
-    :attr icon_href: Address of the Discord Icon representing this server.
-    :attr bot_present: Whether the bot is present in the discord guild.
+    :attr username: The Discord username.
+    :attr discriminator: The 4 digit string allowing to make friend request.
+    :attr avatar: User's avatar ID.
+    :attr relationships: List of guild the user is part of.
     """
     __tablename__ = 'user'
 
