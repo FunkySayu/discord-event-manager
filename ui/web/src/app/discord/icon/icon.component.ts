@@ -15,23 +15,23 @@
  * limitations under the License.
  */
 
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-const DISCORD_CDN = 'https://cdn.discordapp.com'
+const DISCORD_CDN = 'https://cdn.discordapp.com';
 
 @Component({
   selector: 'discord-icon',
   templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss']
+  styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent {
-  @Input() type?: 'icons'|'avatars';
+  @Input() type?: 'icons' | 'avatars';
   @Input() id?: string;
   @Input() icon?: string;
 
-  get src(): string|undefined {
+  get src(): string | undefined {
     if (!this.type || !this.id || !this.icon) {
-      return;
+      return undefined;
     }
     return `${DISCORD_CDN}/${this.type}/${this.id}/${this.icon}.png`;
   }

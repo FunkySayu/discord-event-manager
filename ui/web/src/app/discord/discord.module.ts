@@ -15,17 +15,14 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { IconComponent } from './icon/icon.component';
-
+import {IconComponent} from './icon/icon.component';
 
 @NgModule({
   declarations: [IconComponent],
   exports: [IconComponent],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule],
 })
-export class DiscordModule { }
+export class DiscordModule {}

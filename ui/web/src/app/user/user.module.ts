@@ -15,23 +15,17 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterModule} from '@angular/router';
 
 import {UserService} from './user.service';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    HttpClientModule,
-    RouterModule,
-  ],
+  imports: [BrowserModule, CommonModule, HttpClientModule, RouterModule],
   providers: [UserService],
 })
-export class UserModule { }
+export class UserModule {}

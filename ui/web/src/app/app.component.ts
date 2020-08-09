@@ -15,28 +15,29 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
-import { catchError, shareReplay, switchMap } from 'rxjs/operators';
+import {Component} from '@angular/core';
+import {of} from 'rxjs';
+import {shareReplay, switchMap} from 'rxjs/operators';
 
-import { UserService, Guild } from './user/user.service';
+import {UserService, Guild} from './user/user.service';
 
 /** Base component of the application. */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   selectedGuild?: Guild;
 
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   profile$ = this.userService.isAuthenticated().pipe(
     // Emit null if the user is not authenticated, otherwise get its profile.
     switchMap(logged =>
-        logged ? this.userService.getUserProfile() : of(null)),
+      logged ? this.userService.getUserProfile() : of(null)
+    ),
     // Share the result of the profile.
-    shareReplay(1));
+    shareReplay(1)
+  );
 }

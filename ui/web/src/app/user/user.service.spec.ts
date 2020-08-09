@@ -15,11 +15,14 @@
  * limitations under the License.
  */
 
-import { TestBed, getTestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {TestBed, getTestBed} from '@angular/core/testing';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 
-import { UserModule } from './user.module';
-import { UserService } from './user.service';
+import {UserModule} from './user.module';
+import {UserService} from './user.service';
 
 describe('UserService', () => {
   let service: UserService;
@@ -40,14 +43,14 @@ describe('UserService', () => {
 
   describe('isAuthenticated', () => {
     it('checks the response content', () => {
-      let response: boolean|undefined;
+      let response: boolean | undefined;
       service.isAuthenticated().subscribe(isAuthenticated => {
         response = isAuthenticated;
       });
 
       const req = httpMock.expectOne('/auth/discord/is_authenticated');
-      expect(req.request.method).toBe("GET");
-      req.flush({'authenticated': true});
+      expect(req.request.method).toBe('GET');
+      req.flush({authenticated: true});
 
       expect(response).toBeDefined('no response retrieved');
       expect(response).toBeTruthy();
