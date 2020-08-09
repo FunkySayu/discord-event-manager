@@ -22,11 +22,7 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './styles-demo.component.html',
   styleUrls: ['./styles-demo.component.scss'],
 })
-export class StylesDemoComponent implements OnInit {
+export class StylesDemoComponent {
   readonly palettes = ['red', 'orange', 'yellow', 'green', 'blue'];
   readonly weights = ['lightest', 'lighter', 'light', 'normal', 'dark', 'darker', 'darkest'];
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }
