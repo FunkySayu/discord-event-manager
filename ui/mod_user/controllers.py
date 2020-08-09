@@ -17,8 +17,8 @@ limitations under the License.
 
 from flask import Blueprint, jsonify
 
-from config.discord import api_base_url
 from ui.mod_auth.session import get_discord_session
+from ui.mod_user.user import User
 
 mod_user = Blueprint('user', __name__, url_prefix='/api/user')
 
@@ -26,7 +26,6 @@ mod_user = Blueprint('user', __name__, url_prefix='/api/user')
 @mod_user.route('/')
 def user():
     """Returns the Discord information about this user."""
-    discord = get_discord_session()
-    user = discord.get(api_base_url + '/users/@me').json()
-    guilds = discord.get(api_base_url + '/users/@me/guilds').json()
-    return jsonify(user=user, guilds=guilds)
+    discord_session = get_discord_session()
+    user = User.from_oauth_discord(discord_session)
+    return jsonify(user.to_dict())
