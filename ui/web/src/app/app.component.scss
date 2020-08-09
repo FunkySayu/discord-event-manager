@@ -13,3 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+app-header {
+  height: 64px;
+}
+
+main {
+  height: calc(100% - 64px);
+}

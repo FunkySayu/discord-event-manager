@@ -1,8 +1,11 @@
 <app-header [profile]="profile$ | async" [(selectedGuild)]="selectedGuild"></app-header>
 
-<router-outlet></router-outlet>
+<main>
+  <router-outlet></router-outlet>
+</main>
 
 <h1>User info</h1>
 <pre *ngIf="profile$ | async as profile">{{profile.user | json}}</pre>
 <h1>Selected guild</h1>
 <pre *ngIf="selectedGuild">{{selectedGuild | json}}</pre>
+<a routerLink="/demo/styles-palette" routerLinkActive="active">Styles</a>

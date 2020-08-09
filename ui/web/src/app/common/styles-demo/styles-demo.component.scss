@@ -1,0 +1,118 @@
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@import 'common/colors';
+
+
+@mixin palette($base) {
+  .lightest {
+    background-color: map-get($base, lightest);
+    color: $black;
+  }
+
+  .lighter {
+    background-color: map-get($base, lighter);
+    color: $black;
+  }
+
+  .light {
+    background-color: map-get($base, light);
+    color: $black;
+  }
+
+  .normal {
+    background-color: map-get($base, normal);
+    color: $black;
+  }
+
+  .dark {
+    background-color: map-get($base, dark);
+    color: $white;
+  }
+
+  .darker {
+    background-color: map-get($base, darker);
+    color: $white;
+  }
+
+  .darkest {
+    background-color: map-get($base, darkest);
+    color: $white;
+  }
+
+  .text {
+
+    .white {
+      background-color: $white;
+      color: map-get($base, dark);
+     }
+
+    .black {
+      background-color: black;
+      color: map-get($base, light);
+     }
+  }
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  .palette {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      align-items: center;
+
+      h1 {
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    &.blue {
+      @include palette($app-blue);
+    }
+
+    &.red {
+      @include palette($app-red);
+    }
+
+    &.green {
+      @include palette($app-green);
+    }
+
+    &.yellow {
+      @include palette($app-yellow);
+    }
+
+    &.orange {
+      @include palette($app-orange);
+    }
+  }
+}

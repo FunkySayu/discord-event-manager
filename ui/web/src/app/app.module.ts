@@ -20,6 +20,7 @@ import {NgModule} from '@angular/core';
 
 import {UserModule} from './user/user.module';
 import {HeaderModule} from './header/header.module';
+import {DemoModule} from './common/common.module';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -27,7 +28,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [AppRoutingModule, BrowserAnimationsModule, BrowserModule, HeaderModule, UserModule],
+  imports: [AppRoutingModule, BrowserAnimationsModule, BrowserModule, DemoModule, HeaderModule, UserModule],
   providers: [],
   bootstrap: [AppComponent],
 })
