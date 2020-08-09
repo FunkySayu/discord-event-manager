@@ -29,10 +29,9 @@ export declare enum Permission {
 
 /** A Discord guild information. */
 export declare interface Guild {
-  id?: string;
-  name?: string;
-  icon?: string;
-  is_owner?: boolean;
+  id?: number;
+  discord_name?: string;
+  icon_href?: string;
 }
 
 export declare interface GuildRelationship {

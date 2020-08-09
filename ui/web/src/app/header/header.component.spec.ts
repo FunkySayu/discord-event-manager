@@ -48,8 +48,8 @@ describe('HeaderComponent', () => {
 
   it('displays the user avatar instead of the login button after auth', () => {
     const profile: UserProfile = {
-      guilds: [],
-      user: {id: '123', avatar: '456'},
+      id: 123,
+      icon_url: 'https://something.com/123',
     };
     component.profile = profile;
     fixture.detectChanges();
@@ -57,12 +57,20 @@ describe('HeaderComponent', () => {
     expect(fixture.nativeElement.querySelector('a.login')).toBeNull();
     const userButton = fixture.nativeElement.querySelector('button.user-profile');
     expect(userButton).not.toBeNull();
-    expect(userButton.querySelector('discord-icon img')).not.toBeNull();
+    expect(userButton.querySelector('img')).not.toBeNull();
   });
 
   it('selects a guild by default if none are selected', fakeAsync(() => {
     const profile: UserProfile = {
-      guilds: [{id: '123', name: 'My amazing guild', icon: '456'}],
+      relationships: [
+        {
+          guild: {
+            id: 123,
+            discord_name: 'My amazing guild',
+            icon_href: 'https://something.com/123',
+          },
+        },
+      ],
     };
     component.profile = profile;
     component.ngOnChanges();
@@ -72,7 +80,7 @@ describe('HeaderComponent', () => {
 
     const guildSelector = fixture.nativeElement.querySelector('button.guild-selection');
     expect(guildSelector).not.toBeNull();
-    expect(guildSelector.querySelector('discord-icon img')).not.toBeNull();
+    expect(guildSelector.querySelector('img')).not.toBeNull();
     expect(guildSelector.textContent).toContain('My amazing guild');
   }));
 });

@@ -62,6 +62,6 @@ export class HeaderComponent implements OnChanges {
   }
 
   trackByGuildId(index: number, relationship: GuildRelationship): string {
-    return relationship.guild?.id ?? '';
+    return String(relationship.guild?.id ?? '');
   }
 }
