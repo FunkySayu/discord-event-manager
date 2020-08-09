@@ -5,7 +5,7 @@
 </main>
 
 <h1>User info</h1>
-<pre *ngIf="profile$ | async as profile">{{profile.user | json}}</pre>
+<pre *ngIf="profile$ | async as profile">{{profile | json}}</pre>
 <h1>Selected guild</h1>
 <pre *ngIf="selectedGuild">{{selectedGuild | json}}</pre>
 <a routerLink="/demo/styles-palette" routerLinkActive="active">Styles</a>

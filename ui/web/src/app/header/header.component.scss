@@ -51,7 +51,7 @@ mat-toolbar {
   display: flex;
   align-items: center;
 
-  discord-icon {
+  img {
     margin: 0 6px 0 -4px;
     width: 24px;
     height: 24px;
@@ -71,12 +71,12 @@ mat-toolbar {
     }
   }
 
-  discord-icon:last-child,
+  img:last-child,
   mat-icon:last-child {
     margin-right: -4px;
   }
 
-  discord-icon:first-child,
+  img:first-child,
   mat-icon:first-child {
     margin-left: -4px;
   }

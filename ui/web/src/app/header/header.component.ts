@@ -15,49 +15,53 @@
  * limitations under the License.
  */
 
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {UserService, UserProfile, Guild} from 'src/app/user/user.service';
+import { UserService, UserProfile, Guild, GuildRelationship } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnChanges {
   @Input() profile?: UserProfile;
   @Input() selectedGuild?: Guild;
   @Output() selectedGuildChange = new EventEmitter<Guild>();
 
-  constructor(private readonly router: Router, private readonly userService: UserService) {}
+  constructor(private readonly router: Router, private readonly userService: UserService) { }
 
   ngOnChanges() {
-    if (this.profile && this.profile.guilds.length && !this.selectedGuild) {
-      this.selectedGuild = this.profile.guilds[0];
+    const guilds = this.profile?.relationships ?? [];
+    if (this.profile && guilds.length && !this.selectedGuild) {
+      this.selectedGuild = guilds[0].guild;
+
       // Emit the automatic selection on the next cycle, to avoid creating an
       // Angular error where states are mis-matching.
-
       setTimeout(() => {
-        this.selectedGuildChange.emit(this.selectedGuild);
+        this.selectedGuildChange.emit(guilds[0].guild);
       });
     }
   }
 
-  onGuildSelected(guild: Guild) {
-    if (this.selectedGuild?.id !== guild.id) {
-      this.selectedGuild = guild;
-      this.selectedGuildChange.emit(guild);
+  onGuildSelected(relationship: GuildRelationship) {
+    if (!relationship.guild) {
+       return;
+    }
+    if (this.selectedGuild?.id !== relationship.guild.id) {
+      this.selectedGuild = relationship.guild;
+      this.selectedGuildChange.emit(relationship.guild);
     }
   }
 
   logoutUser() {
     this.userService.logout().subscribe(() => {
-      this.router.navigate(['/'], {queryParams: {refresh: 1}});
+      this.router.navigate(['/'], {queryParams: {'refresh': 1}});
     });
   }
 
-  trackByGuildId(index: number, guild: Guild): string {
-    return guild.id;
+  trackByGuildId(index: number, relationship: GuildRelationship): string {
+    return relationship.guild?.id ?? '';
   }
 }
