@@ -29,13 +29,6 @@ import {HeaderComponent} from './header.component';
 @NgModule({
   declarations: [HeaderComponent],
   exports: [HeaderComponent],
-  imports: [
-    CommonModule,
-    DiscordModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatToolbarModule,
-  ],
+  imports: [CommonModule, DiscordModule, MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule],
 })
 export class HeaderModule {}

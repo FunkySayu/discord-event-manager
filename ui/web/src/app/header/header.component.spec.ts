@@ -15,13 +15,7 @@
  * limitations under the License.
  */
 
-import {
-  async,
-  fakeAsync,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import {async, fakeAsync, tick, ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
@@ -61,9 +55,7 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('a.login')).toBeNull();
-    const userButton = fixture.nativeElement.querySelector(
-      'button.user-profile'
-    );
+    const userButton = fixture.nativeElement.querySelector('button.user-profile');
     expect(userButton).not.toBeNull();
     expect(userButton.querySelector('discord-icon img')).not.toBeNull();
   });
@@ -78,9 +70,7 @@ describe('HeaderComponent', () => {
     // Guild default selection happens on the next cycle; wait for it.
     tick(1);
 
-    const guildSelector = fixture.nativeElement.querySelector(
-      'button.guild-selection'
-    );
+    const guildSelector = fixture.nativeElement.querySelector('button.guild-selection');
     expect(guildSelector).not.toBeNull();
     expect(guildSelector.querySelector('discord-icon img')).not.toBeNull();
     expect(guildSelector.textContent).toContain('My amazing guild');

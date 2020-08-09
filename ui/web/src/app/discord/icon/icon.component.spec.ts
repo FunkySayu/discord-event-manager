@@ -32,8 +32,6 @@ describe('IconComponent', () => {
 
     const img = fixture.nativeElement.querySelector('img');
     expect(img).not.toBeNull();
-    expect(img.getAttribute('src')).toBe(
-      'https://cdn.discordapp.com/avatars/123/456.png'
-    );
+    expect(img.getAttribute('src')).toBe('https://cdn.discordapp.com/avatars/123/456.png');
   });
 });
