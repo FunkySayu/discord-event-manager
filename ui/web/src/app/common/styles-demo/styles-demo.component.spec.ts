@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { StylesDemoComponent } from './styles-demo.component';
+import {StylesDemoComponent} from './styles-demo.component';
 
 describe('StylesDemoComponent', () => {
   let component: StylesDemoComponent;
@@ -25,9 +25,8 @@ describe('StylesDemoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StylesDemoComponent ]
-    })
-    .compileComponents();
+      declarations: [StylesDemoComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
