@@ -18,11 +18,9 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {StylesDemoComponent} from './common/styles-demo/styles-demo.component'
+import {StylesDemoComponent} from './common/styles-demo/styles-demo.component';
 
-const routes: Routes = [
-  {path: 'demo/styles-palette', component: StylesDemoComponent}
-];
+const routes: Routes = [{path: 'demo/styles-palette', component: StylesDemoComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {useHash: true})],
