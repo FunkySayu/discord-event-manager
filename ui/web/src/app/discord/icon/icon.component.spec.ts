@@ -1,8 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DiscordModule } from '../discord.module';
-import { IconComponent } from './icon.component';
-
+import {DiscordModule} from '../discord.module';
+import {IconComponent} from './icon.component';
 
 describe('IconComponent', () => {
   let component: IconComponent;
@@ -10,9 +9,8 @@ describe('IconComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ DiscordModule ]
-    })
-    .compileComponents();
+      imports: [DiscordModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -35,6 +33,7 @@ describe('IconComponent', () => {
     const img = fixture.nativeElement.querySelector('img');
     expect(img).not.toBeNull();
     expect(img.getAttribute('src')).toBe(
-      'https://cdn.discordapp.com/avatars/123/456.png');
+      'https://cdn.discordapp.com/avatars/123/456.png'
+    );
   });
 });

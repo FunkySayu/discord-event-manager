@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, mapTo } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map, mapTo} from 'rxjs/operators';
 
 /** A Discord guild information. */
 export interface Guild {
@@ -44,13 +44,12 @@ interface AuthCheckResponse {
   authenticated?: boolean;
 }
 
-
 /** Accesses the general profile of the user. */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient) {}
 
   /** Returns the high level user profile. */
   getUserProfile(): Observable<UserProfile> {
@@ -59,8 +58,9 @@ export class UserService {
 
   /** Checks if the user is currently authenticated. */
   isAuthenticated(): Observable<boolean> {
-    return this.http.get<AuthCheckResponse>('/auth/discord/is_authenticated').pipe(
-      map(response => !!response?.authenticated));
+    return this.http
+      .get<AuthCheckResponse>('/auth/discord/is_authenticated')
+      .pipe(map(response => !!response?.authenticated));
   }
 
   /** Logs out the user. */

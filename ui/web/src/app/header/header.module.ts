@@ -15,17 +15,16 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
 
-import { DiscordModule } from '../discord/discord.module';
+import {DiscordModule} from '../discord/discord.module';
 
-import { HeaderComponent } from './header.component';
-
+import {HeaderComponent} from './header.component';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -37,6 +36,6 @@ import { HeaderComponent } from './header.component';
     MatIconModule,
     MatMenuModule,
     MatToolbarModule,
-  ]
+  ],
 })
-export class HeaderModule { }
+export class HeaderModule {}
