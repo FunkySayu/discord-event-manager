@@ -16,10 +16,7 @@
  */
 
 import {TestBed, getTestBed} from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 
 import {UserModule} from './user.module';
 import {UserService} from './user.service';

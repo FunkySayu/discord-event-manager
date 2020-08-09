@@ -34,9 +34,7 @@ export class AppComponent {
 
   profile$ = this.userService.isAuthenticated().pipe(
     // Emit null if the user is not authenticated, otherwise get its profile.
-    switchMap(logged =>
-      logged ? this.userService.getUserProfile() : of(null)
-    ),
+    switchMap(logged => (logged ? this.userService.getUserProfile() : of(null))),
     // Share the result of the profile.
     shareReplay(1)
   );

@@ -30,10 +30,7 @@ export class HeaderComponent implements OnChanges {
   @Input() selectedGuild?: Guild;
   @Output() selectedGuildChange = new EventEmitter<Guild>();
 
-  constructor(
-    private readonly router: Router,
-    private readonly userService: UserService
-  ) {}
+  constructor(private readonly router: Router, private readonly userService: UserService) {}
 
   ngOnChanges() {
     if (this.profile && this.profile.guilds.length && !this.selectedGuild) {
