@@ -20,33 +20,17 @@ limitations under the License.
 
 from flask import send_from_directory, render_template
 
-from config.flask import debug
 from ui.base import app, db
 from ui.mod_auth.controllers import mod_auth
-from ui.mod_user.controllers import mod_user
+from ui.mod_frontend.controllers import mod_frontend
 from ui.mod_guild.controllers import mod_guild
+from ui.mod_user.controllers import mod_user
 
 db.init_app(app)
 app.register_blueprint(mod_auth)
-app.register_blueprint(mod_user)
+app.register_blueprint(mod_frontend)
 app.register_blueprint(mod_guild)
-
-
-# Prevent cached response when running in debug mode, so we can easily
-# rebuild on change and see the differences.
-if debug:
-    @app.after_request
-    def after_request(response):
-        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
-        response.headers["Expires"] = 0
-        response.headers["Pragma"] = "no-cache"
-        return response
-
-
-@app.route('/<path:path>')
-def frontend_proxy(path):
-    """Serves the unbound paths from the Angular compiled directory."""
-    return send_from_directory('./web/dist', path)
+app.register_blueprint(mod_user)
 
 
 @app.route('/')

@@ -26,7 +26,7 @@ import {LandingModule} from './landing/landing.module';
 const routes: Routes = [{path: 'demo/styles-palette', component: StylesDemoComponent}];
 
 @NgModule({
-  imports: [DemoModule, LandingModule, RouterModule.forRoot(routes, {useHash: true})],
+  imports: [DemoModule, LandingModule, RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
