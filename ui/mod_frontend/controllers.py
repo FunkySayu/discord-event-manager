@@ -43,6 +43,6 @@ def frontend_proxy(path):
     try:
         return send_from_directory('./web/dist', path)
     except NotFound:
-        # Fallback to the index.html. It is fairly possible the requested route
-        # is the result of Angular attempting to route to itself.
+        # Fallback to the index.html. The requested route might be the
+        # result of how the Angular router is implementing its routes.
         return send_from_directory('./web/dist', 'index.html')
