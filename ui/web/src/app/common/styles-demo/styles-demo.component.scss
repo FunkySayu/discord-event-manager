@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+@import 'src/app/common/base';
 @import 'node_modules/sass-material-colors/sass/sass-material-colors-classes';
 
 section {
@@ -42,6 +43,10 @@ section {
         align-items: center;
         text-align: center;
       }
+    }
+
+    .white-font {
+      color: $white;
     }
   }
 }

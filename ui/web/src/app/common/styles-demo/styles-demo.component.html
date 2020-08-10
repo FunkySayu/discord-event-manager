@@ -2,7 +2,7 @@
   <div *ngFor="let palette of palettes" class="palette {{palette}}">
     <div *ngFor="let weight of weights"
          class="bg-color-{{palette}}-{{weight}}">
-      <h1>{{palette | titlecase}} {{weight}}</h1>
+      <h1 [class.white-font]="weight > 600">{{palette | titlecase}} {{weight}}</h1>
     </div>
     <div class="text">
       <h1 class="color-{{palette}}-700">{{palette | titlecase}} 700</h1>
