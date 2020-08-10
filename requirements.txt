@@ -18,6 +18,7 @@ python-wowapi
 flask
 flask_sqlalchemy
 sqlalchemy_serializer
+werkzeug
 
 # For scripts
 tabulate
