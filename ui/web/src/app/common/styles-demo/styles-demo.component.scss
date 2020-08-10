@@ -15,58 +15,8 @@
  * limitations under the License.
  */
 
-@import 'common/colors';
-
-
-@mixin palette($base) {
-  .lightest {
-    background-color: map-get($base, lightest);
-    color: $black;
-  }
-
-  .lighter {
-    background-color: map-get($base, lighter);
-    color: $black;
-  }
-
-  .light {
-    background-color: map-get($base, light);
-    color: $black;
-  }
-
-  .normal {
-    background-color: map-get($base, normal);
-    color: $black;
-  }
-
-  .dark {
-    background-color: map-get($base, dark);
-    color: $white;
-  }
-
-  .darker {
-    background-color: map-get($base, darker);
-    color: $white;
-  }
-
-  .darkest {
-    background-color: map-get($base, darkest);
-    color: $white;
-  }
-
-  .text {
-
-    .white {
-      background-color: $white;
-      color: map-get($base, dark);
-     }
-
-    .black {
-      background-color: black;
-      color: map-get($base, light);
-     }
-  }
-}
+@import 'src/app/common/colors';
+@import 'node_modules/sass-material-colors/sass/sass-material-colors-classes';
 
 section {
   display: flex;
@@ -93,26 +43,6 @@ section {
         align-items: center;
         text-align: center;
       }
-    }
-
-    &.blue {
-      @include palette($app-blue);
-    }
-
-    &.red {
-      @include palette($app-red);
-    }
-
-    &.green {
-      @include palette($app-green);
-    }
-
-    &.yellow {
-      @include palette($app-yellow);
-    }
-
-    &.orange {
-      @include palette($app-orange);
     }
   }
 }

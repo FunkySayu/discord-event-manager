@@ -23,6 +23,17 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./styles-demo.component.scss'],
 })
 export class StylesDemoComponent {
-  readonly palettes = ['red', 'orange', 'yellow', 'green', 'blue'];
-  readonly weights = ['lightest', 'lighter', 'light', 'normal', 'dark', 'darker', 'darkest'];
+  readonly palettes = ['red', 'orange', 'yellow', 'green', 'blue', 'grey'];
+  readonly weights = [
+    '50',
+    '100',
+    '200',
+    '300',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900'
+  ];
 }
