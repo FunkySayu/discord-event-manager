@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-styles-demo',
@@ -24,16 +24,5 @@ import {Component, OnInit} from '@angular/core';
 })
 export class StylesDemoComponent {
   readonly palettes = ['red', 'orange', 'yellow', 'green', 'blue', 'grey'];
-  readonly weights = [
-    '50',
-    '100',
-    '200',
-    '300',
-    '400',
-    '500',
-    '600',
-    '700',
-    '800',
-    '900'
-  ];
+  readonly weights = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
 }
