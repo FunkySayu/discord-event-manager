@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {of} from 'rxjs';
 import {shareReplay, switchMap} from 'rxjs/operators';
 
@@ -27,15 +28,28 @@ import {UserService, Guild} from './user/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   selectedGuild?: Guild;
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly router: Router) {}
 
-  profile$ = this.userService.isAuthenticated().pipe(
+  /** Verifies who is the current authenticated user. */
+  private readonly authenticated$ = this.userService.isAuthenticated().pipe(shareReplay(1));
+
+  /** Retrieves the profile of the current active user. */
+  readonly profile$ = this.authenticated$.pipe(
     // Emit null if the user is not authenticated, otherwise get its profile.
     switchMap(logged => (logged ? this.userService.getUserProfile() : of(null))),
     // Share the result of the profile.
     shareReplay(1)
   );
+
+  /** Redirects the user on depending of the authentication check. */
+  ngOnInit() {
+    this.authenticated$.subscribe(isAuthenticated => {
+      if (!isAuthenticated) {
+        this.router.navigate(['/landing']);
+      }
+    });
+  }
 }

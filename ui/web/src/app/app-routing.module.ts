@@ -19,11 +19,14 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 import {StylesDemoComponent} from './common/styles-demo/styles-demo.component';
+import {DemoModule} from './common/common.module';
+import {LandingComponent} from './landing/landing.component';
+import {LandingModule} from './landing/landing.module';
 
 const routes: Routes = [{path: 'demo/styles-palette', component: StylesDemoComponent}];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [DemoModule, LandingModule, RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
