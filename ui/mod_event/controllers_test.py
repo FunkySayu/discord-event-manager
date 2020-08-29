@@ -20,7 +20,7 @@ from pytz import utc
 
 from ui.common.testing import ControllerTestFixture
 from ui.mod_event.controllers import mod_event
-from ui.mod_event.event import Event, RepetitionFrequency
+from ui.mod_event.event import Event, EventRepetitionFrequency
 from ui.mod_guild.guild import Guild
 
 
@@ -40,7 +40,7 @@ class TestEventControllers(ControllerTestFixture, unittest.TestCase):
         self.db.session.add(Event(
             guild, 'Two',
             datetime(2020, 10, 10, 11, 0, tzinfo=utc),
-            repetition=RepetitionFrequency.weekly))
+            repetition=EventRepetitionFrequency.weekly))
         self.db.session.commit()
 
     def test_get_all_events(self):
