@@ -22,7 +22,7 @@ from datetime import datetime
 from pytz import utc, timezone
 
 from ui.common.testing import DatabaseTestFixture
-from ui.mod_event.event import Event, RepetitionFrequency
+from ui.mod_event.event import Event, EventRepetitionFrequency
 from ui.mod_guild.guild import Guild
 
 
@@ -97,7 +97,7 @@ class TestEventModel(DatabaseTestFixture, unittest.TestCase):
             'Some title',
             datetime(2020, 10, 10, 10, 10, tzinfo=timezone('Europe/Paris')),
             'Some description',
-            RepetitionFrequency.daily)
+            EventRepetitionFrequency.daily)
 
         next_event = event.create_next_event()
 
@@ -122,8 +122,8 @@ class TestEventModel(DatabaseTestFixture, unittest.TestCase):
 
     def test_all_repetition_frequency_have_timedelta(self):
         """Ensures we never raise NotImplementedError"""
-        for value in RepetitionFrequency:
-            if value is RepetitionFrequency.not_repeated:
+        for value in EventRepetitionFrequency:
+            if value is EventRepetitionFrequency.not_repeated:
                 self.assertIsNone(value.to_timedelta())
             else:
                 self.assertIsNotNone(value.to_timedelta())

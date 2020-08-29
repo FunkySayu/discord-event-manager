@@ -30,14 +30,14 @@ from ui.base import db, BaseSerializerMixin
 from ui.mod_guild.guild import Guild
 
 
-class RepetitionFrequency(Enum):
+class EventRepetitionFrequency(Enum):
     """Frequency at which an event should be repeated."""
     not_repeated = 'NOT_REPEATED'
     daily = 'DAILY'
     weekly = 'WEEKLY'
 
     @classmethod
-    def _missing_(cls, value: Any) -> RepetitionFrequency:
+    def _missing_(cls, value: Any) -> EventRepetitionFrequency:
         """Mark the event as not repeated if the value is missing."""
         logging.warning(
             'invalid frequency provided "%r"; falling back to unrepeated.',
@@ -46,11 +46,11 @@ class RepetitionFrequency(Enum):
 
     def to_timedelta(self) -> Optional[timedelta]:
         """Returns the time delta from the repetition."""
-        if self == RepetitionFrequency.not_repeated:
+        if self == EventRepetitionFrequency.not_repeated:
             return None
-        if self == RepetitionFrequency.daily:
+        if self == EventRepetitionFrequency.daily:
             return timedelta(days=1)
-        if self == RepetitionFrequency.weekly:
+        if self == EventRepetitionFrequency.weekly:
             return timedelta(weeks=1)
         raise NotImplementedError(
             '%r does not have an associated timedelta.', self)
@@ -99,7 +99,7 @@ class Event(db.Model, BaseSerializerMixin):
 
     _date_utc = db.Column(db.DateTime)
     timezone_name = db.Column(db.String)
-    repetition = db.Column(db.Enum(RepetitionFrequency))
+    repetition = db.Column(db.Enum(EventRepetitionFrequency))
 
     # Relationships
     guild_id = db.Column(db.Integer, db.ForeignKey('guild.id'))
@@ -107,7 +107,7 @@ class Event(db.Model, BaseSerializerMixin):
 
     def __init__(self, guild: Guild,
                  title: str, date: datetime, description: str = "",
-                 repetition=RepetitionFrequency.not_repeated,
+                 repetition=EventRepetitionFrequency.not_repeated,
                  parent: Event = None):
         self.guild = guild
         self.guild_id = guild.id

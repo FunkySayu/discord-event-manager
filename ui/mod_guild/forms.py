@@ -22,7 +22,7 @@ from typing import Type
 from wtforms import Form, DateTimeField, StringField, SelectField, validators
 
 from ui.mod_guild.guild import Guild
-from ui.mod_event.event import Event, RepetitionFrequency
+from ui.mod_event.event import Event, EventRepetitionFrequency
 
 
 class EnumField(SelectField):
@@ -51,8 +51,8 @@ class EventCreationForm(Form):
     ])
     description = StringField('Description', [validators.Length(max=2000)])
     date = DateTimeField('Date')
-    repetition = EnumField('Repetition frequency', enum=RepetitionFrequency,
-                           default=RepetitionFrequency.not_repeated.value)
+    repetition = EnumField('Repetition frequency', enum=EventRepetitionFrequency,
+                           default=EventRepetitionFrequency.not_repeated.value)
     forced_timezone = StringField('Forced timezone')
 
     def convert_to_event(self, guild: Guild) -> Event:
