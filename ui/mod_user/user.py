@@ -1,4 +1,4 @@
-"""Database model declaration for a guild and a WoW guild."""
+"""Database model declaration for an application user."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ import discord
 from enum import Enum
 from flask_sqlalchemy import BaseQuery
 from requests_oauthlib import OAuth2Session
-from typing import List, Dict, Optional
+from typing import List, Optional
 
 from config.discord import api_base_url
 from ui.base import db, BaseSerializerMixin
