@@ -68,7 +68,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         self.assertEqual(guild.discord_name, 'Beep Beep I am a Sheep')
         self.assertEqual(guild.id, 123456789)
         self.assertEqual(
-            guild.icon_href,
+            guild.icon_url,
             'https://cdn.discordapp.com/icons/123456789/987654321.webp'
             '?size=1024')
         self.assertEqual(guild.bot_present, True)

@@ -70,7 +70,7 @@ class Guild(db.Model, BaseSerializerMixin):
     :attr date_created: The moment the guild was registered in our storage.
     :attr date_modified: The last update performed on our storage.
     :attr discord_name: The name of the guild as per Discord.
-    :attr icon_href: Address of the Discord Icon representing this server.
+    :attr icon_url: Address of the Discord Icon representing this server.
     :attr bot_present: Whether the bot is present in the discord guild.
     """
     __tablename__ = 'guild'
@@ -91,7 +91,7 @@ class Guild(db.Model, BaseSerializerMixin):
         onupdate=db.func.current_timestamp())
 
     discord_name = db.Column(db.String)
-    icon_href = db.Column(db.String)
+    icon_url = db.Column(db.String)
     bot_present = db.Column(db.Boolean)
 
     # Relationships
@@ -129,7 +129,7 @@ class WowGuild(db.Model, BaseSerializerMixin):
     :attr realm_name: The localized version of the guild's realm.
     :attr name: The localized version of the guild name.
     :attr faction: Faction the guild is into.
-    :attr icon_href: Address of the icon of this guild.
+    :attr icon_url: Address of the icon of this guild.
     :attr guild: back populated guild associated to this wow guild.
     """
     __tablename__ = 'wow_guild'
