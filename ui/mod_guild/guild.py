@@ -106,7 +106,7 @@ class Guild(db.Model, BaseSerializerMixin):
         """Gets the values from the Discord record of a guild."""
         self.id = discord_guild.id
         self.discord_name = discord_guild.name
-        self.icon_href = str(discord_guild.icon_url)
+        self.icon_url = str(discord_guild.icon_url)
         self.bot_present = True
 
 
