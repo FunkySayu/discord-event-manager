@@ -160,7 +160,7 @@ class WowGuild(db.Model, BaseSerializerMixin):
     realm_name = db.Column(db.String)
     name = db.Column(db.String)
     faction = db.Column(db.Enum(Faction))
-    icon_href = db.Column(db.String)
+    icon_url = db.Column(db.String)
 
     # Relationships
     guild = db.relationship('Guild', uselist=False,
@@ -192,6 +192,6 @@ class WowGuild(db.Model, BaseSerializerMixin):
         crest_data = handler.get_guild_crest_emblem_media(
             region.value, region.static_namespace,
             data['crest']['emblem']['id'])
-        guild.icon_href = crest_data['assets'][0]['value']
+        guild.icon_url = crest_data['assets'][0]['value']
 
         return guild
