@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 
-import {Component} from '@angular/core';
+/** All supported color palettes for the application. */
+export const ALL_PALETTES = ['red', 'orange', 'yellow', 'green', 'blue', 'grey'];
 
-@Component({
-  selector: 'app-styles-demo',
-  templateUrl: './styles-demo.component.html',
-  styleUrls: ['./styles-demo.component.scss'],
-})
-export class StylesDemoComponent {
-  readonly palettes = ['red', 'orange', 'yellow', 'green', 'blue', 'grey'];
-  readonly weights = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
-}
+/** All supported color weights for the application. */
+export const ALL_WEIGHTS = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];

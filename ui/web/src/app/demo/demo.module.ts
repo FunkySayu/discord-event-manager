@@ -7,7 +7,7 @@
  * You may obtain a copy of the License at
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
-
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,20 +16,12 @@
  */
 
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-
-import {StylesDemoComponent} from './demo/styles/styles.component';
-import {DemoModule} from './demo/demo.module';
-import {LandingComponent} from './landing/landing.component';
-import {LandingModule} from './landing/landing.module';
-
-const routes: Routes = [
-  {path: 'demo/styles-palette', component: StylesDemoComponent},
-  {path: '', component: LandingComponent},
-];
+import {CommonModule} from '@angular/common';
+import {StylesDemoComponent} from './styles/styles.component';
 
 @NgModule({
-  imports: [DemoModule, LandingModule, RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  declarations: [StylesDemoComponent],
+  exports: [StylesDemoComponent],
+  imports: [CommonModule],
 })
-export class AppRoutingModule {}
+export class DemoModule {}
