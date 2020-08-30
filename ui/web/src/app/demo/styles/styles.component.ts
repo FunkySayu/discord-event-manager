@@ -15,13 +15,16 @@
  * limitations under the License.
  */
 
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {StylesDemoComponent} from './styles-demo/styles-demo.component';
+import {Component} from '@angular/core';
 
-@NgModule({
-  declarations: [StylesDemoComponent],
-  exports: [StylesDemoComponent],
-  imports: [CommonModule],
+import {ALL_PALETTES, ALL_WEIGHTS} from '../../common/colors';
+
+@Component({
+  selector: 'app-styles-demo',
+  templateUrl: './styles.component.html',
+  styleUrls: ['./styles.component.scss'],
 })
-export class DemoModule {}
+export class StylesDemoComponent {
+  readonly palettes = ALL_PALETTES;
+  readonly weights = ALL_WEIGHTS;
+}
