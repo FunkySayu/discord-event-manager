@@ -127,6 +127,6 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         self.assertEqual(guild.realm_name, 'Argent Dawn')
         self.assertEqual(guild.realm_slug, 'argent-dawn')
         self.assertEqual(guild.faction, Faction.alliance)
-        self.assertEqual(guild.icon_href,
+        self.assertEqual(guild.icon_url,
                          'https://render-eu.worldofwarcraft.com/'
                          'guild/tabards/emblem_114.png')

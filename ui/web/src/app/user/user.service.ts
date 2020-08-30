@@ -31,7 +31,7 @@ export declare enum Permission {
 export declare interface Guild {
   id?: number;
   discord_name?: string;
-  icon_href?: string;
+  icon_url?: string;
 }
 
 export declare interface GuildRelationship {
