@@ -5,7 +5,7 @@
   <ng-container *ngIf="profile">
     <button mat-button [matMenuTriggerFor]="guildMenu" class="guild-selection">
       <div class="button-wrapper">
-        <img [src]="selectedGuild?.icon_href" />
+        <img [src]="selectedGuild?.icon_url" />
         <span>{{ selectedGuild?.discord_name }}</span>
         <mat-icon class="subtle">keyboard_arrow_down</mat-icon>
       </div>
@@ -15,7 +15,7 @@
               (click)="onGuildSelected(relationship)"
               mat-menu-item>
         <div class="button-wrapper">
-          <img [src]="relationship.guild?.icon_href" />
+          <img [src]="relationship.guild?.icon_url" />
           <span>{{ relationship.guild?.discord_name }}</span>
         </div>
       </button>
