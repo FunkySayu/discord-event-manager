@@ -22,14 +22,17 @@ import {StylesDemoComponent} from './demo/styles/styles.component';
 import {DemoModule} from './demo/demo.module';
 import {LandingComponent} from './landing/landing.component';
 import {LandingModule} from './landing/landing.module';
+import {GuildProfileComponent} from './guild/guild-profile.component';
+import {GuildModule} from './guild/guild.module';
 
 const routes: Routes = [
   {path: 'demo/styles-palette', component: StylesDemoComponent},
+  {path: 'guild/:guildId', component: GuildProfileComponent},
   {path: '', component: LandingComponent},
 ];
 
 @NgModule({
-  imports: [DemoModule, LandingModule, RouterModule.forRoot(routes)],
+  imports: [DemoModule, GuildModule, LandingModule, RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

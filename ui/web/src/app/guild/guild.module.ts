@@ -15,21 +15,19 @@
  * limitations under the License.
  */
 
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CommonModule} from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterModule} from '@angular/router';
 
-import {UserModule} from './user/user.module';
-import {HeaderModule} from './header/header.module';
-import {GuildModule} from './guild/guild.module';
-
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
+import {GuildProfileComponent} from './guild-profile.component';
+import {GuildService} from './guild.service';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [AppRoutingModule, BrowserAnimationsModule, BrowserModule, GuildModule, HeaderModule, UserModule],
-  providers: [],
-  bootstrap: [AppComponent],
+  declarations: [GuildProfileComponent],
+  imports: [BrowserModule, CommonModule, HttpClientModule, RouterModule],
+  exports: [GuildProfileComponent],
+  providers: [GuildService],
 })
-export class AppModule {}
+export class GuildModule {}

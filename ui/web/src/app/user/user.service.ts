@@ -20,18 +20,13 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map, mapTo} from 'rxjs/operators';
 
+import {Guild} from '../guild/guild.service';
+
 /** Permission level of an user over a guild. */
 export declare enum Permission {
   NONE = 'NONE',
   VISIBLE = 'VISIBLE',
   OWNER = 'OWNER',
-}
-
-/** A Discord guild information. */
-export declare interface Guild {
-  id?: number;
-  discord_name?: string;
-  icon_url?: string;
 }
 
 export declare interface GuildRelationship {
