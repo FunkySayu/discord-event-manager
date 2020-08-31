@@ -22,11 +22,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
 
+import {AppCommonModule} from '../common/common.module';
 import {HeaderComponent} from './header.component';
 
 @NgModule({
   declarations: [HeaderComponent],
   exports: [HeaderComponent],
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule],
+  imports: [AppCommonModule, CommonModule, MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule],
 })
 export class HeaderModule {}

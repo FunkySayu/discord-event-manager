@@ -1,0 +1,7 @@
+<div class="icon-container">
+  <img *ngIf="src" [src]="src" [alt]="alt" />
+
+  <div *ngIf="!src" class="letter-container">
+    <span>{{ alt ? alt[0] : '?' | titlecase }}</span>
+  </div>
+</div>

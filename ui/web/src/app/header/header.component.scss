@@ -31,7 +31,7 @@ mat-toolbar {
     background-color: $discord-color;
     color: $white;
 
-    img {
+    app-avatar {
       margin: 0 6px 0 -4px;
       height: 30px;
       width: 30px;
@@ -51,6 +51,7 @@ mat-toolbar {
   display: flex;
   align-items: center;
 
+  app-avatar,
   img {
     margin: 0 6px 0 -4px;
     width: 24px;
@@ -71,11 +72,13 @@ mat-toolbar {
     }
   }
 
+  app-avatar:last-child,
   img:last-child,
   mat-icon:last-child {
     margin-right: -4px;
   }
 
+  app-avatar:first-child,
   img:first-child,
   mat-icon:first-child {
     margin-left: -4px;

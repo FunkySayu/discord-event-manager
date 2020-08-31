@@ -15,24 +15,14 @@
  * limitations under the License.
  */
 
-import {Component, Input} from '@angular/core';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-const DISCORD_CDN = 'https://cdn.discordapp.com';
+import {AvatarComponent} from './avatar/avatar.component';
 
-@Component({
-  selector: 'discord-icon',
-  templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss'],
+@NgModule({
+  imports: [CommonModule],
+  declarations: [AvatarComponent],
+  exports: [AvatarComponent],
 })
-export class IconComponent {
-  @Input() type?: 'icons' | 'avatars';
-  @Input() id?: string;
-  @Input() icon?: string;
-
-  get src(): string | undefined {
-    if (!this.type || !this.id || !this.icon) {
-      return undefined;
-    }
-    return `${DISCORD_CDN}/${this.type}/${this.id}/${this.icon}.png`;
-  }
-}
+export class AppCommonModule {}

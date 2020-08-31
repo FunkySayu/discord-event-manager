@@ -15,12 +15,16 @@
  * limitations under the License.
  */
 
-:host {
-  line-height: normal;
-}
+import {Component, Input} from '@angular/core';
 
-img {
-  width: inherit;
-  height: inherit;
-  border-radius: 100px;
+@Component({
+  selector: 'app-avatar',
+  templateUrl: './avatar.component.html',
+  styleUrls: ['./avatar.component.scss'],
+})
+export class AvatarComponent {
+  /** Address of the icon. */
+  @Input() src?: string;
+  /** Alternative string to display if the icon is missing. */
+  @Input() alt?: string;
 }
