@@ -81,7 +81,7 @@ class Guild(db.Model, BaseSerializerMixin):
     # Serialization options
     serialize_rules = ('-wow_guild_id',)
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     date_created = db.Column(
         db.DateTime,
         default=db.func.current_timestamp())
@@ -104,7 +104,7 @@ class Guild(db.Model, BaseSerializerMixin):
 
     def resync_from_discord_guild(self, discord_guild: discord.Guild):
         """Gets the values from the Discord record of a guild."""
-        self.id = discord_guild.id
+        self.id = str(discord_guild.id)
         self.discord_name = discord_guild.name
         self.icon_url = str(discord_guild.icon_url)
         self.bot_present = True

@@ -18,7 +18,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {UserService, UserProfile, Guild, GuildRelationship} from 'src/app/user/user.service';
+import {UserService, UserProfile, GuildRelationship} from 'src/app/user/user.service';
+import {Guild} from 'src/app/guild/guild.service';
 
 @Component({
   selector: 'app-header',

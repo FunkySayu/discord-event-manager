@@ -20,7 +20,8 @@ import {Router} from '@angular/router';
 import {of} from 'rxjs';
 import {shareReplay, switchMap} from 'rxjs/operators';
 
-import {UserService, Guild} from './user/user.service';
+import {UserService} from './user/user.service';
+import {Guild} from './guild/guild.service';
 
 /** Base component of the application. */
 @Component({
