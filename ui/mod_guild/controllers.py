@@ -52,7 +52,7 @@ def get_all_guilds():
     return jsonify(guilds=[g.to_dict(rules=('-events',)) for g in guilds])
 
 
-@mod_guild.route('/<str:guild_id>')
+@mod_guild.route('/<guild_id>')
 def get_one_guild(guild_id: int):
     """Returns a guild from its ID as well as its associated events."""
     # TODO(funkysayu): Implement the visibility limit.
@@ -62,7 +62,7 @@ def get_one_guild(guild_id: int):
     return jsonify(guild.to_dict())
 
 
-@mod_guild.route('/<str:guild_id>/events')
+@mod_guild.route('/<guild_id>/events')
 def get_guild_events(guild_id: int):
     """Returns the events scheduled for this guild."""
     # TODO(funkysayu): Implement the user visibility limit.
@@ -70,7 +70,7 @@ def get_guild_events(guild_id: int):
     return jsonify(events=[e.to_dict() for e in events])
 
 
-@mod_guild.route('/<str:guild_id>/events', methods=['PUT'])
+@mod_guild.route('/<guild_id>/events', methods=['PUT'])
 def create_guild_event(guild_id: int):
     """Creates an event for this guild."""
     # TODO(funkysayu): Implement the visibility limit.
