@@ -19,6 +19,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {map, switchMap} from 'rxjs/operators';
 
+import {Event} from 'src/app/events/events.service';
 import {GuildService} from './guild.service';
 
 /** Routed component presenting the profile of a guild. */
@@ -36,4 +37,9 @@ export class GuildProfileComponent {
     // Get the corresponding guild information
     switchMap(guildId => this.guildService.getGuild(guildId))
   );
+
+  /** Helps Angular keeping track of which event it already rendered. */
+  trackByEventId(index: number, event: Event): string {
+    return event.id;
+  }
 }
