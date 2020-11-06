@@ -64,7 +64,7 @@ export class EventsService {
    * This assumes the event is a repeated one; if it is not, the server will fail with
    * a 412 error.
    */
-   getNextEvent(id: string): Observable<Event> {
-     return this.http.get<Event>(`/api/events/${id}:next`);
-   }
+  getNextEvent(id: string): Observable<Event> {
+    return this.http.get<Event>(`/api/events/${id}:next`);
+  }
 }
