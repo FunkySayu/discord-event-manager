@@ -167,14 +167,15 @@ class Event(db.Model, BaseSerializerMixin):
         """
         if self.repetition is None:
             raise ValueError("Event %r is not repeated.", self)
-        # As per datetime documentation, no time zone adjustments are done
-        # even if the input is an aware object (i.e. has a timezone
-        # associated). This operation will not modify the original hour of the
-        # event.
         delta = self.repetition.to_timedelta()
         if delta is None:
             raise ValueError(
                 "Cannot create the next event of a non-repeated event.")
+
+        # As per datetime documentation, no time zone adjustments are done
+        # even if the input is an aware object (i.e. has a timezone
+        # associated). This operation will not modify the original hour of the
+        # event.
         next_date = self.date + delta
 
         return Event(self.guild, self.title, next_date,
