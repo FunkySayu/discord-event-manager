@@ -1,1 +1,40 @@
-<pre>{{ guild$ | async | json }}</pre>
+<ng-container *ngIf="guild$ | async as guild">
+  <aside id="guild-card">
+    <div class="avatar-container">
+      <app-avatar [src]="guild.icon_url" [alt]="guild.discord_name"></app-avatar>
+    </div>
+    <div class="card-content">
+      <h1>{{ guild.discord_name }}</h1>
+      <div class="role-listing">
+        <span>42</span>
+        <img src="/assets/blizzard/roles/melee.png" alt="Melee DPS" />
+
+        <span>42</span>
+        <img src="/assets/blizzard/roles/ranged.png" alt="Ranged DPS" />
+
+        <span>42</span>
+        <img src="/assets/blizzard/roles/heal.png" alt="Healers" />
+
+        <span>42</span>
+        <img src="/assets/blizzard/roles/tank.png" alt="Tanks" />
+      </div>
+    </div>
+  </aside>
+
+  <div id="guild-event-container">
+    <section>
+      <h1>Events</h1>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+    </section>
+
+    <h1>Debug</h1>
+    <pre>{{ guild | json }}</pre>
+  </div>
+
+  <aside id="user-card">
+    <h1>My characters</h1>
+  </aside>
+</ng-container>
