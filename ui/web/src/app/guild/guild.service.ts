@@ -19,7 +19,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-export type Timestamp = string;
+import {Timestamp} from 'src/app/common/typing';
 
 export declare interface Guild {
   id?: string;
