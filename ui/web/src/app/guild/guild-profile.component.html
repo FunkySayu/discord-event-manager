@@ -24,10 +24,7 @@
   <div id="guild-event-container">
     <section>
       <h1>Events</h1>
-      <p>1</p>
-      <p>2</p>
-      <p>3</p>
-      <p>4</p>
+      <pre *ngFor="let event of guild.events; trackBy: trackByEventId">{{ event | json }}</pre>
     </section>
 
     <h1>Debug</h1>
