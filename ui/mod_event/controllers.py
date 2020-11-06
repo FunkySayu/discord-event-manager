@@ -62,7 +62,12 @@ def get_next_event(event_id: int):
     event = Event.query.filter_by(id=event_id).one_or_none()
     if event is None:
         return jsonify(error='Event %r not found' % event_id), 404
-    next_event = event.create_next_event()
+
+    try:
+        next_event = event.create_next_event()
+    except ValueError:
+        return jsonify(
+            error='Cannot create the next occurrence of a non-repeated event.'), 412
 
     # Ensure we have an event generation limit.
     if next_event.date - event.date > MAX_TIMEDELTA_EVENT_GENERATION:
