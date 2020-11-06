@@ -21,12 +21,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 
+import {AppCommonModule} from '../common/common.module';
+
 import {GuildProfileComponent} from './guild-profile.component';
 import {GuildService} from './guild.service';
 
 @NgModule({
   declarations: [GuildProfileComponent],
-  imports: [BrowserModule, CommonModule, HttpClientModule, RouterModule],
+  imports: [AppCommonModule, BrowserModule, CommonModule, HttpClientModule, RouterModule],
   exports: [GuildProfileComponent],
   providers: [GuildService],
 })

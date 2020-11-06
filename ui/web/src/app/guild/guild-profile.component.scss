@@ -14,3 +14,91 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@import 'src/app/common/colors';
+
+$content-size-max: 1800px;
+$content-size-min: 1024px;
+
+:host {
+  width: 95%;
+  min-width: $content-size-min;
+  max-width: $content-size-max;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: row;
+
+  // High level guild description.
+
+  aside#guild-card {
+    width: 30%;
+    max-width: 300px;
+    box-sizing: border-box;
+    margin: 0 4px;
+
+    .avatar-container {
+      height: 100px;
+      width: 100px;
+      padding: 5px;
+      margin: auto;
+      border-radius: 1000px;
+      position: relative;
+      background-color: $white;
+      z-index: 99;
+
+      app-avatar {
+        height: 90px;
+        width: 90px;
+        border-size: 4px;
+      }
+    }
+
+    .card-content {
+      border-top: 2px solid material-color('grey', '300');
+      border-radius: 4px;
+      padding: 20px 5px;
+      position: relative;
+      top: -25px;
+
+      h1 {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-align: center;
+        margin: 4px;
+      }
+
+      .role-listing {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+
+        img {
+          width: 20px;
+          height: 20px;
+          margin-left: 4px;
+
+          &:not(:last-child) {
+            margin-right: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  // Main container.
+
+  div#guild-event-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+  }
+
+  // User profile in relation to the guild.
+
+  aside#user-card {
+    display: flex;
+    flex-direction: row;
+  }
+}
