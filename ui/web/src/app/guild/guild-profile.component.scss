@@ -18,11 +18,9 @@
 @import 'src/app/common/colors';
 
 $content-size-max: 1800px;
-$content-size-min: 1024px;
 
 :host {
   width: 95%;
-  min-width: $content-size-min;
   max-width: $content-size-max;
   margin: 10px auto;
   display: flex;
