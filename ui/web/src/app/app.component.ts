@@ -53,4 +53,12 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
+  /** Navigates to the guild profile. */
+  navigateToGuild(guild?: Guild) {
+    if (!guild?.id) {
+      return;
+    }
+    this.router.navigate(['guild', guild.id]);
+  }
 }
