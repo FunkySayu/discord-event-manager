@@ -16,7 +16,7 @@
  */
 
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import {assertNonNull} from 'src/app/common/asserts';
 import {Timezone, ALL_TIMEZONES, TIMEZONE_NAMES} from 'src/app/common/time';
@@ -44,11 +44,21 @@ export class EventCreationDialogComponent {
   readonly TIMEZONE_NAMES = TIMEZONE_NAMES;
   readonly TODAY = new Date();
 
+  /** Currently selected timezone. */
   timezone: Timezone;
 
-  constructor(@Inject(MAT_DIALOG_DATA) readonly data: EventCreationDialogData) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) readonly data: EventCreationDialogData,
+    private readonly dialogRef: MatDialogRef<EventCreationDialogComponent>
+  ) {
     assertNonNull(this.data, 'EventCreationDialogComponent requires data to be passed.');
 
     this.timezone = this.data.timezone ?? ALL_TIMEZONES[0];
+  }
+
+  /** Attempts to create the event. Blocks the modal from closing, and log any potential errors. */
+  createEvent() {
+    const event: Event = {}; // TODO(funkysayu): fill this from the form values.
+    this.dialogRef.close(event);
   }
 }
