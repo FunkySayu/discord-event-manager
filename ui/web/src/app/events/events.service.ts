@@ -19,7 +19,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-import {Timestamp} from 'src/app/common/typing';
+import {Timestamp} from 'src/app/common/time';
 
 /**
  * The repetition frequency of an event.
