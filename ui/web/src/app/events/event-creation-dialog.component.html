@@ -1,6 +1,45 @@
-<h1 mat-dialog-title>Hello</h1>
+<h1 mat-dialog-title>Create an event</h1>
 
-<mat-dialog-content><pre>{{ data | json }}</pre></mat-dialog-content>
+<mat-dialog-content>
+  <section>
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput />
+    </mat-form-field>
+  </section>
+
+  <section>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+  </section>
+
+  <section>
+    <mat-form-field appearance="fill">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" [min]="TODAY">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <ngx-mat-timepicker [showSeconds]="false">
+    </ngx-mat-timepicker>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Timezone</mat-label>
+      <mat-select>
+        <mat-option value="default">Use server's default</mat-option>
+        <mat-option
+          *ngFor="let timezone of ALL_TIMEZONES"
+          [value]="timezone">{{ TIMEZONE_NAMES[timezone] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+
+  <br>
+  <pre>{{ data | json }}</pre>
+</mat-dialog-content>
 
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>

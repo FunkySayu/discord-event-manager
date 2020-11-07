@@ -42,6 +42,7 @@ export interface CreatedEvent {
 export class EventCreationDialogComponent {
   readonly ALL_TIMEZONES = ALL_TIMEZONES;
   readonly TIMEZONE_NAMES = TIMEZONE_NAMES;
+  readonly TODAY = new Date();
 
   constructor(@Inject(MAT_DIALOG_DATA) readonly data: EventCreationDialogData) {
     assertNonNull(this.data, 'EventCreationDialogComponent requires data to be passed.');
