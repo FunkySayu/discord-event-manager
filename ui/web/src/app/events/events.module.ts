@@ -16,12 +16,18 @@
  */
 
 import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import {EventsService} from './events.service';
+import {EventCreationDialogComponent} from './event-creation-dialog.component';
 
 @NgModule({
-  imports: [HttpClientModule],
+  imports: [CommonModule, HttpClientModule, MatButtonModule, MatDialogModule],
   providers: [EventsService],
+  declarations: [EventCreationDialogComponent],
+  entryComponents: [EventCreationDialogComponent],
 })
 export class EventsModule {}
