@@ -17,3 +17,22 @@
 
 /** Represents a timestamp record returned by the server. */
 export type Timestamp = string;
+
+
+/** Enumerator over all supported timezones within the application. */
+export enum Timezone {
+  UTC = 'UTC',
+  EUROPE_PARIS = 'Europe/Paris',
+}
+
+/** List of all possible values for the timezones in the application. */
+export const ALL_TIMEZONES = [
+  Timezone.UTC,
+  Timezone.EUROPE_PARIS,
+];
+
+/** Human readable names for each timezones. */
+export const TIMEZONE_NAMES: Record<Timezone, string> = {
+  [Timezone.UTC]: 'UTC',
+  [Timezone.EUROPE_PARIS]: 'Europe/Paris',
+};

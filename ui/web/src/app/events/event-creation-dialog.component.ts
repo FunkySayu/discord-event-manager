@@ -19,6 +19,8 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import {assertNonNull} from 'src/app/common/asserts';
+import {ALL_TIMEZONES, TIMEZONE_NAMES} from 'src/app/common/time';
+
 import {Event} from './events.service';
 
 /** Input provided to the modal, pre-configuring its inputs. */
@@ -38,6 +40,9 @@ export interface CreatedEvent {
   styleUrls: ['./event-creation-dialog.component.scss'],
 })
 export class EventCreationDialogComponent {
+  readonly ALL_TIMEZONES = ALL_TIMEZONES;
+  readonly TIMEZONE_NAMES = TIMEZONE_NAMES;
+
   constructor(@Inject(MAT_DIALOG_DATA) readonly data: EventCreationDialogData) {
     assertNonNull(this.data, 'EventCreationDialogComponent requires data to be passed.');
   }
