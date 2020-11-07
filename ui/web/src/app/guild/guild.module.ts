@@ -19,8 +19,12 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+
 import {RouterModule} from '@angular/router';
 
+import {EventsModule} from 'src/app/events/events.module';
 import {AppCommonModule} from '../common/common.module';
 
 import {GuildProfileComponent} from './guild-profile.component';
@@ -28,7 +32,16 @@ import {GuildService} from './guild.service';
 
 @NgModule({
   declarations: [GuildProfileComponent],
-  imports: [AppCommonModule, BrowserModule, CommonModule, HttpClientModule, RouterModule],
+  imports: [
+    AppCommonModule,
+    BrowserModule,
+    CommonModule,
+    EventsModule,
+    HttpClientModule,
+    MatButtonModule,
+    MatDialogModule,
+    RouterModule,
+  ],
   exports: [GuildProfileComponent],
   providers: [GuildService],
 })

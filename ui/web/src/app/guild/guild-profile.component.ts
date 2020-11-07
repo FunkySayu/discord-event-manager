@@ -17,9 +17,11 @@
 
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 import {map, switchMap} from 'rxjs/operators';
 
 import {Event} from 'src/app/events/events.service';
+import {EventCreationDialogComponent} from 'src/app/events/event-creation-dialog.component';
 import {GuildService} from './guild.service';
 
 /** Routed component presenting the profile of a guild. */
@@ -29,7 +31,11 @@ import {GuildService} from './guild.service';
   styleUrls: ['./guild-profile.component.scss'],
 })
 export class GuildProfileComponent {
-  constructor(private readonly guildService: GuildService, private readonly route: ActivatedRoute) {}
+  constructor(
+    private readonly guildService: GuildService,
+    private readonly route: ActivatedRoute,
+    private readonly dialog: MatDialog
+  ) {}
 
   readonly guild$ = this.route.paramMap.pipe(
     // Get guild ID we are currently browsing
@@ -37,6 +43,14 @@ export class GuildProfileComponent {
     // Get the corresponding guild information
     switchMap(guildId => this.guildService.getGuild(guildId))
   );
+
+  openCreateEventDialog() {
+    const dialogRef = this.dialog.open(EventCreationDialogComponent, {data: {}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog results: ${result}`);
+    });
+  }
 
   /** Helps Angular keeping track of which event it already rendered. */
   trackByEventId(index: number, event: Event): string {
