@@ -25,6 +25,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatIconModule} from '@angular/material/icon';
 import {
   NgxMatDatetimePickerModule,
   NgxMatTimepickerModule,
@@ -42,6 +43,7 @@ import {EventCreationDialogComponent} from './event-creation-dialog.component';
     MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatNativeDateModule,
     MatSelectModule,

@@ -19,14 +19,14 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import {assertNonNull} from 'src/app/common/asserts';
-import {ALL_TIMEZONES, TIMEZONE_NAMES} from 'src/app/common/time';
+import {Timezone, ALL_TIMEZONES, TIMEZONE_NAMES} from 'src/app/common/time';
 
 import {Event} from './events.service';
 
 /** Input provided to the modal, pre-configuring its inputs. */
 export interface EventCreationDialogData {
   /** The default timezone to use. */
-  timezone?: string;
+  timezone?: Timezone;
 }
 
 /** Created event by the dialog. */
@@ -44,7 +44,11 @@ export class EventCreationDialogComponent {
   readonly TIMEZONE_NAMES = TIMEZONE_NAMES;
   readonly TODAY = new Date();
 
+  timezone: Timezone;
+
   constructor(@Inject(MAT_DIALOG_DATA) readonly data: EventCreationDialogData) {
     assertNonNull(this.data, 'EventCreationDialogComponent requires data to be passed.');
+
+    this.timezone = this.data.timezone ?? ALL_TIMEZONES[0];
   }
 }

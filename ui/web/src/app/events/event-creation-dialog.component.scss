@@ -17,8 +17,30 @@
 
 @import 'src/app/common/colors';
 
+h1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .spacer {
+    flex-grow: 1;
+  }
+}
+
 section {
-  input {
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+
+  mat-form-field {
+    flex-grow: 1;
+  }
+
+  &.date-selection {
+
+    mat-form-field.date-form-field {
+      width: 140px;
+      margin-right: 16px;
+    }
   }
 }
