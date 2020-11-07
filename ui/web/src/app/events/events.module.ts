@@ -26,11 +26,6 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatTimepickerModule,
-  NgxMatNativeDateModule,
-} from '@angular-material-components/datetime-picker';
 
 import {EventsService} from './events.service';
 import {EventCreationDialogComponent} from './event-creation-dialog.component';
@@ -47,9 +42,6 @@ import {EventCreationDialogComponent} from './event-creation-dialog.component';
     MatInputModule,
     MatNativeDateModule,
     MatSelectModule,
-    NgxMatTimepickerModule,
-    // TODO(funkysayu): Seems it should be using moments?
-    NgxMatNativeDateModule,
   ],
   providers: [EventsService],
   declarations: [EventCreationDialogComponent],
