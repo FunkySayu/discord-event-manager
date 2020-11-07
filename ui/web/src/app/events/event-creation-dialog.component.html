@@ -1,35 +1,38 @@
-<h1 mat-dialog-title>Create an event</h1>
+<h1 mat-dialog-title>
+  <span>Create an event</span>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</h1>
 
 <mat-dialog-content>
   <section>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>Title</mat-label>
       <input matInput />
     </mat-form-field>
   </section>
 
   <section>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>Description</mat-label>
       <textarea matInput></textarea>
     </mat-form-field>
   </section>
 
-  <section>
-    <mat-form-field appearance="fill">
+  <section class="date-selection">
+    <mat-form-field class="date-form-field" appearance="standard">
       <mat-label>Date</mat-label>
       <input matInput [matDatepicker]="picker" [min]="TODAY">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <ngx-mat-timepicker [showSeconds]="false">
+    <ngx-mat-timepicker [showSeconds]="false" [showSpinners]="false">
     </ngx-mat-timepicker>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard">
       <mat-label>Timezone</mat-label>
-      <mat-select>
-        <mat-option value="default">Use server's default</mat-option>
+      <mat-select [(value)]="timezone">
         <mat-option
           *ngFor="let timezone of ALL_TIMEZONES"
           [value]="timezone">{{ TIMEZONE_NAMES[timezone] }}</mat-option>
@@ -41,7 +44,6 @@
   <pre>{{ data | json }}</pre>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true">Create</button>
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">Create</button>
 </mat-dialog-actions>
