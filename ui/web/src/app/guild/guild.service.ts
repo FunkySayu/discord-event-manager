@@ -19,7 +19,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
+import {Event} from 'src/app/events/events.service';
 import {Timestamp} from 'src/app/common/time';
+import {HTTP_OPTIONS} from 'src/app/common/http';
 
 export declare interface Guild {
   id?: string;
@@ -36,7 +38,12 @@ export class GuildService {
   constructor(private readonly http: HttpClient) {}
 
   /** Returns the high level user profile. */
-  getGuild(id: string): Observable<Guild> {
-    return this.http.get<Guild>(`/api/guilds/${id}`);
+  getGuild(guildId: string): Observable<Guild> {
+    return this.http.get<Guild>(`/api/guilds/${guildId}`);
+  }
+
+  /** Creates an event for a given guild. */
+  createEvent(guildId: string, event: Event): Observable<Event> {
+    return this.http.put<Event>(`/api/guilds/${guildId}/events`, event, HTTP_OPTIONS);
   }
 }
