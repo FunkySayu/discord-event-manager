@@ -16,6 +16,7 @@
  */
 
 import {NgModule} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
@@ -42,6 +43,7 @@ import {EventCreationDialogComponent} from './event-creation-dialog.component';
     MatInputModule,
     MatNativeDateModule,
     MatSelectModule,
+    ReactiveFormsModule,
   ],
   providers: [EventsService],
   declarations: [EventCreationDialogComponent],
