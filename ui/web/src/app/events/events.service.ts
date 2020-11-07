@@ -39,6 +39,7 @@ export declare enum EventRepetitionFrequency {
  */
 export declare interface Event {
   id?: string;
+  date?: Timestamp;
   date_created?: Timestamp;
   date_modified?: Timestamp;
   parent_id?: string;

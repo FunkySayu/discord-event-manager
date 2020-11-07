@@ -32,3 +32,8 @@ export const TIMEZONE_NAMES: Record<Timezone, string> = {
   [Timezone.UTC]: 'UTC',
   [Timezone.EUROPE_PARIS]: 'Europe/Paris',
 };
+
+/** Naive transformation of a date to a timestamp. Note this does NOT take into consideration timezone! */
+export function naiveConvertDateToTimestamp(date: Date): Timestamp {
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}:00`;
+}
