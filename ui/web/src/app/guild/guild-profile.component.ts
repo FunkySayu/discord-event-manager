@@ -18,11 +18,11 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {map, switchMap} from 'rxjs/operators';
+import {filter, map, switchMap} from 'rxjs/operators';
 
 import {Event} from 'src/app/events/events.service';
 import {EventCreationDialogComponent} from 'src/app/events/event-creation-dialog.component';
-import {GuildService} from './guild.service';
+import {GuildService, Guild} from './guild.service';
 
 /** Routed component presenting the profile of a guild. */
 @Component({
@@ -44,11 +44,23 @@ export class GuildProfileComponent {
     switchMap(guildId => this.guildService.getGuild(guildId))
   );
 
-  openCreateEventDialog() {
+  openCreateEventDialog(guild: Guild) {
     const dialogRef = this.dialog.open(EventCreationDialogComponent, {data: {}});
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog results: ${result}`);
+    const creationPipeline = dialogRef.afterClosed().pipe(
+      // Only initiate some requests an event was provided.
+      filter(value => !!value),
+      // Initiate the creation of the event in the backend.
+      switchMap((event: Event) => this.guildService.createEvent(guild.id, event))
+    );
+
+    // TODO(funkysayu): Subscribe to the pipeline without caring much about the result.
+    // Ideally we should have a snackbar indicating loading of the request and an error
+    // handler somewhere.
+    // We should also force a reload of the guild whenever we get a positive result from
+    // the backend.
+    creationPipeline.subscribe(result => {
+      console.log(result);
     });
   }
 

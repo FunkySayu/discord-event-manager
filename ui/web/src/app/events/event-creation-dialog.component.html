@@ -36,11 +36,8 @@
       </mat-select>
     </mat-form-field>
   </section>
-
-  <br>
-  <pre>{{ data | json }}</pre>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" [mat-dialog-close]="true">Create</button>
+  <button mat-flat-button color="primary" (click)="createEvent()">Create</button>
 </mat-dialog-actions>
