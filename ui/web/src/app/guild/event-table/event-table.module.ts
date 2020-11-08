@@ -18,33 +18,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
 
-import {RouterModule} from '@angular/router';
+import {AppCommonModule} from 'src/app/common/common.module';
 
-import {EventsModule} from 'src/app/events/events.module';
-import {AppCommonModule} from '../common/common.module';
-
-import {GuildProfileComponent} from './guild-profile.component';
-import {GuildService} from './guild.service';
-import {GuildEventTableModule} from './event-table/event-table.module';
+import {GuildEventTableComponent} from './event-table.component';
 
 @NgModule({
-  declarations: [GuildProfileComponent],
   imports: [
     AppCommonModule,
     BrowserModule,
     CommonModule,
-    EventsModule,
-    GuildEventTableModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatDialogModule,
-    RouterModule,
   ],
-  exports: [GuildProfileComponent],
-  providers: [GuildService],
+  declarations: [GuildEventTableComponent],
+  exports: [GuildEventTableComponent],
 })
-export class GuildModule {}
+export class GuildEventTableModule {
+}

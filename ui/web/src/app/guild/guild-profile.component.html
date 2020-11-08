@@ -24,7 +24,7 @@
   <div id="guild-event-container">
     <section>
       <h1>Events</h1>
-      <pre *ngFor="let event of guild.events; trackBy: trackByEventId">{{ event | json }}</pre>
+      <guild-event-table [events]="guild.events"></guild-event-table>
       <button mat-button (click)="openCreateEventDialog(guild)">Create event</button>
     </section>
 
