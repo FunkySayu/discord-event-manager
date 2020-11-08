@@ -44,7 +44,7 @@ export const REPETITION_NAMES: Record<EventRepetitionFrequency, string> = {
   [EventRepetitionFrequency.NOT_REPEATED]: 'Not repeated',
   [EventRepetitionFrequency.DAILY]: 'Daily',
   [EventRepetitionFrequency.WEEKLY]: 'Weekly',
-}
+};
 
 /**
  * An event, as per the definition in the backend.
