@@ -20,7 +20,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {state, style, trigger} from '@angular/animations';
 
 import {Event} from 'src/app/events/events.service';
 import {EventCreationDialogComponent} from 'src/app/events/event-creation-dialog.component';
