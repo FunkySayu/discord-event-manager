@@ -31,6 +31,7 @@
       <mat-form-field appearance="standard">
         <mat-label>Timezone</mat-label>
         <mat-select [(value)]="timezone">
+          <mat-option value="SERVER_DEFAULT">Server's default</mat-option>
           <mat-option
             *ngFor="let timezone of ALL_TIMEZONES"
             [value]="timezone">{{ TIMEZONE_NAMES[timezone] }}</mat-option>

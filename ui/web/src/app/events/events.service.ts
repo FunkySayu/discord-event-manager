@@ -19,7 +19,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
-import {Timestamp} from 'src/app/common/time';
+import {Timestamp, Timezone} from 'src/app/common/time';
 
 /**
  * The repetition frequency of an event.
@@ -45,7 +45,7 @@ export declare interface Event {
   parent_id?: string;
   title?: string;
   description?: string;
-  timezone_name?: string;
+  timezone_name?: Timezone;
   repetition?: EventRepetitionFrequency;
 }
 
