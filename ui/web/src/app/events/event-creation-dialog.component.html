@@ -9,7 +9,10 @@
     <section>
       <mat-form-field appearance="standard">
         <mat-label>Title</mat-label>
-        <input matInput formControlName="title" />
+        <input matInput required formControlName="title" />
+        <mat-error *ngIf="formGroup.controls['title'].invalid">
+          Required, of length from 4 to 32 characters.
+        </mat-error>
       </mat-form-field>
     </section>
 
@@ -23,9 +26,19 @@
     <section class="date-selection">
       <mat-form-field class="date-form-field" appearance="standard">
         <mat-label>Date</mat-label>
-        <input matInput [matDatepicker]="picker" [min]="TODAY" formControlName="date">
+        <input matInput required [matDatepicker]="picker" [min]="TODAY" formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="time-form-field" appearance="standard">
+        <mat-label>Hours</mat-label>
+        <input matInput required formControlName="hours" type="number" [min]="0" [max]="23" />
+      </mat-form-field>
+
+      <mat-form-field class="time-form-field" appearance="standard">
+        <mat-label>Min.</mat-label>
+        <input matInput required formControlName="minutes" type="number" [min]="0" [max]="59" />
       </mat-form-field>
 
       <mat-form-field appearance="standard">
@@ -52,5 +65,5 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" (click)="createEvent()">Create</button>
+  <button mat-flat-button color="primary" (click)="createEvent()" [disabled]="!formGroup.valid">Create</button>
 </mat-dialog-actions>

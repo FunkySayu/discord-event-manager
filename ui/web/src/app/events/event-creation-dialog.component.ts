@@ -17,7 +17,7 @@
 
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {assertNonNull} from 'src/app/common/asserts';
 import {Timezone, ALL_TIMEZONES, TIMEZONE_NAMES, naiveConvertDateToTimestamp} from 'src/app/common/time';
@@ -49,9 +49,11 @@ export class EventCreationDialogComponent {
   readonly TODAY = new Date();
 
   readonly formGroup = new FormGroup({
-    title: new FormControl(''),
+    title: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(32)]),
     description: new FormControl(''),
-    date: new FormControl(''),
+    date: new FormControl('', [Validators.required]),
+    hours: new FormControl(19, [Validators.required, Validators.min(0), Validators.max(23)]),
+    minutes: new FormControl(30, [Validators.required, Validators.min(0), Validators.max(59)]),
   });
 
   /** Currently selected timezone. */
@@ -71,8 +73,8 @@ export class EventCreationDialogComponent {
   /** Attempts to create the event. Blocks the modal from closing, and log any potential errors. */
   createEvent() {
     const date: Date = this.formGroup.controls.date.value;
-    date.setHours(13);
-    date.setMinutes(37);
+    date.setHours(this.formGroup.controls.hours.value);
+    date.setMinutes(this.formGroup.controls.minutes.value);
 
     const event: Event = {
       title: this.formGroup.controls.title.value,
