@@ -1,46 +1,51 @@
-<mat-table #table [dataSource]="dataSource" [trackBy]="trackByEventId">
+<table mat-table #table [dataSource]="dataSource" [trackBy]="trackByEventId">
   <!-- Column template containing the title of the event. -->
   <ng-container matColumnDef="title">
-    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-    <mat-cell *matCellDef="let event">{{ event.title }}</mat-cell>
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let event">{{ event.title }}</td>
   </ng-container>
 
   <!-- Column template containing the title of the event. -->
   <ng-container matColumnDef="date">
-    <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-    <mat-cell *matCellDef="let event">{{ event.date }}</mat-cell>
+    <th mat-header-cell *matHeaderCellDef>Date</th>
+    <td mat-cell *matCellDef="let event">{{ event.date }}</td>
   </ng-container>
 
   <!-- Column template containing the wow character signed up for this event. -->
   <ng-container matColumnDef="wow-character">
-    <mat-header-cell *matHeaderCellDef>Character signed</mat-header-cell>
-    <mat-cell *matCellDef="let event">
+    <th mat-header-cell *matHeaderCellDef>Character signed</th>
+    <td mat-cell *matCellDef="let event">
       <wow-character-card [character]="SAMPLE_CHARACTER"></wow-character-card>
-    </mat-cell>
+    </td>
   </ng-container>
 
   <!-- Column template containing the quick actions on an event, as well as the create event button. -->
   <ng-container matColumnDef="actions">
-    <mat-header-cell *matHeaderCellDef>
+    <th mat-header-cell *matHeaderCellDef>
       <button mat-flat-button color="primary" (click)="openCreateEventDialog()">Create event</button>
-    </mat-header-cell>
-    <mat-cell *matCellDef="let event"></mat-cell>
+    </th>
+    <td mat-cell *matCellDef="let event"></td>
   </ng-container>
 
   <!-- Expanded column. -->
   <ng-container matColumnDef="expandedDetail">
-    <mat-cell *matCellDef="let detail">
+    <td [attr.colspan]="displayedColumns.length"
+        mat-cell *matCellDef="let detail"
+        [@detailExpand]="detail.event == expandedEvent ? 'expanded' : 'collapsed'"
+        style="overflow: hidden">
       <pre>{{detail.event | json}}</pre>
-    </mat-cell>
+    </td>
   </ng-container>
 
   <!-- Renders the row templates. -->
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"
-           class="listing-row"
-           [class.expanded]="expandedEvent == row"
-           (click)="expandedEvent = row"></mat-row>
-  <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpandedRow"
-           [@detailExpand]="row.event == expandedEvent ? 'expanded' : 'collapsed'"
-           style="overflow: hidden"></mat-row>
-</mat-table>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="listing-row"
+      [class.expanded]="expandedEvent == row"
+      (click)="expandedEvent = row"></tr>
+  <tr mat-row
+      *matRowDef="let row; columns: ['expandedDetail']; when: isExpandedRow"
+      [@detailExpand]="row.event == expandedEvent ? 'expanded' : 'collapsed'"
+      ></tr>
+</table>

@@ -17,23 +17,24 @@
 
 @import 'src/app/common/typography';
 
-mat-table {
-  @include body-1;
+table {
+  width: 100%;
+  @include body-2;
   border: 1px solid #ccc;
   border-radius: 2px;
 
-  mat-header-cell {
+  th {
     @include overline;
   }
 
   // Do not add a border on the expanded row.
-  mat-row.listing-row.expanded {
+  td.listing-row.expanded {
     border-bottom: 0px;
   }
 
   // Do not double the border at the end of the table.
-  mat-row:last-child,
-  mat-row:nth-last-child(2) {
+  tr:last-child td,
+  tr:nth-last-child(2) td {
     border-bottom: 0px;
   }
 }
