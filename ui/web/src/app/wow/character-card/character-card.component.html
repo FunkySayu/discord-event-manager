@@ -1,12 +1,11 @@
 <div class="character-card-container">
-  <div class="thumbnail-shape shadow-backdrop"></div>
+  <div class="thumbnail-container">
+    <img [src]="character.icon_url" alt="{{ character.name }} profile picture" />
+  </div>
   <div class="character-container shadow-backdrop">
     <div class="character-container-content">
       <p class="character-name">{{ character.name }}</p>
       <p class="character-speciality">{{ character.speciality }}</p>
     </div>
-  </div>
-  <div class="thumbnail-shape thumbnail-container">
-    <img [src]="character.icon_url" alt="{{ character.name }} profile picture" />
   </div>
 </div>
