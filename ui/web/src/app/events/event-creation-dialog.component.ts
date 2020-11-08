@@ -52,7 +52,7 @@ export class EventCreationDialogComponent {
   });
 
   /** Currently selected timezone. */
-  timezone: Timezone;
+  timezone: Timezone|'SERVER_DEFAULT';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) readonly data: EventCreationDialogData,
@@ -60,7 +60,7 @@ export class EventCreationDialogComponent {
   ) {
     assertNonNull(this.data, 'EventCreationDialogComponent requires data to be passed.');
 
-    this.timezone = this.data.timezone ?? ALL_TIMEZONES[0];
+    this.timezone = this.data.timezone ?? 'SERVER_DEFAULT';
   }
 
   /** Attempts to create the event. Blocks the modal from closing, and log any potential errors. */
@@ -74,6 +74,9 @@ export class EventCreationDialogComponent {
       description: this.formGroup.controls.description.value,
       date: naiveConvertDateToTimestamp(date),
     };
+    if (this.timezone !== 'SERVER_DEFAULT') {
+      event.timezone_name = this.timezone;
+    }
 
     this.dialogRef.close(event);
   }

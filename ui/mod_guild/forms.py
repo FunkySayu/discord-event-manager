@@ -53,7 +53,7 @@ class EventCreationForm(Form):
     date = DateTimeField('Date')
     repetition = EnumField('Repetition frequency', enum=EventRepetitionFrequency,
                            default=EventRepetitionFrequency.not_repeated.value)
-    forced_timezone = StringField('Forced timezone')
+    timezone_name = StringField('Forced timezone')
 
     def convert_to_event(self, guild: Guild) -> Event:
         """Converts the data provided in the form to an event."""
@@ -62,8 +62,8 @@ class EventCreationForm(Form):
         #   a realm-wise timezone, use this timezone as the default one.
         #   For now and as long as we don't have this link, default to UTC.
         tz = utc
-        if self.forced_timezone.data:
-            tz = timezone(self.forced_timezone.data)
+        if self.timezone_name.data:
+            tz = timezone(self.timezone_name.data)
         date = tz.localize(self.date.data)
         return Event(
             guild, self.title.data, date,
