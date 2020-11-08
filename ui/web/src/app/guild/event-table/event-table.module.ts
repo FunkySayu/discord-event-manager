@@ -26,15 +26,8 @@ import {AppCommonModule} from 'src/app/common/common.module';
 import {GuildEventTableComponent} from './event-table.component';
 
 @NgModule({
-  imports: [
-    AppCommonModule,
-    BrowserModule,
-    CommonModule,
-    MatButtonModule,
-    MatTableModule,
-  ],
+  imports: [AppCommonModule, BrowserModule, CommonModule, MatButtonModule, MatTableModule],
   declarations: [GuildEventTableComponent],
   exports: [GuildEventTableComponent],
 })
-export class GuildEventTableModule {
-}
+export class GuildEventTableModule {}

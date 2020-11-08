@@ -17,10 +17,10 @@
 
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import { DataSource } from '@angular/cdk/collections';
+import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import {Event} from 'src/app/events/events.service';
 import {EventCreationDialogComponent} from 'src/app/events/event-creation-dialog.component';
@@ -28,11 +28,11 @@ import {EventCreationDialogComponent} from 'src/app/events/event-creation-dialog
 /** Represents an expanded row. */
 interface ExpandedEvent {
   detailRow: true;
-  event: Event,
+  event: Event;
 }
 
-function isExpandedEvent(event: Event|ExpandedEvent): event is ExpandedEvent {
-  return event.hasOwnProperty('detailRow');
+function isExpandedEvent(event: Event | ExpandedEvent): event is ExpandedEvent {
+  return Object.prototype.hasOwnProperty.call(event, 'detailRow');
 }
 
 /**
@@ -48,9 +48,7 @@ class GuildEventTableDataSource extends DataSource<Event | ExpandedEvent> {
 
   /** An observable on the doubled rows. */
   private readonly withExpanded$ = this.originalEvents$.pipe(
-    map(events => events.reduce(
-      (acc, event) => acc.concat([event, {detailRow: true, event}]),
-      [])),
+    map(events => events.reduce((acc, event) => acc.concat([event, {detailRow: true, event}]), []))
   );
 
   /** Returns the observable to the events and their expanded row. */
@@ -73,8 +71,8 @@ class GuildEventTableDataSource extends DataSource<Event | ExpandedEvent> {
   styleUrls: ['./event-table.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
-      state('expanded', style({ height: '*', visibility: 'visible' })),
+      state('collapsed', style({height: '0px', minHeight: '0', visibility: 'hidden'})),
+      state('expanded', style({height: '*', visibility: 'visible'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -87,7 +85,7 @@ export class GuildEventTableComponent {
   /** List of columns normally displayed. */
   readonly displayedColumns: readonly string[] = ['title', 'date', 'actions'];
   /** Checks whether a row is an expanded one or not. */
-  readonly isExpandedRow = (index: number, event: Event|ExpandedEvent) => isExpandedEvent(event);
+  readonly isExpandedRow = (index: number, event: Event | ExpandedEvent) => isExpandedEvent(event);
 
   constructor(private readonly dialog: MatDialog) {}
 
@@ -100,7 +98,7 @@ export class GuildEventTableComponent {
   @Output() eventCreated = new EventEmitter<Event>();
 
   /** Explains to angular how to track events within a ngFor. */
-  trackByEventId(index: number, event: Event|ExpandedEvent): string {
+  trackByEventId(index: number, event: Event | ExpandedEvent): string {
     return isExpandedEvent(event) ? `expanded::${event.event.id}` : `normal::${event.id}`;
   }
 
@@ -109,7 +107,8 @@ export class GuildEventTableComponent {
 
     const creationPipeline = dialogRef.afterClosed().pipe(
       // Only emit if the user actually created an event.
-      filter(event => !!event));
+      filter(event => !!event)
+    );
     creationPipeline.subscribe(event => {
       // Emit the event to the Output.
       this.eventCreated.next(event);

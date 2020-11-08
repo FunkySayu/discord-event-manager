@@ -49,7 +49,7 @@ export class EventCreationDialogComponent {
     title: new FormControl(''),
     description: new FormControl(''),
     date: new FormControl(''),
-  })
+  });
 
   /** Currently selected timezone. */
   timezone: Timezone;
