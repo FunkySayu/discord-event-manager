@@ -15,7 +15,10 @@
  * limitations under the License.
  */
 
+@import 'src/app/common/typography';
+
 mat-table {
+  @include body-1;
   border: 1px solid #ccc;
   border-radius: 2px;
 
