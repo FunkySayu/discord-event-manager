@@ -18,6 +18,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {BehaviorSubject} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 
 import {Event} from 'src/app/events/events.service';
@@ -36,19 +37,23 @@ export class GuildProfileComponent {
     private readonly dialog: MatDialog
   ) {}
 
-  readonly guild$ = this.route.paramMap.pipe(
+  /** Allows to trigger reload of the guild information based on emission on this observable. */
+  private readonly reloader$ = new BehaviorSubject<void>(undefined);
+
+  /** Queries the guild from the ID contained in the route. */
+  readonly guild$ = this.reloader$.pipe(
     // Get guild ID we are currently browsing
-    map(params => params.get('guildId') ?? ''),
+    map(() => this.route.snapshot.paramMap.get('guildId') ?? ''),
     // Get the corresponding guild information
     switchMap(guildId => this.guildService.getGuild(guildId))
   );
 
+  /** Calls the backend to create the provided event for the guild. */
   async createGuildEvent(guild: Guild, event: Event) {
     // TODO(funkysayu): Subscribe to the pipeline without caring much about the result.
     // Ideally we should have a snackbar indicating loading of the request and an error
     // handler somewhere.
-    // We should also force a reload of the guild whenever we get a positive result from
-    // the backend.
-    console.log(await this.guildService.createEvent(guild.id, event).toPromise());
+    await this.guildService.createEvent(guild.id, event).toPromise();
+    this.reloader$.next();
   }
 }
