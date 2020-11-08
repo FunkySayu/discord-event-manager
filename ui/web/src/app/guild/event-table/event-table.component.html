@@ -1,7 +1,4 @@
-<pre *ngFor="let event of events; trackBy: trackByEventId">{{ event | json }}</pre>
-
-
-<mat-table #table [dataSource]="dataSource">
+<mat-table #table [dataSource]="dataSource" [trackBy]="trackByEventId">
   <!-- Column template containing the title of the event. -->
   <ng-container matColumnDef="title">
     <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>

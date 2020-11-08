@@ -31,6 +31,10 @@ interface ExpandedEvent {
   event: Event,
 }
 
+function isExpandedEvent(event: Event|ExpandedEvent): event is ExpandedEvent {
+  return event.hasOwnProperty('detailRow');
+}
+
 /**
  * Provides a data-source on all events available.
  *
@@ -83,7 +87,7 @@ export class GuildEventTableComponent {
   /** List of columns normally displayed. */
   readonly displayedColumns: readonly string[] = ['title', 'date', 'actions'];
   /** Checks whether a row is an expanded one or not. */
-  readonly isExpandedRow = (index: number, row: object) => row.hasOwnProperty('detailRow');
+  readonly isExpandedRow = (index: number, event: Event|ExpandedEvent) => isExpandedEvent(event);
 
   constructor(private readonly dialog: MatDialog) {}
 
@@ -96,8 +100,8 @@ export class GuildEventTableComponent {
   @Output() eventCreated = new EventEmitter<Event>();
 
   /** Explains to angular how to track events within a ngFor. */
-  trackByEventId(index: number, event: Event): string {
-    return event.id;
+  trackByEventId(index: number, event: Event|ExpandedEvent): string {
+    return isExpandedEvent(event) ? `expanded::${event.event.id}` : `normal::${event.id}`;
   }
 
   openCreateEventDialog() {
