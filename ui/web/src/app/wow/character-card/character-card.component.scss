@@ -14,3 +14,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+@import 'src/app/common/colors';
+@import 'src/app/common/typography';
+
+// Positioning
+
+$card-container-height: 54px;
+$card-shadow-backdrop: 3px;
+$card-additional-info-container-height: 36px;
+
+.character-card-container {
+  position: relative;
+  height: $card-container-height;
+  margin: $card-shadow-backdrop + 1px 0;
+
+  .thumbnail-shape {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: $card-container-height;
+    width: $card-container-height;
+    border: 2px solid material-color('grey', '800');
+    border-radius: 100px;
+    box-sizing: border-box;
+    box-shadow: 0 0 2px 0px white inset, 0 0 2px 0px white;
+
+    img {
+      height: $card-container-height - 4px;
+      width: $card-container-height - 4px;
+      border-radius: 100px;
+    }
+  }
+
+  .character-container {
+    box-sizing: border-box;
+    border: 1px solid material-color('grey', '600');
+    border-radius: 4px;
+    position: absolute;
+    left: 27px;
+    top: 9px;
+    height: 36px;
+    padding: 2px 4px 2px ($card-container-height - 2px)/2 + 4px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.character-container {
+  background-color: material-color('grey', '50');
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+
+  .character-name {
+    @include body-1;
+    font-weight: 500;
+    text-shadow: 1px 2px 2px #ccc;
+  }
+
+  .character-speciality {
+    @include caption;
+  }
+}
+
+.shadow-backdrop {
+  box-shadow: 0px $card-shadow-backdrop $card-shadow-backdrop rgba(0, 0, 0, 0.25);
+}
+
