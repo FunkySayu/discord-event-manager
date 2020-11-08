@@ -14,3 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+mat-table {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+
+  // Do not add a border on the expanded row.
+  mat-row.listing-row.expanded {
+    border-bottom: 0px;
+  }
+
+  // Do not double the border at the end of the table.
+  mat-row:last-child,
+  mat-row:nth-last-child(2) {
+    border-bottom: 0px;
+  }
+
+  // The title column is the one we should grow.
+  .mat-column-title {
+    flex-grow: 3;
+  }
+}

@@ -19,6 +19,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
 
 import {AppCommonModule} from 'src/app/common/common.module';
 
@@ -30,6 +31,7 @@ import {GuildEventTableComponent} from './event-table.component';
     BrowserModule,
     CommonModule,
     MatButtonModule,
+    MatTableModule,
   ],
   declarations: [GuildEventTableComponent],
   exports: [GuildEventTableComponent],
