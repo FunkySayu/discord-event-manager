@@ -15,6 +15,48 @@
  * limitations under the License.
  */
 
+// Inspired from: https://material.io/design/typography/the-type-system.html#type-scale
+
+@mixin headline-1 {
+  font: light 95px/100px 'Open Sans', sans-serif;
+  letter-spacing: -1.5px;
+}
+
+@mixin headline-2 {
+  font: light 59px/60px 'Open Sans', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+@mixin headline-3 {
+  font: normal 48px/50px 'Open Sans', sans-serif;
+  letter-spacing: 0px;
+}
+
+@mixin headline-4 {
+  font: normal 34px/40px 'Open Sans', sans-serif;
+  letter-spacing: 0.25px;
+}
+
+@mixin headline-5 {
+  font: normal 24px/30px 'Open Sans', sans-serif;
+  letter-spacing: 0px;
+}
+
+@mixin headline-6 {
+  font: medium 20px/30px 'Open Sans', sans-serif;
+  letter-spacing: 0.15px;
+}
+
+@mixin subtitle-1 {
+  font: normal 16px/20px 'Open Sans', sans-serif;
+  letter-spacing: 0.15px;
+}
+
+@mixin subtitle-2 {
+  font: medium 14px/20px 'Open Sans', sans-serif;
+  letter-spacing: 0.1px;
+}
+
 @mixin body-1 {
   font: normal 16px/20px 'Roboto', sans-serif;
   letter-spacing: 0.5px;
@@ -28,4 +70,10 @@
 @mixin caption {
   font: normal 12px/14px 'Roboto', sans-serif;
   letter-spacing: 0.2px;
+}
+
+@mixin overline {
+  font: normal 10px/14px 'Roboto', sans-serif;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }

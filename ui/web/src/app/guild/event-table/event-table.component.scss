@@ -22,6 +22,10 @@ mat-table {
   border: 1px solid #ccc;
   border-radius: 2px;
 
+  mat-header-cell {
+    @include overline;
+  }
+
   // Do not add a border on the expanded row.
   mat-row.listing-row.expanded {
     border-bottom: 0px;
