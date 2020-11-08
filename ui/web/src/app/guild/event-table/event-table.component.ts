@@ -24,6 +24,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import {Event} from 'src/app/events/events.service';
 import {EventCreationDialogComponent} from 'src/app/events/event-creation-dialog.component';
+import {SAMPLE_CHARACTER} from 'src/app/wow/wow.service';
 
 /** Represents an expanded row. */
 interface ExpandedEvent {
@@ -78,12 +79,15 @@ class GuildEventTableDataSource extends DataSource<Event | ExpandedEvent> {
   ],
 })
 export class GuildEventTableComponent {
+  /** Readonly value binding to access them from within the template. */
+  readonly SAMPLE_CHARACTER = SAMPLE_CHARACTER;
+
   /** Tracks which element is currently expanded. */
   expandedEvent: unknown;
   /** Source on all events, including the expanded rows. */
   readonly dataSource = new GuildEventTableDataSource();
   /** List of columns normally displayed. */
-  readonly displayedColumns: readonly string[] = ['title', 'date', 'actions'];
+  readonly displayedColumns: readonly string[] = ['title', 'date', 'wow-character', 'actions'];
   /** Checks whether a row is an expanded one or not. */
   readonly isExpandedRow = (index: number, event: Event | ExpandedEvent) => isExpandedEvent(event);
 

@@ -11,6 +11,14 @@
     <mat-cell *matCellDef="let event">{{ event.date }}</mat-cell>
   </ng-container>
 
+  <!-- Column template containing the wow character signed up for this event. -->
+  <ng-container matColumnDef="wow-character">
+    <mat-header-cell *matHeaderCellDef>Character signed</mat-header-cell>
+    <mat-cell *matCellDef="let event">
+      <wow-character-card [character]="SAMPLE_CHARACTER"></wow-character-card>
+    </mat-cell>
+  </ng-container>
+
   <!-- Column template containing the quick actions on an event, as well as the create event button. -->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef>
