@@ -43,7 +43,7 @@
       *matRowDef="let row; columns: displayedColumns"
       class="listing-row"
       [class.expanded]="expandedEvent == row"
-      (click)="expandedEvent = row"></tr>
+      (click)="expandedEvent = (expandedEvent == row) ? null : row"></tr>
   <tr mat-row
       *matRowDef="let row; columns: ['expandedDetail']; when: isExpandedRow"
       [@detailExpand]="row.event == expandedEvent ? 'expanded' : 'collapsed'"
