@@ -29,9 +29,4 @@ mat-table {
   mat-row:nth-last-child(2) {
     border-bottom: 0px;
   }
-
-  // The title column is the one we should grow.
-  .mat-column-title {
-    flex-grow: 3;
-  }
 }

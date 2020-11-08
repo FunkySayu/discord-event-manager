@@ -22,11 +22,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 
 import {AppCommonModule} from 'src/app/common/common.module';
+import {WowCharacterCardModule} from 'src/app/wow/character-card/character-card.module';
 
 import {GuildEventTableComponent} from './event-table.component';
 
 @NgModule({
-  imports: [AppCommonModule, BrowserModule, CommonModule, MatButtonModule, MatTableModule],
+  imports: [AppCommonModule, BrowserModule, CommonModule, MatButtonModule, MatTableModule, WowCharacterCardModule],
   declarations: [GuildEventTableComponent],
   exports: [GuildEventTableComponent],
 })
