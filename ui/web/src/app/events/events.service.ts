@@ -26,10 +26,24 @@ import {Timestamp, Timezone} from 'src/app/common/time';
  *
  * Needs to be kept in sync with: ui/mod_event/event.py:EventRepetitionFrequency.
  */
-export declare enum EventRepetitionFrequency {
+export enum EventRepetitionFrequency {
   NOT_REPEATED = 'NOT_REPEATED',
   DAILY = 'DAILY',
   WEEKLY = 'WEEKLY',
+}
+
+/** All possible values for the repetition of an event. */
+export const ALL_REPETITIONS = [
+  EventRepetitionFrequency.NOT_REPEATED,
+  EventRepetitionFrequency.DAILY,
+  EventRepetitionFrequency.WEEKLY,
+];
+
+/** All repetitions and their human readable name. */
+export const REPETITION_NAMES: Record<EventRepetitionFrequency, string> = {
+  [EventRepetitionFrequency.NOT_REPEATED]: 'Not repeated',
+  [EventRepetitionFrequency.DAILY]: 'Daily',
+  [EventRepetitionFrequency.WEEKLY]: 'Weekly',
 }
 
 /**

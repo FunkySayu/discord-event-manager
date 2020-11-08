@@ -22,7 +22,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {assertNonNull} from 'src/app/common/asserts';
 import {Timezone, ALL_TIMEZONES, TIMEZONE_NAMES, naiveConvertDateToTimestamp} from 'src/app/common/time';
 
-import {Event} from './events.service';
+import {Event, ALL_REPETITIONS, REPETITION_NAMES} from './events.service';
 
 /** Input provided to the modal, pre-configuring its inputs. */
 export interface EventCreationDialogData {
@@ -41,8 +41,11 @@ export interface CreatedEvent {
   styleUrls: ['./event-creation-dialog.component.scss'],
 })
 export class EventCreationDialogComponent {
+  /** Constant binding to access them from within the template. */
   readonly ALL_TIMEZONES = ALL_TIMEZONES;
   readonly TIMEZONE_NAMES = TIMEZONE_NAMES;
+  readonly ALL_REPETITIONS = ALL_REPETITIONS;
+  readonly REPETITION_NAMES = REPETITION_NAMES;
   readonly TODAY = new Date();
 
   readonly formGroup = new FormGroup({
@@ -53,6 +56,8 @@ export class EventCreationDialogComponent {
 
   /** Currently selected timezone. */
   timezone: Timezone|'SERVER_DEFAULT';
+  /** Currently selected repetition. */
+  repetition = ALL_REPETITIONS[0];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) readonly data: EventCreationDialogData,
@@ -73,6 +78,7 @@ export class EventCreationDialogComponent {
       title: this.formGroup.controls.title.value,
       description: this.formGroup.controls.description.value,
       date: naiveConvertDateToTimestamp(date),
+      repetition: this.repetition,
     };
     if (this.timezone !== 'SERVER_DEFAULT') {
       event.timezone_name = this.timezone;
