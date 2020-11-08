@@ -57,7 +57,7 @@ export class EventCreationDialogComponent {
   });
 
   /** Currently selected timezone. */
-  timezone: Timezone|'SERVER_DEFAULT';
+  timezone: Timezone | 'SERVER_DEFAULT';
   /** Currently selected repetition. */
   repetition = ALL_REPETITIONS[0];
 
