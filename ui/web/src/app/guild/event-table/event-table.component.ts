@@ -15,9 +15,13 @@
  * limitations under the License.
  */
 
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {filter} from 'rxjs/operators';
 
 import {Event} from 'src/app/events/events.service';
+import {EventCreationDialogComponent} from 'src/app/events/event-creation-dialog.component';
+
 
 @Component({
   selector: 'guild-event-table',
@@ -27,9 +31,24 @@ import {Event} from 'src/app/events/events.service';
 export class GuildEventTableComponent {
   /** The list of events to display. */
   @Input() events: Event[] = [];
+  /** Emits whenever an event have been created by the user. */
+  @Output() eventCreated = new EventEmitter<Event>();
+
+  constructor(private readonly dialog: MatDialog) {}
 
   /** Explains to angular how to track events within a ngFor. */
   trackByEventId(index: number, event: Event): string {
     return event.id;
+  }
+
+  openCreateEventDialog() {
+    const dialogRef = this.dialog.open(EventCreationDialogComponent, {data: {}});
+
+    const creationPipeline = dialogRef.afterClosed().pipe(
+      // Only emit if the user actually created an event.
+      filter(event => !!event));
+    creationPipeline.subscribe(event => {
+      this.eventCreated.next(event);
+    });
   }
 }

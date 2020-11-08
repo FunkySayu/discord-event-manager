@@ -18,6 +18,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
+import {MatButtonModule} from '@angular/material/button';
 
 import {AppCommonModule} from 'src/app/common/common.module';
 
@@ -28,6 +29,7 @@ import {GuildEventTableComponent} from './event-table.component';
     AppCommonModule,
     BrowserModule,
     CommonModule,
+    MatButtonModule,
   ],
   declarations: [GuildEventTableComponent],
   exports: [GuildEventTableComponent],

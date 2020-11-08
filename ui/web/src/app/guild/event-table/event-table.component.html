@@ -1,1 +1,2 @@
 <pre *ngFor="let event of events; trackBy: trackByEventId">{{ event | json }}</pre>
+<button mat-button (click)="openCreateEventDialog()">Create event</button>
