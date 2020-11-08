@@ -24,8 +24,7 @@
   <div id="guild-event-container">
     <section>
       <h1>Events</h1>
-      <guild-event-table [events]="guild.events"></guild-event-table>
-      <button mat-button (click)="openCreateEventDialog(guild)">Create event</button>
+      <guild-event-table [events]="guild.events" (eventCreated)="createGuildEvent(guild, $event)"></guild-event-table>
     </section>
 
     <section>

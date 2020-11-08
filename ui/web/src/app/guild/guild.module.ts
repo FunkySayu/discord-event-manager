@@ -20,7 +20,6 @@ import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
 
 import {RouterModule} from '@angular/router';
 
@@ -40,7 +39,6 @@ import {GuildEventTableModule} from './event-table/event-table.module';
     EventsModule,
     GuildEventTableModule,
     HttpClientModule,
-    MatButtonModule,
     MatDialogModule,
     RouterModule,
   ],
