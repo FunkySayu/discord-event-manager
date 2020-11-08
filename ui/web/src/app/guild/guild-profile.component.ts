@@ -63,9 +63,4 @@ export class GuildProfileComponent {
       console.log(result);
     });
   }
-
-  /** Helps Angular keeping track of which event it already rendered. */
-  trackByEventId(index: number, event: Event): string {
-    return event.id;
-  }
 }
