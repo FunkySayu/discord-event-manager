@@ -38,6 +38,16 @@
         </mat-select>
       </mat-form-field>
     </section>
+
+    <section>
+      <mat-form-field appearance="standard">
+        <mat-select [(value)]="repetition">
+          <mat-option
+            *ngFor="let repetition of ALL_REPETITIONS"
+            [value]="repetition">{{ REPETITION_NAMES[repetition] }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </section>
   </form>
 </mat-dialog-content>
 
