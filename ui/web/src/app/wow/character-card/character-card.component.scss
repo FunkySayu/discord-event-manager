@@ -21,7 +21,7 @@
 // Positioning
 
 $card-container-height: 36px;
-$card-shadow-backdrop: 3px;
+$card-shadow-backdrop: 2px;
 $card-additional-info-container-height: 36px;
 
 .character-card-container {
@@ -60,8 +60,8 @@ $card-additional-info-container-height: 36px;
     }
 
     .character-name {
-      @include body-1;
-      text-shadow: 1px 2px 2px #ccc;
+      @include body-2;
+      text-shadow: 1px 1px 1px material-color('grey', '300');
     }
 
     .character-speciality {
