@@ -17,19 +17,13 @@ limitations under the License.
 
 import discord
 
-from enum import Enum
 from wowapi import WowApi
 
 from flask_sqlalchemy import BaseQuery
 
 from ui.base import db, BaseSerializerMixin
 from ui.mod_wow.region import Region
-
-
-class Faction(Enum):
-    """World of Warcraft faction the horde belongs to."""
-    horde = 'HORDE'
-    alliance = 'ALLIANCE'
+from ui.mod_wow.static import WowFaction
 
 
 class Guild(db.Model, BaseSerializerMixin):
@@ -74,9 +68,8 @@ class Guild(db.Model, BaseSerializerMixin):
     # Relationships
     wow_guild_id = db.Column(db.Integer, db.ForeignKey('wow_guild.id'))
     wow_guild = db.relationship('WowGuild', uselist=False, back_populates='guild')
-    events = db.relationship('Event', uselist=True, back_populates='guild')
 
-    def __init__(self, id: int):
+    def __init__(self, id: str):
         self.id = id
 
     def resync_from_discord_guild(self, discord_guild: discord.Guild):
@@ -136,7 +129,7 @@ class WowGuild(db.Model, BaseSerializerMixin):
 
     realm_name = db.Column(db.String)
     name = db.Column(db.String)
-    faction = db.Column(db.Enum(Faction))
+    faction = db.Column(db.Enum(WowFaction))
     icon_url = db.Column(db.String)
 
     # Relationships
@@ -162,7 +155,7 @@ class WowGuild(db.Model, BaseSerializerMixin):
             region.value, region.profile_namespace, realm_slug, name_slug,
             locale='en_US')
         guild = cls(data['id'], region, realm_slug, name_slug)
-        guild.faction = Faction(data['faction']['type'])
+        guild.faction = WowFaction(data['faction']['type'])
         guild.name = data['name']
         guild.realm_name = data['realm']['name']
 

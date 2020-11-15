@@ -33,6 +33,12 @@ from ui.base import db, BaseSerializerMixin
 from ui.mod_wow.region import DEFAULT_REGION
 
 
+class WowFaction(Enum):
+    """World of Warcraft role a spec can implement."""
+    horde = "HORDE"
+    alliance = "ALLIANCE"
+
+
 class WowRole(Enum):
     """World of Warcraft role a spec can implement."""
     dps = "DAMAGE"

@@ -22,7 +22,8 @@ import os
 import unittest.mock
 
 from ui.common.testing import DatabaseTestFixture
-from ui.mod_guild.guild import Guild, WowGuild, Region, Faction
+from ui.mod_guild.guild import Guild, WowGuild, Region
+from ui.mod_wow.static import WowFaction
 
 
 TESTDATA_DIR = os.path.join(
@@ -45,7 +46,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
 
     def test_create_guild(self):
         """Creates and registers a guild in a database."""
-        guild = Guild(123456789)
+        guild = Guild('123456789')
         guild.discord_name = 'test me'
         self.db.session.add(guild)
         self.db.session.commit()
@@ -56,7 +57,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
 
     def test_guild_synchronization_from_discord(self):
         """Creates a guild and synchronize its field from a Discord one."""
-        guild = Guild(123456789)
+        guild = Guild('123456789')
         discord_guild = discord.Guild(state=None, data={
             'name': 'Beep Beep I am a Sheep',
             'id': 123456789,
@@ -66,7 +67,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         guild.resync_from_discord_guild(discord_guild)
 
         self.assertEqual(guild.discord_name, 'Beep Beep I am a Sheep')
-        self.assertEqual(guild.id, 123456789)
+        self.assertEqual(guild.id, '123456789')
         self.assertEqual(
             guild.icon_url,
             'https://cdn.discordapp.com/icons/123456789/987654321.webp'
@@ -76,7 +77,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
     def test_create_wow_guild(self):
         """Creates and register a wow guild in a database."""
         wow_guild = WowGuild(123, Region.eu, 'argent-dawn', 'some-guild')
-        wow_guild.faction = Faction.horde
+        wow_guild.faction = WowFaction.horde
         wow_guild.realm_name = 'Argent Dawn'
         wow_guild.name = 'Some Guild'
 
@@ -85,26 +86,26 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
 
         queried = WowGuild.query.filter_by(id=123).all()
         self.assertEqual(len(queried), 1)
-        self.assertEqual(queried[0].faction, Faction.horde)
+        self.assertEqual(queried[0].faction, WowFaction.horde)
         self.assertEqual(queried[0].region, Region.eu)
         self.assertEqual(queried[0].realm_name, 'Argent Dawn')
         self.assertEqual(queried[0].name, 'Some Guild')
 
     def test_associate_guilds(self):
         """Verify wow guild and guild assocation work."""
-        wow_guild = WowGuild(321, Region.na, 'argent-dawn', 'some-guild')
-        wow_guild.faction = Faction.alliance
+        wow_guild = WowGuild(321, Region.us, 'argent-dawn', 'some-guild')
+        wow_guild.faction = WowFaction.alliance
         self.db.session.add(wow_guild)
-        guild = Guild(123)
+        guild = Guild('123')
         guild.wow_guild = wow_guild
 
         self.db.session.add(guild)
         self.db.session.commit()
 
         wow_queried: WowGuild = WowGuild.query.filter_by(id=321).first()
-        self.assertEqual(wow_queried.guild, guild)
+        self.assertEqual(wow_queried.guild.id, guild.id)
         queried: Guild = Guild.query.filter_by(id=123).first()
-        self.assertEqual(queried.wow_guild, wow_guild)
+        self.assertEqual(queried.wow_guild.id, wow_guild.id)
 
     def test_create_wow_guild_from_api(self):
         """Test creation from the WoW API results."""
@@ -126,7 +127,7 @@ class TestGuildModel(DatabaseTestFixture, unittest.TestCase):
         self.assertEqual(guild.name_slug, 'negative-waves')
         self.assertEqual(guild.realm_name, 'Argent Dawn')
         self.assertEqual(guild.realm_slug, 'argent-dawn')
-        self.assertEqual(guild.faction, Faction.alliance)
+        self.assertEqual(guild.faction, WowFaction.alliance)
         self.assertEqual(guild.icon_url,
                          'https://render-eu.worldofwarcraft.com/'
                          'guild/tabards/emblem_114.png')
