@@ -1,0 +1,507 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://us.api.blizzard.com/data/wow/playable-specialization/269?namespace=static-9.0.1_36072-us"
+    }
+  },
+  "id": 269,
+  "playable_class": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/playable-class/10?namespace=static-9.0.1_36072-us"
+    },
+    "name": "Monk",
+    "id": 10
+  },
+  "name": "Windwalker",
+  "gender_description": {
+    "male": "A martial artist without peer who pummels foes with hands and fists.\r\n\r\nPreferred Weapons: Fist Weapons, Axes, Maces, Swords",
+    "female": "A martial artist without peer who pummels foes with hands and fists.\r\n\r\nPreferred Weapons: Fist Weapons, Axes, Maces, Swords"
+  },
+  "media": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/media/playable-specialization/269?namespace=static-9.0.1_36072-us"
+    },
+    "id": 269
+  },
+  "role": {
+    "type": "DAMAGE",
+    "name": "Damage"
+  },
+  "talent_tiers": [
+    {
+      "level": 15,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23106?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Eye of the Tiger",
+            "id": 23106
+          },
+          "spell_tooltip": {
+            "description": "Tiger Palm also applies Eye of the Tiger, dealing 163 Nature damage to the enemy and 163 healing to the Monk over 8 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19820?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Wave",
+            "id": 19820
+          },
+          "spell_tooltip": {
+            "description": "A wave of Chi energy flows through friends and foes, dealing 81 Nature damage or 230 healing. Bounces up to 7 times to targets within 25 yards.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "15 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20185?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Burst",
+            "id": 20185
+          },
+          "spell_tooltip": {
+            "description": "Hurls a torrent of Chi energy up to 40 yds forward, dealing 216 Nature damage to all enemies, and 509 healing to the Monk and all allies in its path.\r\n\r\nChi Burst generates 1 Chi per enemy target damaged, up to a maximum of 2.",
+            "cast_time": "1 sec cast",
+            "range": "40 yd range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 0
+    },
+    {
+      "level": 25,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19304?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Celerity",
+            "id": 19304
+          },
+          "spell_tooltip": {
+            "description": "Reduces the cooldown of Roll by 5 sec and increases its maximum number of charges by 1.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19818?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Torpedo",
+            "id": 19818
+          },
+          "spell_tooltip": {
+            "description": "Torpedoes you forward a long distance and increases your movement speed by 30% for 10 sec, stacking up to 2 times.",
+            "cast_time": "Instant"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19302?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Tiger's Lust",
+            "id": 19302
+          },
+          "spell_tooltip": {
+            "description": "Increases a friendly target's movement speed by 70% for 6 sec and removes all roots and snares.",
+            "cast_time": "Instant",
+            "range": "20 yd range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 1
+    },
+    {
+      "level": 30,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22098?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Ascension",
+            "id": 22098
+          },
+          "spell_tooltip": {
+            "description": "Increases your maximum Chi by 1, maximum Energy by 20, and your Energy regeneration by 10%.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19771?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Fist of the White Tiger",
+            "id": 19771
+          },
+          "spell_tooltip": {
+            "description": "Strike with the technique of the White Tiger, dealing 634 Physical damage.\r\n\r\nGenerates 3 Chi.",
+            "cast_time": "Instant",
+            "power_cost": "40 Energy",
+            "range": "Melee Range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22096?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Energizing Elixir",
+            "id": 22096
+          },
+          "spell_tooltip": {
+            "description": "Chug an Energizing Elixir, granting 2 Chi and generating 75 Energy over 5 sec.",
+            "cast_time": "Instant",
+            "cooldown": "1 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 2
+    },
+    {
+      "level": 35,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19993?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Tiger Tail Sweep",
+            "id": 19993
+          },
+          "spell_tooltip": {
+            "description": "Increases the range of Leg Sweep by 2 yds and reduces its cooldown by 10 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23364?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Good Karma",
+            "id": 23364
+          },
+          "spell_tooltip": {
+            "description": "100% of the damage redirected by Touch of Karma also heals you.",
+            "cast_time": "Passive"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19995?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Ring of Peace",
+            "id": 19995
+          },
+          "spell_tooltip": {
+            "description": "Form a Ring of Peace at the target location for 5 sec. Enemies that enter will be ejected from the Ring.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "45 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 3
+    },
+    {
+      "level": 40,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23258?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Inner Strength",
+            "id": 23258
+          },
+          "spell_tooltip": {
+            "description": "Each Chi you spend reduces damage taken by 2% for 5 sec, stacking up to 5 times.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20173?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Diffuse Magic",
+            "id": 20173
+          },
+          "spell_tooltip": {
+            "description": "Reduces magic damage you take by 60% for 6 sec, and transfers all currently active harmful magical effects on you back to their original caster if possible.",
+            "cast_time": "Instant",
+            "cooldown": "1.5 min cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20175?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Dampen Harm",
+            "id": 20175
+          },
+          "spell_tooltip": {
+            "description": "Reduces all damage you take by 20% to 50% for 10 sec, with larger attacks being reduced by more.",
+            "cast_time": "Instant",
+            "cooldown": "2 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 4
+    },
+    {
+      "level": 45,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22093?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Hit Combo",
+            "id": 22093
+          },
+          "spell_tooltip": {
+            "description": "Each successive attack that triggers Combo Strikes in a row grants 1% increased damage, stacking up to 6 times.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23122?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Rushing Jade Wind",
+            "id": 23122
+          },
+          "spell_tooltip": {
+            "description": "Summons a whirling tornado around you, causing 517 damage over 5.1 sec to up to 6 enemies within 8 yards.",
+            "cast_time": "Instant",
+            "power_cost": "1 Chi",
+            "cooldown": "6 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22102?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Dance of Chi-Ji",
+            "id": 22102
+          },
+          "spell_tooltip": {
+            "description": "Spending Chi has a chance to make your next Spinning Crane Kick free and deal an additional 200% damage.",
+            "cast_time": "Passive"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 5
+    },
+    {
+      "level": 50,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22107?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Spiritual Focus",
+            "id": 22107
+          },
+          "spell_tooltip": {
+            "description": "Every 2 Chi you spend reduces the cooldown of Storm, Earth, and Fire by 1.0 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22105?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Whirling Dragon Punch",
+            "id": 22105
+          },
+          "spell_tooltip": {
+            "description": "Performs a devastating whirling upward strike, dealing 1,188 damage to all nearby enemies. Only usable while both Fists of Fury and Rising Sun Kick are on cooldown.",
+            "cast_time": "Instant",
+            "cooldown": "24 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/21191?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Serenity",
+            "id": 21191
+          },
+          "spell_tooltip": {
+            "description": "Enter an elevated state of mental and physical serenity for 12 sec. While in this state, you deal 20% increased damage and healing, and all Chi consumers are free and cool down 100% more quickly.",
+            "cast_time": "Instant",
+            "cooldown": "1.5 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 6
+    }
+  ],
+  "pvp_talents": [
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/77?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Ride the Wind",
+        "id": 77
+      },
+      "spell_tooltip": {
+        "description": "Flying Serpent Kick clears all snares from you when used and forms a path of wind in its wake, causing all allies who stand in it to have 30% increased movement speed and to be immune to movement slowing effects.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/675?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Tigereye Brew",
+        "id": 675
+      },
+      "spell_tooltip": {
+        "description": "Consumes up to 10 stacks of Tigereye Brew to empower your Physical abilities with wind for 2 sec per stack consumed.  Damage of your strikes are reduced, but bypass armor.\r\n\r\nFor each 3 Chi you consume, you gain a stack of Tigereye Brew.",
+        "cast_time": "Instant"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/852?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Reverse Harm",
+        "id": 852
+      },
+      "spell_tooltip": {
+        "description": "Increases the healing done by Expel Harm by 100%, and your Expel Harm now generates 1 additional Chi.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/3050?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Disabling Reach",
+        "id": 3050
+      },
+      "spell_tooltip": {
+        "description": "Disable now has a 10 yard range.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/3052?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Grapple Weapon",
+        "id": 3052
+      },
+      "spell_tooltip": {
+        "description": "You fire off a rope spear, grappling the target's weapons and shield, returning them to you for 6 sec.",
+        "cast_time": "Instant",
+        "range": "30 yd range",
+        "cooldown": "45 sec cooldown"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/3734?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Alpha Tiger",
+        "id": 3734
+      },
+      "spell_tooltip": {
+        "description": "Attacking new challengers with Tiger Palm fills you with the spirit of Xuen, granting you 30% haste for 8 sec. \r\n\r\nThis effect cannot occur more than once every 30 sec per target.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/3737?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Wind Waker",
+        "id": 3737
+      },
+      "spell_tooltip": {
+        "description": "When you or allies with your Windwalking are snared, the snare is instantly removed and their movement speed is prevented from being reduced below 100% for 4 sec.\r\n\r\nThis effect cannot occur more than once every 30 sec per target.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/3744?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Pressure Points",
+        "id": 3744
+      },
+      "spell_tooltip": {
+        "description": "Killing a player with Touch of Death reduces the remaining cooldown of Touch of Karma by 60 sec.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/3745?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Turbo Fists",
+        "id": 3745
+      },
+      "spell_tooltip": {
+        "description": "Fists of Fury now deals full damage to all targets hit, reduces all targets movement speed by 90%, and you Parry all attacks while channelling Fists of Fury.",
+        "cast_time": "Passive"
+      }
+    }
+  ]
+}

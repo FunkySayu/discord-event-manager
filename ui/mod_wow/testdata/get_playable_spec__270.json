@@ -1,0 +1,514 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://us.api.blizzard.com/data/wow/playable-specialization/270?namespace=static-9.0.1_36072-us"
+    }
+  },
+  "id": 270,
+  "playable_class": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/playable-class/10?namespace=static-9.0.1_36072-us"
+    },
+    "name": "Monk",
+    "id": 10
+  },
+  "name": "Mistweaver",
+  "gender_description": {
+    "male": "A healer who masters the mysterious art of manipulating life energies aided by the wisdom of the Jade Serpent.\r\n\r\nPreferred Weapon: Staff, Mace, Sword",
+    "female": "A healer who masters the mysterious art of manipulating life energies aided by the wisdom of the Jade Serpent.\r\n\r\nPreferred Weapon: Staff, Mace, Sword"
+  },
+  "media": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/media/playable-specialization/270?namespace=static-9.0.1_36072-us"
+    },
+    "id": 270
+  },
+  "role": {
+    "type": "HEALER",
+    "name": "Healer"
+  },
+  "talent_tiers": [
+    {
+      "level": 15,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19823?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Mist Wrap",
+            "id": 19823
+          },
+          "spell_tooltip": {
+            "description": "Increases Enveloping Mist's duration by 1 sec and its healing bonus by 10%.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19820?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Wave",
+            "id": 19820
+          },
+          "spell_tooltip": {
+            "description": "A wave of Chi energy flows through friends and foes, dealing 72 Nature damage or 209 healing. Bounces up to 7 times to targets within 25 yards.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "15 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20185?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Burst",
+            "id": 20185
+          },
+          "spell_tooltip": {
+            "description": "Hurls a torrent of Chi energy up to 40 yds forward, dealing 232 Nature damage to all enemies, and 464 healing to the Monk and all allies in its path.",
+            "cast_time": "1 sec cast",
+            "range": "40 yd range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 0
+    },
+    {
+      "level": 25,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19304?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Celerity",
+            "id": 19304
+          },
+          "spell_tooltip": {
+            "description": "Reduces the cooldown of Roll by 5 sec and increases its maximum number of charges by 1.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19818?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Torpedo",
+            "id": 19818
+          },
+          "spell_tooltip": {
+            "description": "Torpedoes you forward a long distance and increases your movement speed by 30% for 10 sec, stacking up to 2 times.",
+            "cast_time": "Instant"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19302?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Tiger's Lust",
+            "id": 19302
+          },
+          "spell_tooltip": {
+            "description": "Increases a friendly target's movement speed by 70% for 6 sec and removes all roots and snares.",
+            "cast_time": "Instant",
+            "range": "20 yd range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 1
+    },
+    {
+      "level": 30,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22168?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Lifecycles",
+            "id": 22168
+          },
+          "spell_tooltip": {
+            "description": "Enveloping Mist reduces the mana cost of your next Vivify by 25%.\r\n\r\nVivify reduces the mana cost of your next Enveloping Mist by 25%.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22167?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Spirit of the Crane",
+            "id": 22167
+          },
+          "spell_tooltip": {
+            "description": "Teachings of the Monastery causes each additional Blackout Kick to restore 0.65% mana.",
+            "cast_time": "Passive"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22166?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Mana Tea",
+            "id": 22166
+          },
+          "spell_tooltip": {
+            "description": "Reduces the mana cost of your spells by 50% for 10 sec.",
+            "cast_time": "Instant",
+            "cooldown": "1.5 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 2
+    },
+    {
+      "level": 35,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19993?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Tiger Tail Sweep",
+            "id": 19993
+          },
+          "spell_tooltip": {
+            "description": "Increases the range of Leg Sweep by 2 yds and reduces its cooldown by 10 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22219?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Song of Chi-Ji",
+            "id": 22219
+          },
+          "spell_tooltip": {
+            "description": "Conjures a cloud of hypnotic mist that slowly travels forward. Enemies touched by the mist fall asleep, Disoriented for 20 sec.",
+            "cast_time": "1.8 sec cast",
+            "range": "40 yd range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19995?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Ring of Peace",
+            "id": 19995
+          },
+          "spell_tooltip": {
+            "description": "Form a Ring of Peace at the target location for 5 sec. Enemies that enter will be ejected from the Ring.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "45 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 3
+    },
+    {
+      "level": 40,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23371?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Healing Elixir",
+            "id": 23371
+          },
+          "spell_tooltip": {
+            "description": "Drink a healing elixir, healing you for 15% of your maximum health.",
+            "cast_time": "Instant"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20173?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Diffuse Magic",
+            "id": 20173
+          },
+          "spell_tooltip": {
+            "description": "Reduces magic damage you take by 60% for 6 sec, and transfers all currently active harmful magical effects on you back to their original caster if possible.",
+            "cast_time": "Instant",
+            "cooldown": "1.5 min cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20175?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Dampen Harm",
+            "id": 20175
+          },
+          "spell_tooltip": {
+            "description": "Reduces all damage you take by 20% to 50% for 10 sec, with larger attacks being reduced by more.",
+            "cast_time": "Instant",
+            "cooldown": "2 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 4
+    },
+    {
+      "level": 45,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23107?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Summon Jade Serpent Statue",
+            "id": 23107
+          },
+          "spell_tooltip": {
+            "description": "Summons a Jade Serpent Statue at the target location. When you channel Soothing Mist, the statue will also begin to channel Soothing Mist on your target, healing for 1,065 over 6.8 sec.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "10 sec cooldown"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22101?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Refreshing Jade Wind",
+            "id": 22101
+          },
+          "spell_tooltip": {
+            "description": "Summon a whirling tornado around you, causing 743 healing over 7.7 sec to up to 6 allies within 10 yards.",
+            "cast_time": "Instant",
+            "power_cost": "350 Mana",
+            "cooldown": "9 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22214?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Invoke Chi-Ji, the Red Crane",
+            "id": 22214
+          },
+          "spell_tooltip": {
+            "description": "Summon an effigy of Chi-Ji that kicks up a Gust of Mist when you Blackout Kick, Rising Sun Kick, or Spinning Crane Kick, healing up to 2 allies for 362, and reducing the cost and cast time of your next Enveloping Mist by 33%, stacking.\r\n\r\nChi-Ji's presence makes you immune to movement impairing effects.",
+            "cast_time": "Instant",
+            "power_cost": "500 Mana",
+            "range": "40 yd range",
+            "cooldown": "3 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 5
+    },
+    {
+      "level": 50,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22218?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Focused Thunder",
+            "id": 22218
+          },
+          "spell_tooltip": {
+            "description": "Thunder Focus Tea now empowers your next 2 spells.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22169?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Upwelling",
+            "id": 22169
+          },
+          "spell_tooltip": {
+            "description": "For every 6 sec Essence Font spends off cooldown, your next Essence Font may be channeled for 1 additional second.\r\n\r\nThe duration of Essence Font's heal over time is increased by 4 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22170?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Rising Mist",
+            "id": 22170
+          },
+          "spell_tooltip": {
+            "description": "Rising Sun Kick heals all allies with your Renewing Mist, Enveloping Mist, or Essence Font for 136, and extends those effects by 4 sec, up to 100% of their original duration.",
+            "cast_time": "Passive"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 6
+    }
+  ],
+  "pvp_talents": [
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/70?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Eminence",
+        "id": 70
+      },
+      "spell_tooltip": {
+        "description": "Reduces the cooldown of your Transcendence: Transfer by 20 sec.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/678?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Chrysalis",
+        "id": 678
+      },
+      "spell_tooltip": {
+        "description": "Reduces the cooldown of Life Cocoon by 25 sec.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/679?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Counteract Magic",
+        "id": 679
+      },
+      "spell_tooltip": {
+        "description": "Renewing Mist heals for 135% more when the target is affected by a magical damage over time effect.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/680?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Dome of Mist",
+        "id": 680
+      },
+      "spell_tooltip": {
+        "description": "Enveloping Mist transforms 100% of its remaining periodic healing into a Dome of Mist when dispelled.\r\n\r\n Dome of Mist\r\nAbsorbs damage. All healing received by the Monk increased by 30%. Lasts 8 sec.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/681?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Surging Mist",
+        "id": 681
+      },
+      "spell_tooltip": {
+        "description": "Heals the target for 890 and increases the healing they take from Surging Mist by 50% for 6 sec.  Stacks up to 2 times.",
+        "cast_time": "1.5 sec cast",
+        "power_cost": "380 Mana",
+        "range": "40 yd range"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/682?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Refreshing Breeze",
+        "id": 682
+      },
+      "spell_tooltip": {
+        "description": "Increases the healing of Vivify by 20%, and Vivify refreshes the duration of Essence Font on targets it heals.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/683?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Healing Sphere",
+        "id": 683
+      },
+      "spell_tooltip": {
+        "description": "Coalesces a Healing Sphere out of the mists at the target location after 1.5 sec.  If allies walk through it, they consume the sphere, healing themselves for 687 and dispelled of all harmful periodic magic effects.\r\n\r\nMaximum of 3 Healing Spheres can be active by the Monk at any given time.",
+        "cast_time": "Instant",
+        "power_cost": "190 Mana",
+        "range": "40 yd range"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/1928?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Zen Focus Tea",
+        "id": 1928
+      },
+      "spell_tooltip": {
+        "description": "Provides immunity to Silence and Interrupt effects for 5 sec.",
+        "cast_time": "Instant",
+        "cooldown": "45 sec cooldown"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/3732?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Grapple Weapon",
+        "id": 3732
+      },
+      "spell_tooltip": {
+        "description": "You fire off a rope spear, grappling the target's weapons and shield, returning them to you for 6 sec.",
+        "cast_time": "Instant",
+        "range": "30 yd range",
+        "cooldown": "45 sec cooldown"
+      }
+    }
+  ]
+}

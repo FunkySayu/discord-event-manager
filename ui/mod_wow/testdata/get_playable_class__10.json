@@ -1,0 +1,52 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://us.api.blizzard.com/data/wow/playable-class/10?namespace=static-9.0.1_36072-us"
+    }
+  },
+  "id": 10,
+  "name": "Monk",
+  "gender_name": {
+    "male": "Monk",
+    "female": "Monk"
+  },
+  "power_type": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/power-type/3?namespace=static-9.0.1_36072-us"
+    },
+    "name": "Energy",
+    "id": 3
+  },
+  "specializations": [
+    {
+      "key": {
+        "href": "https://us.api.blizzard.com/data/wow/playable-specialization/268?namespace=static-9.0.1_36072-us"
+      },
+      "name": "Brewmaster",
+      "id": 268
+    },
+    {
+      "key": {
+        "href": "https://us.api.blizzard.com/data/wow/playable-specialization/269?namespace=static-9.0.1_36072-us"
+      },
+      "name": "Windwalker",
+      "id": 269
+    },
+    {
+      "key": {
+        "href": "https://us.api.blizzard.com/data/wow/playable-specialization/270?namespace=static-9.0.1_36072-us"
+      },
+      "name": "Mistweaver",
+      "id": 270
+    }
+  ],
+  "media": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/media/playable-class/10?namespace=static-9.0.1_36072-us"
+    },
+    "id": 10
+  },
+  "pvp_talent_slots": {
+    "href": "https://us.api.blizzard.com/data/wow/playable-class/10/pvp-talent-slots?namespace=static-9.0.1_36072-us"
+  }
+}

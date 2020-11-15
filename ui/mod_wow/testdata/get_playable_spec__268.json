@@ -1,0 +1,535 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://us.api.blizzard.com/data/wow/playable-specialization/268?namespace=static-9.0.1_36072-us"
+    }
+  },
+  "id": 268,
+  "playable_class": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/playable-class/10?namespace=static-9.0.1_36072-us"
+    },
+    "name": "Monk",
+    "id": 10
+  },
+  "name": "Brewmaster",
+  "gender_description": {
+    "male": "A sturdy brawler who uses unpredictable movement and mystical brews to avoid damage and protect allies.\r\n\r\nPreferred Weapon: Staff, Polearm",
+    "female": "A sturdy brawler who uses unpredictable movement and mystical brews to avoid damage and protect allies.\r\n\r\nPreferred Weapon: Staff, Polearm"
+  },
+  "media": {
+    "key": {
+      "href": "https://us.api.blizzard.com/data/wow/media/playable-specialization/268?namespace=static-9.0.1_36072-us"
+    },
+    "id": 268
+  },
+  "role": {
+    "type": "TANK",
+    "name": "Tank"
+  },
+  "talent_tiers": [
+    {
+      "level": 15,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23106?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Eye of the Tiger",
+            "id": 23106
+          },
+          "spell_tooltip": {
+            "description": "Tiger Palm also applies Eye of the Tiger, dealing 170 Nature damage to the enemy and 170 healing to the Monk over 8 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19820?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Wave",
+            "id": 19820
+          },
+          "spell_tooltip": {
+            "description": "A wave of Chi energy flows through friends and foes, dealing 86 Nature damage or 256 healing. Bounces up to 7 times to targets within 25 yards.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "15 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20185?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Burst",
+            "id": 20185
+          },
+          "spell_tooltip": {
+            "description": "Hurls a torrent of Chi energy up to 40 yds forward, dealing 276 Nature damage to all enemies, and 519 healing to the Monk and all allies in its path.\r\n\r\nCasting Chi Burst does not prevent avoiding attacks.",
+            "cast_time": "1 sec cast",
+            "range": "40 yd range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 0
+    },
+    {
+      "level": 25,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19304?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Celerity",
+            "id": 19304
+          },
+          "spell_tooltip": {
+            "description": "Reduces the cooldown of Roll by 5 sec and increases its maximum number of charges by 1.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19818?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Chi Torpedo",
+            "id": 19818
+          },
+          "spell_tooltip": {
+            "description": "Torpedoes you forward a long distance and increases your movement speed by 30% for 10 sec, stacking up to 2 times.",
+            "cast_time": "Instant"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19302?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Tiger's Lust",
+            "id": 19302
+          },
+          "spell_tooltip": {
+            "description": "Increases a friendly target's movement speed by 70% for 6 sec and removes all roots and snares.",
+            "cast_time": "Instant",
+            "range": "20 yd range",
+            "cooldown": "30 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 1
+    },
+    {
+      "level": 30,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22099?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Light Brewing",
+            "id": 22099
+          },
+          "spell_tooltip": {
+            "description": "Reduces the cooldown of Purifying Brew and Celestial Brew by 20%.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22097?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Spitfire",
+            "id": 22097
+          },
+          "spell_tooltip": {
+            "description": "Tiger Palm has a 25% chance to reset the cooldown of Breath of Fire.",
+            "cast_time": "Passive"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19992?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Black Ox Brew",
+            "id": 19992
+          },
+          "spell_tooltip": {
+            "description": "Chug some Black Ox Brew, which instantly refills your Energy, Purifying Brew charges, and resets the cooldown of Celestial Brew.",
+            "cast_time": "Instant",
+            "cooldown": "2 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 2
+    },
+    {
+      "level": 35,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19993?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Tiger Tail Sweep",
+            "id": 19993
+          },
+          "spell_tooltip": {
+            "description": "Increases the range of Leg Sweep by 2 yds and reduces its cooldown by 10 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19994?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Summon Black Ox Statue",
+            "id": 19994
+          },
+          "spell_tooltip": {
+            "description": "Summons a Black Ox Statue at the target location for 15 min, pulsing threat to all enemies within 20 yards.\r\n\r\nYou may cast Provoke on the statue to taunt all enemies near the statue.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "10 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19995?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Ring of Peace",
+            "id": 19995
+          },
+          "spell_tooltip": {
+            "description": "Form a Ring of Peace at the target location for 5 sec. Enemies that enter will be ejected from the Ring.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "45 sec cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 3
+    },
+    {
+      "level": 40,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20174?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Bob and Weave",
+            "id": 20174
+          },
+          "spell_tooltip": {
+            "description": "Increases the duration of Stagger by 3.0 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/23363?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Healing Elixir",
+            "id": 23363
+          },
+          "spell_tooltip": {
+            "description": "Drink a healing elixir, healing you for 15% of your maximum health.",
+            "cast_time": "Instant"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20175?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Dampen Harm",
+            "id": 20175
+          },
+          "spell_tooltip": {
+            "description": "Reduces all damage you take by 20% to 50% for 10 sec, with larger attacks being reduced by more.",
+            "cast_time": "Instant",
+            "cooldown": "2 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 4
+    },
+    {
+      "level": 45,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/19819?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Special Delivery",
+            "id": 19819
+          },
+          "spell_tooltip": {
+            "description": "Drinking from your Brews has a 100% chance to toss a keg high into the air that lands nearby after 3 sec, dealing 222 damage to all enemies within 8 yards and reducing their movement speed by 50% for 15 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/20184?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Rushing Jade Wind",
+            "id": 20184
+          },
+          "spell_tooltip": {
+            "description": "Summons a whirling tornado around you, causing 492 damage over 7.7 sec to up to 6 enemies within 8 yards.",
+            "cast_time": "Instant",
+            "power_cost": null,
+            "cooldown": "6 sec cooldown"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22103?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Exploding Keg",
+            "id": 22103
+          },
+          "spell_tooltip": {
+            "description": "Hurls a flaming keg at the target location, dealing 1,163 Fire damage to nearby enemies and causing them to miss their melee attacks for the next 3 sec.",
+            "cast_time": "Instant",
+            "range": "40 yd range",
+            "cooldown": "1 min cooldown"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 5
+    },
+    {
+      "level": 50,
+      "talents": [
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22106?namespace=static-9.0.1_36072-us"
+            },
+            "name": "High Tolerance",
+            "id": 22106
+          },
+          "spell_tooltip": {
+            "description": "Stagger is 5% more effective at delaying damage.\r\n\r\nYou gain up to 15% Haste based on your current level of Stagger.",
+            "cast_time": "Passive"
+          },
+          "column_index": 0
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22104?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Celestial Flames",
+            "id": 22104
+          },
+          "spell_tooltip": {
+            "description": "Drinking from Brews has a 30% chance to coat the Monk with Celestial Flames for 6 sec.\r\n\r\nWhile Celestial Flames is active, Spinning Crane Kick applies Breath of Fire and Breath of Fire reduces the damage affected enemies deal to you by an additional 5%.\r\n\r\n",
+            "cast_time": "Passive"
+          },
+          "column_index": 1
+        },
+        {
+          "talent": {
+            "key": {
+              "href": "https://us.api.blizzard.com/data/wow/talent/22108?namespace=static-9.0.1_36072-us"
+            },
+            "name": "Blackout Combo",
+            "id": 22108
+          },
+          "spell_tooltip": {
+            "description": "Blackout Kick also empowers your next ability:\r\n\r\nTiger Palm: Damage increased by 100%.\r\nBreath of Fire: Cooldown reduced by 3 sec.\r\nKeg Smash: Reduces the remaining cooldown on your Brews by 2 additional sec.\r\nCelestial Brew: Pauses Stagger damage for 3 sec.",
+            "cast_time": "Passive"
+          },
+          "column_index": 2
+        }
+      ],
+      "tier_index": 6
+    }
+  ],
+  "pvp_talents": [
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/666?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Microbrew",
+        "id": 666
+      },
+      "spell_tooltip": {
+        "description": "Reduces the cooldown of Fortifying Brew by 50%.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/667?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Hot Trub",
+        "id": 667
+      },
+      "spell_tooltip": {
+        "description": "Purifying Brew deals 20% of your purified staggered damage as Fire, divided between all enemies within 10 yards.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/668?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Guided Meditation",
+        "id": 668
+      },
+      "spell_tooltip": {
+        "description": "The cooldown of Zen Meditation is reduced by 75%. While Zen Meditation is active, all harmful spells cast against your allies within 40 yards are redirected to you.\r\n\r\nZen Meditation is no longer cancelled when being struck by a melee attack.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/669?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Avert Harm",
+        "id": 669
+      },
+      "spell_tooltip": {
+        "description": "Guard the 4 closest players within 15 yards for 15 sec, allowing you to Stagger 20% of damage they take.",
+        "cast_time": "Instant",
+        "cooldown": "45 sec cooldown"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/670?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Craft: Nimble Brew",
+        "id": 670
+      },
+      "spell_tooltip": {
+        "description": "Craft a Nimble Brew to share with allies. Maximum of 2 can be carried at once. \r\n\r\n Nimble Brew\r\nRemoves all root, stun, fear and horror effects and reduces the duration of future such effects by 60% for 6 sec.",
+        "cast_time": "2 sec cast"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/671?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Incendiary Breath",
+        "id": 671
+      },
+      "spell_tooltip": {
+        "description": "Increases the radius and damage of Breath of Fire by 100%, causing it to disorient all targets it strikes for 4 sec, but its cooldown is increased by 100%.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/672?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Double Barrel",
+        "id": 672
+      },
+      "spell_tooltip": {
+        "description": "Your next Keg Smash deals 50% additional damage, and stuns all targets it hits for 3 sec.",
+        "cast_time": "Instant",
+        "cooldown": "45 sec cooldown"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/673?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Mighty Ox Kick",
+        "id": 673
+      },
+      "spell_tooltip": {
+        "description": "You perform a Mighty Ox Kick, hurling your enemy a distance behind you.",
+        "cast_time": "Instant",
+        "range": "Melee Range",
+        "cooldown": "30 sec cooldown"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/765?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Eerie Fermentation",
+        "id": 765
+      },
+      "spell_tooltip": {
+        "description": "You gain up to 30% movement speed  and 15% magical damage reduction based on your current level of Stagger.",
+        "cast_time": "Passive"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/843?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Admonishment",
+        "id": 843
+      },
+      "spell_tooltip": {
+        "description": "You focus the assault on this target, increasing their damage taken by 3% for 6 sec.  Each unique player that attacks the target increases the damage taken by an additional 3%, stacking up to 5 times.\r\n\r\nYour melee attacks refresh the duration of Focused Assault.",
+        "cast_time": "Instant",
+        "range": "10 yd range",
+        "cooldown": "20 sec cooldown"
+      }
+    },
+    {
+      "talent": {
+        "key": {
+          "href": "https://us.api.blizzard.com/data/wow/pvp-talent/1958?namespace=static-9.0.1_36072-us"
+        },
+        "name": "Niuzao's Essence",
+        "id": 1958
+      },
+      "spell_tooltip": {
+        "description": "Drinking a Purifying Brew will dispel all snares affecting you.",
+        "cast_time": "Passive"
+      }
+    }
+  ]
+}
