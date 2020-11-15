@@ -23,74 +23,7 @@ import re
 from enum import Enum
 from typing import Set, List, Dict, Optional
 
-
-class CharacterRole(Enum):
-    """List of possible roles in the game."""
-    TANK = "TANK"
-    HEALER = "HEALER"
-    DPS = "DPS"
-
-
-class CharacterClass(Enum):
-    """List of supported classes in the game."""
-    DEATH_KNIGHT = "Death Knight"
-    DEMON_HUNTER = "Demon Hunter"
-    DRUID = "Druid"
-    HUNTER = "Hunter"
-    MAGE = "Mage"
-    MONK = "Monk"
-    PALADIN = "Paladin"
-    PRIEST = "Priest"
-    ROGUE = "Rogue"
-    SHAMAN = "Shaman"
-    WARLOCK = "Warlock"
-    WARRIOR = "Warrior"
-
-    @staticmethod
-    def get_all_roles(klass: 'CharacterClass') -> List[CharacterRole]:
-        if klass not in _CLASS_SUPPORTED_ROLES:
-            raise ValueError("No roles registered for this class.")
-        return _CLASS_SUPPORTED_ROLES[klass]
-
-
-# List of roles supported by class.
-_CLASS_SUPPORTED_ROLES: Dict[CharacterClass, List[CharacterRole]] = {
-    CharacterClass.DEATH_KNIGHT: [
-        CharacterRole.TANK,
-        CharacterRole.DPS],
-    CharacterClass.DEMON_HUNTER: [
-        CharacterRole.TANK,
-        CharacterRole.DPS],
-    CharacterClass.DRUID: [
-        CharacterRole.TANK,
-        CharacterRole.HEALER,
-        CharacterRole.DPS],
-    CharacterClass.HUNTER: [
-        CharacterRole.DPS],
-    CharacterClass.MAGE: [
-        CharacterRole.DPS],
-    CharacterClass.MONK: [
-        CharacterRole.TANK,
-        CharacterRole.HEALER,
-        CharacterRole.DPS],
-    CharacterClass.PALADIN: [
-        CharacterRole.TANK,
-        CharacterRole.HEALER,
-        CharacterRole.DPS],
-    CharacterClass.PRIEST: [
-        CharacterRole.HEALER,
-        CharacterRole.DPS],
-    CharacterClass.ROGUE: [
-        CharacterRole.DPS],
-    CharacterClass.SHAMAN: [
-        CharacterRole.HEALER,
-        CharacterRole.DPS],
-    CharacterClass.WARLOCK: [
-        CharacterRole.DPS],
-    CharacterClass.WARRIOR: [
-        CharacterRole.TANK,
-        CharacterRole.DPS],
-}
+from ui.mod_wow.static import WowPlayableClass, WowPlayableSpec
 
 
 class Character:
@@ -103,17 +36,17 @@ class Character:
     """
     server: str
     name: str
-    klass: CharacterClass
-    playable_roles: List[CharacterRole]
+    klass: WowPlayableClass
+    playable_roles: List[WowPlayableSpec]
 
-    def __init__(self, server: str, name: str, klass: CharacterClass,
-                 playable_roles: Optional[List[CharacterRole]] = None):
+    def __init__(self, server: str, name: str, klass: WowPlayableClass,
+                 playable_roles: Optional[List[WowPlayableSpec]] = None):
         self.server = server
         self.name = name
         self.klass = klass
         self.playable_roles = (playable_roles is not None
                                and playable_roles
-                               or CharacterClass.get_all_roles(klass))
+                               or WowPlayableClass.get_all_roles(klass))
 
     def __repr__(self):
         """Returns a debugging representation of the character."""
@@ -147,7 +80,7 @@ class Player:
         return '<Player {} ({} characters)>'.format(
             self.discord_handle, len(self.characters))
 
-    def get_playable_roles(self) -> Set[CharacterRole]:
+    def get_playable_roles(self) -> Set[WowPlayableSpec]:
         """Returns all the roles the player is able to play."""
         roles = set()
         for character in self.characters:
