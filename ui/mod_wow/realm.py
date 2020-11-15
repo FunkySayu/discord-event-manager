@@ -64,13 +64,13 @@ class WowRealm(db.Model, BaseSerializerMixin):
         self.region = region
         self.timezone_name = timezone_name
 
+    @property
+    def timezone(self):
+        """Returns the timezone object of this realm."""
+        return timezone(self.timezone_name)
+
     @classmethod
     def create_from_api(cls, handler: WowApi, region: Region, realm_slug: str) -> WowRealm:
         """Creates a WowPlayableClass from the data returned by the WoW API"""
         data = handler.get_realm(region.value, region.dynamic_namespace, realm_slug, locale='en_US')
         return cls(data['id'], data['name'], data['slug'], region, data['timezone'])
-
-    @property
-    def timezone(self):
-        """Returns the timezone object of this realm."""
-        return timezone(self.timezone_name)
