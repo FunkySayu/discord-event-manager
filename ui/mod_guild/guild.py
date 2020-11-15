@@ -23,30 +23,7 @@ from wowapi import WowApi
 from flask_sqlalchemy import BaseQuery
 
 from ui.base import db, BaseSerializerMixin
-
-
-class Region(Enum):
-    """All supported regions."""
-    eu = 'eu'
-    na = 'na'
-
-    # Blizzard namespaces conversion.
-    # https://develop.battle.net/documentation/world-of-warcraft/guides/namespaces
-
-    @property
-    def dynamic_namespace(self):
-        """Returns the Blizzard dynamic namespace for this region."""
-        return f'dynamic-{self.value}'
-
-    @property
-    def static_namespace(self):
-        """Returns the Blizzard static namespace for this region."""
-        return f'static-{self.value}'
-
-    @property
-    def profile_namespace(self):
-        """Returns the Blizzard profile namespace for this region."""
-        return f'profile-{self.value}'
+from ui.mod_wow.region import Region
 
 
 class Faction(Enum):
