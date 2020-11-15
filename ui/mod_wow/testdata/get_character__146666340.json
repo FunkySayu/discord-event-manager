@@ -1,0 +1,127 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew?namespace=profile-eu"
+    }
+  },
+  "id": 146666340,
+  "name": "Funkypewpew",
+  "gender": {
+    "type": "FEMALE",
+    "name": "Female"
+  },
+  "faction": {
+    "type": "ALLIANCE",
+    "name": "Alliance"
+  },
+  "race": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/playable-race/4?namespace=static-9.0.1_36072-eu"
+    },
+    "name": "Night Elf",
+    "id": 4
+  },
+  "character_class": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/playable-class/3?namespace=static-9.0.1_36072-eu"
+    },
+    "name": "Hunter",
+    "id": 3
+  },
+  "active_spec": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/playable-specialization/253?namespace=static-9.0.1_36072-eu"
+    },
+    "name": "Beast Mastery",
+    "id": 253
+  },
+  "realm": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/realm/536?namespace=dynamic-eu"
+    },
+    "name": "Argent Dawn",
+    "id": 536,
+    "slug": "argent-dawn"
+  },
+  "guild": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/guild/argent-dawn/negative-waves?namespace=profile-eu"
+    },
+    "name": "Negative Waves",
+    "id": 49392850,
+    "realm": {
+      "key": {
+        "href": "https://eu.api.blizzard.com/data/wow/realm/536?namespace=dynamic-eu"
+      },
+      "name": "Argent Dawn",
+      "id": 536,
+      "slug": "argent-dawn"
+    },
+    "faction": {
+      "type": "ALLIANCE",
+      "name": "Alliance"
+    }
+  },
+  "level": 50,
+  "experience": 0,
+  "achievement_points": 7245,
+  "achievements": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/achievements?namespace=profile-eu"
+  },
+  "titles": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/titles?namespace=profile-eu"
+  },
+  "pvp_summary": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/pvp-summary?namespace=profile-eu"
+  },
+  "encounters": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/encounters?namespace=profile-eu"
+  },
+  "media": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/character-media?namespace=profile-eu"
+  },
+  "hunter_pets": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/hunter-pets?namespace=profile-eu"
+  },
+  "last_login_timestamp": 1605371936000,
+  "average_item_level": 136,
+  "equipped_item_level": 135,
+  "specializations": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/specializations?namespace=profile-eu"
+  },
+  "statistics": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/statistics?namespace=profile-eu"
+  },
+  "mythic_keystone_profile": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/mythic-keystone-profile?namespace=profile-eu"
+  },
+  "equipment": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/equipment?namespace=profile-eu"
+  },
+  "appearance": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/appearance?namespace=profile-eu"
+  },
+  "collections": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/collections?namespace=profile-eu"
+  },
+  "active_title": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/title/378?namespace=static-9.0.1_36072-eu"
+    },
+    "name": "Inquisitor",
+    "id": 378,
+    "display_string": "Inquisitor {name}"
+  },
+  "reputations": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/reputations?namespace=profile-eu"
+  },
+  "quests": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/quests?namespace=profile-eu"
+  },
+  "achievements_statistics": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/achievements/statistics?namespace=profile-eu"
+  },
+  "professions": {
+    "href": "https://eu.api.blizzard.com/profile/wow/character/argent-dawn/funkypewpew/professions?namespace=profile-eu"
+  }
+}
