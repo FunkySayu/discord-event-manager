@@ -1,0 +1,28 @@
+{
+  "_links": {
+    "self": {
+      "href": "https://eu.api.blizzard.com/data/wow/realm/argent-dawn?namespace=dynamic-eu"
+    }
+  },
+  "id": 536,
+  "region": {
+    "key": {
+      "href": "https://eu.api.blizzard.com/data/wow/region/3?namespace=dynamic-eu"
+    },
+    "name": "Europe",
+    "id": 3
+  },
+  "connected_realm": {
+    "href": "https://eu.api.blizzard.com/data/wow/connected-realm/3702?namespace=dynamic-eu"
+  },
+  "name": "Argent Dawn",
+  "category": "English",
+  "locale": "enGB",
+  "timezone": "Europe/Paris",
+  "type": {
+    "type": "RP",
+    "name": "Roleplaying"
+  },
+  "is_tournament": false,
+  "slug": "argent-dawn"
+}
