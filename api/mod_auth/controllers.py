@@ -18,7 +18,7 @@ limitations under the License.
 from flask import Blueprint, request, session, redirect, url_for, jsonify
 
 from config.discord import api_base_url, oauth2_client_secret
-from ui.mod_auth.session import make_session, get_discord_session, RequireAuthenticationError
+from api.mod_auth.session import make_session, get_discord_session, RequireAuthenticationError
 
 
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth')

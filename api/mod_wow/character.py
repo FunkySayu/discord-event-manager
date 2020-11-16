@@ -23,9 +23,9 @@ from wowapi import WowApi
 
 from flask_sqlalchemy import BaseQuery
 
-from ui.base import db, BaseSerializerMixin
-from ui.mod_wow.realm import WowRealm
-from ui.mod_wow.static import WowFaction, WowPlayableClass, WowPlayableSpec
+from api.base import db, BaseSerializerMixin
+from api.mod_wow.realm import WowRealm
+from api.mod_wow.static import WowFaction, WowPlayableClass, WowPlayableSpec
 
 
 class WowCharacter(db.Model, BaseSerializerMixin):

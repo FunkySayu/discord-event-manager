@@ -25,9 +25,9 @@ from datetime import datetime, timedelta
 from typing import Tuple
 from pytz import UTC, timezone, UnknownTimeZoneError
 
+from api.base import app
+from api.mod_event.event import Event
 from bot.handlers.base import CommandHandler
-from ui.base import app
-from ui.mod_event.event import Event
 
 
 DEFAULT_TIMEZONE = UTC

@@ -21,9 +21,9 @@ import unittest.mock
 from datetime import datetime
 from pytz import utc, timezone
 
-from ui.common.testing import DatabaseTestFixture
-from ui.mod_event.event import Event, EventRepetitionFrequency
-from ui.mod_guild.guild import Guild
+from api.common.testing import DatabaseTestFixture
+from api.mod_event.event import Event, EventRepetitionFrequency
+from api.mod_guild.guild import Guild
 
 
 class TestEventModel(DatabaseTestFixture, unittest.TestCase):

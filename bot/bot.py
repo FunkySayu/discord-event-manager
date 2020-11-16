@@ -21,11 +21,11 @@ import logging
 
 from typing import Dict, Optional, List
 
+from api.base import app, db
+from api.mod_guild.guild import Guild
 from bot.handlers.base import CommandHandler
 from bot.handlers.events import CommandWeekly, CommandSetTimezone
 from bot.handlers.help import CommandHelp
-from ui.base import app, db
-from ui.mod_guild.guild import Guild
 
 
 class WowrganizerBot(discord.Client):

@@ -21,9 +21,9 @@ from wowapi import WowApi
 
 from flask_sqlalchemy import BaseQuery
 
-from ui.base import db, BaseSerializerMixin
-from ui.mod_wow.region import Region
-from ui.mod_wow.static import WowFaction
+from api.base import db, BaseSerializerMixin
+from api.mod_wow.region import Region
+from api.mod_wow.static import WowFaction
 
 
 class Guild(db.Model, BaseSerializerMixin):

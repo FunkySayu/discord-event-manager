@@ -21,8 +21,8 @@ from pytz import utc, timezone
 from typing import Type
 from wtforms import Form, DateTimeField, StringField, SelectField, validators
 
-from ui.mod_guild.guild import Guild
-from ui.mod_event.event import Event, EventRepetitionFrequency
+from api.mod_guild.guild import Guild
+from api.mod_event.event import Event, EventRepetitionFrequency
 
 
 class EnumField(SelectField):

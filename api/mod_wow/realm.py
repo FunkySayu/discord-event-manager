@@ -22,8 +22,8 @@ from flask_sqlalchemy import BaseQuery
 from wowapi import WowApi
 from pytz import timezone
 
-from ui.base import db, BaseSerializerMixin
-from ui.mod_wow.region import Region
+from api.base import db, BaseSerializerMixin
+from api.mod_wow.region import Region
 
 
 class WowRealm(db.Model, BaseSerializerMixin):

@@ -20,8 +20,8 @@ import json
 import os
 import unittest.mock
 
-from ui.mod_wow.realm import WowRealm
-from ui.mod_wow.region import Region
+from api.mod_wow.realm import WowRealm
+from api.mod_wow.region import Region
 
 
 TESTDATA_DIR = os.path.join(

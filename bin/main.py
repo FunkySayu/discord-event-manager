@@ -28,8 +28,8 @@ import threading
 from bot.bot import make_bot_instance
 from config.discord import bot_token
 from config.flask import port, debug, database_file
-from ui.app import app, db
-from ui.build import build_angular
+from api.app import app, db
+from api.build import build_angular
 
 parser = argparse.ArgumentParser(
   description='Flask application serving the event manager UI.')

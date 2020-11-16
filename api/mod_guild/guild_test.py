@@ -21,9 +21,9 @@ import json
 import os
 import unittest.mock
 
-from ui.common.testing import DatabaseTestFixture
-from ui.mod_guild.guild import Guild, WowGuild, Region
-from ui.mod_wow.static import WowFaction
+from api.common.testing import DatabaseTestFixture
+from api.mod_guild.guild import Guild, WowGuild, Region
+from api.mod_wow.static import WowFaction
 
 
 TESTDATA_DIR = os.path.join(

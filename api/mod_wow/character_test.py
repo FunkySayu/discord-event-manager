@@ -20,10 +20,10 @@ import json
 import os
 import unittest.mock
 
-from ui.mod_wow.character import WowCharacter
-from ui.mod_wow.region import Region
-from ui.mod_wow.realm import WowRealm
-from ui.mod_wow.static import WowFaction
+from api.mod_wow.character import WowCharacter
+from api.mod_wow.region import Region
+from api.mod_wow.realm import WowRealm
+from api.mod_wow.static import WowFaction
 
 
 TESTDATA_DIR = os.path.join(
