@@ -34,4 +34,4 @@ RUN apk add --no-cache --virtual build-dependencies musl-dev gcc \
 COPY . /discord-event-manager
 
 # Run the program as main.py
-CMD ["python","/discord-event-manager/bin/main.py", "--no_build"]
+CMD ["python", "/discord-event-manager/bin/main.py", "--no_build"]
