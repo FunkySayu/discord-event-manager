@@ -24,9 +24,9 @@ from typing import Tuple, List
 
 from config.blizzard import get_wow_handler
 from config.flask import database_file
-from ui.app import app, db
-from ui.mod_wow.region import Region
-from ui.mod_wow.realm import WowRealm
+from api.app import app, db
+from api.mod_wow.region import Region
+from api.mod_wow.realm import WowRealm
 
 
 parser = argparse.ArgumentParser(
@@ -63,6 +63,7 @@ def main():
         with app.app_context():
             db.create_all()
 
+    logging.info("Preloading realms...")
     preload_realms()
 
 
