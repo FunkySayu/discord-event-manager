@@ -17,8 +17,8 @@ limitations under the License.
 
 from flask import Blueprint, jsonify
 
-from ui.mod_auth.session import get_discord_session
-from ui.mod_user.user import User
+from api.mod_auth.session import get_discord_session
+from api.mod_user.user import User
 
 mod_user = Blueprint('user', __name__, url_prefix='/api/user')
 

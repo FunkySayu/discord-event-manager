@@ -19,10 +19,10 @@ from flask import Blueprint, jsonify, request
 from typing import Optional
 
 from config.blizzard import get_wow_handler
-from ui.base import db
-from ui.mod_event.event import Event
-from ui.mod_guild.guild import Guild, Region, WowGuild
-from ui.mod_guild.forms import EventCreationForm
+from api.base import db
+from api.mod_event.event import Event
+from api.mod_guild.guild import Guild, Region, WowGuild
+from api.mod_guild.forms import EventCreationForm
 
 
 def slugify(name: str) -> str:

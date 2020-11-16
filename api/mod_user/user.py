@@ -23,8 +23,8 @@ from requests_oauthlib import OAuth2Session
 from typing import List, Optional
 
 from config.discord import api_base_url
-from ui.base import db, BaseSerializerMixin
-from ui.mod_guild.guild import Guild
+from api.base import db, BaseSerializerMixin
+from api.mod_guild.guild import Guild
 
 
 class Permission(Enum):

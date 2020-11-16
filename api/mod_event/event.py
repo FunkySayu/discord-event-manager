@@ -26,8 +26,8 @@ from flask_sqlalchemy import BaseQuery
 from typing import Optional, Any
 from pytz import utc, timezone, tzfile
 
-from ui.base import db, BaseSerializerMixin
-from ui.mod_guild.guild import Guild
+from api.base import db, BaseSerializerMixin
+from api.mod_guild.guild import Guild
 
 
 class EventRepetitionFrequency(Enum):

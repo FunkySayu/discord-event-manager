@@ -41,8 +41,8 @@ if debug:
 def frontend_proxy(path):
     """Serves the unbound paths from the Angular compiled directory."""
     try:
-        return send_from_directory('./web/dist', path)
+        return send_from_directory('../web/dist', path)
     except NotFound:
         # Fallback to the index.html. The requested route might be the
         # result of how the Angular router is implementing its routes.
-        return send_from_directory('./web/dist', 'index.html')
+        return send_from_directory('../web/dist', 'index.html')

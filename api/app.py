@@ -20,12 +20,12 @@ limitations under the License.
 
 from flask import send_from_directory, render_template
 
-from ui.base import app, db
-from ui.mod_auth.controllers import mod_auth
-from ui.mod_frontend.controllers import mod_frontend
-from ui.mod_guild.controllers import mod_guild
-from ui.mod_event.controllers import mod_event
-from ui.mod_user.controllers import mod_user
+from api.base import app, db
+from api.mod_auth.controllers import mod_auth
+from api.mod_frontend.controllers import mod_frontend
+from api.mod_guild.controllers import mod_guild
+from api.mod_event.controllers import mod_event
+from api.mod_user.controllers import mod_user
 
 db.init_app(app)
 app.register_blueprint(mod_auth)
@@ -38,7 +38,7 @@ app.register_blueprint(mod_user)
 @app.route('/')
 def root():
     """Serves the root index file."""
-    return send_from_directory('./web/dist', 'index.html')
+    return send_from_directory('../web/dist', 'index.html')
 
 
 @app.errorhandler(500)

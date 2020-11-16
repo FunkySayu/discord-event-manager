@@ -18,10 +18,10 @@ import unittest
 from datetime import datetime
 from pytz import utc
 
-from ui.common.testing import ControllerTestFixture
-from ui.mod_event.controllers import mod_event
-from ui.mod_event.event import Event, EventRepetitionFrequency
-from ui.mod_guild.guild import Guild
+from api.common.testing import ControllerTestFixture
+from api.mod_event.controllers import mod_event
+from api.mod_event.event import Event, EventRepetitionFrequency
+from api.mod_guild.guild import Guild
 
 
 class TestEventControllers(ControllerTestFixture, unittest.TestCase):

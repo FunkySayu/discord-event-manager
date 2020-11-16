@@ -18,8 +18,8 @@ limitations under the License.
 from flask import Blueprint, jsonify
 from datetime import timedelta
 
-from ui.base import db
-from ui.mod_event.event import Event
+from api.base import db
+from api.mod_event.event import Event
 
 mod_event = Blueprint('event', __name__, url_prefix='/api/events')
 

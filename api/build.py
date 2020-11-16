@@ -22,7 +22,7 @@ import subprocess
 import os
 
 THIS_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
-WEB_DIRECTORY = os.path.join(THIS_DIRECTORY, 'web')
+WEB_DIRECTORY = os.path.join(THIS_DIRECTORY, '..', 'web')
 if not os.path.exists(WEB_DIRECTORY):
     raise EnvironmentError(
         f'The directory "{WEB_DIRECTORY}" was not found. '

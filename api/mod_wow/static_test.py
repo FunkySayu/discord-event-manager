@@ -20,7 +20,7 @@ import json
 import os
 import unittest.mock
 
-from ui.mod_wow.static import WowRole, WowPlayableClass, WowPlayableSpec
+from api.mod_wow.static import WowRole, WowPlayableClass, WowPlayableSpec
 
 
 TESTDATA_DIR = os.path.join(

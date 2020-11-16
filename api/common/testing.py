@@ -26,7 +26,7 @@ from flask.testing import FlaskClient
 from flask_sqlalchemy import SQLAlchemy
 from typing import List
 
-from ui.app import db
+from api.app import db
 
 
 class DatabaseTestFixture:
