@@ -82,7 +82,7 @@ class TestEventModel(DatabaseTestFixture, unittest.TestCase):
         self.db.session.commit()
 
         queried = Event.query.one()
-        self.assertEqual(queried.guild.id, 12345)
+        self.assertEqual(queried.guild.id, '12345')
         self.assertEqual(queried.title, 'Some title')
         self.assertEqual(
             queried.date,

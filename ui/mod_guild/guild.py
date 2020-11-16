@@ -68,6 +68,7 @@ class Guild(db.Model, BaseSerializerMixin):
     # Relationships
     wow_guild_id = db.Column(db.Integer, db.ForeignKey('wow_guild.id'))
     wow_guild = db.relationship('WowGuild', uselist=False, back_populates='guild')
+    events = db.relationship('Event', uselist=True, back_populates='guild')
 
     def __init__(self, id: str):
         self.id = id
