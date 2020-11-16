@@ -25,6 +25,7 @@ from typing import List, Optional
 from config.discord import api_base_url
 from api.base import db, BaseSerializerMixin
 from api.mod_guild.guild import Guild
+from api.mod_wow.character import WowCharacter
 
 
 class Permission(Enum):
@@ -64,6 +65,27 @@ class UserInGuild(db.Model, BaseSerializerMixin):
         self.permission = permission
 
 
+class UserOwnsCharacters(db.Model, BaseSerializerMixin):
+    """Creates a relationship between an user and a character.
+
+    :attr playable_specs: List of specs the user is able to play on this character.
+    """
+    __tablename__ = 'user_owns_characters'
+
+    serialize_rules = (
+        # Avoid duplicated entries.
+        '-user_id', '-wow_character_id',
+    )
+
+    user_id = db.Column('user_id', db.Integer,
+                        db.ForeignKey('user.id'), primary_key=True)
+    character_id = db.Column('wow_characters_id', db.Integer,
+                        db.ForeignKey('wow_characters.id'), primary_key=True)
+
+    user = db.relationship('User', uselist=False)
+    character = db.relationship(WowCharacter, uselist=False)
+
+
 class User(db.Model, BaseSerializerMixin):
     """A Discord user.
 
@@ -87,10 +109,11 @@ class User(db.Model, BaseSerializerMixin):
         # Fields not exposed to the frontend.
         '-date_created', '-date_modified', '-avatar',
         # Avoid circular dependencies.
-        '-relationships.user', '-relationships.guild.users',
+        '-guilds.user', '-guilds.guild.users',
+        '-characters.user', '-characters.character.users',
     )
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     date_created = db.Column(
         db.DateTime,
         default=db.func.current_timestamp())
@@ -104,9 +127,10 @@ class User(db.Model, BaseSerializerMixin):
     avatar = db.Column(db.String)
 
     # Relationships
-    relationships = db.relationship('UserInGuild', uselist=True)
+    guilds = db.relationship('UserInGuild', uselist=True)
+    characters = db.relationship('UserOwnsCharacters', uselist=True)
 
-    def __init__(self, id: int):
+    def __init__(self, id: str):
         self.id = id
 
     @property
@@ -123,7 +147,7 @@ class User(db.Model, BaseSerializerMixin):
         oauth_user = session.get(api_base_url + '/users/@me').json()
         # Try to retrieve the latest record of the user, otherwise
         # create a record.
-        id = int(oauth_user.get('id'))
+        id = oauth_user.get('id')
         user = cls.query.filter_by(id=id).one_or_none()
         if user is None:
             user = cls(id)
