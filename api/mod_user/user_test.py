@@ -22,7 +22,9 @@ import unittest.mock
 
 from api.common.testing import DatabaseTestFixture
 from api.mod_guild.guild import Guild
-from api.mod_user.user import User, UserInGuild, Permission
+from api.mod_user.user import User, UserInGuild, Permission, UserOwnsCharacters
+from api.mod_wow.character import WowCharacter
+from api.mod_wow.static import WowFaction
 
 
 TESTDATA_DIR = os.path.join(
@@ -123,3 +125,17 @@ class TestUser(DatabaseTestFixture, unittest.TestCase):
 
         actual = UserInGuild.query.filter_by(user_id=user.id).all()
         self.assertEqual(len(actual), 0)
+
+    def test_can_own_one_character(self):
+        """Checks if the user can own a single character."""
+        self.db.session.add(User('123456789'))
+        self.db.session.add(
+            WowCharacter('987654321', 'Funkypewpew', 13,
+                         WowFaction.alliance, 13, 13, 13, 13))
+
+        relationship = UserOwnsCharacters('123456789', '987654321')
+        self.db.session.add(relationship)
+
+        actual = User.query.filter_by(id='123456789').first()
+        self.assertEqual(len(actual.characters), 1)
+        self.assertEqual(actual.characters[0].character.id, '987654321')
