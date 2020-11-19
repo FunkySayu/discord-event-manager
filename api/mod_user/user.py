@@ -77,13 +77,17 @@ class UserOwnsCharacters(db.Model, BaseSerializerMixin):
         '-user_id', '-wow_character_id',
     )
 
-    user_id = db.Column('user_id', db.Integer,
+    user_id = db.Column('user_id', db.String,
                         db.ForeignKey('user.id'), primary_key=True)
-    character_id = db.Column('wow_characters_id', db.Integer,
-                        db.ForeignKey('wow_characters.id'), primary_key=True)
+    character_id = db.Column('wow_characters_id', db.String,
+                             db.ForeignKey('wow_characters.id'), primary_key=True)
 
     user = db.relationship('User', uselist=False)
     character = db.relationship(WowCharacter, uselist=False)
+
+    def __init__(self, user_id: str, character_id: str):
+        self.user_id = user_id
+        self.character_id = character_id
 
 
 class User(db.Model, BaseSerializerMixin):

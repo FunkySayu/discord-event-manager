@@ -48,7 +48,7 @@ class WowCharacter(db.Model, BaseSerializerMixin):
     # Serialization options
     serialize_rules = ('-klass_id', '-active_spec_id','-realm_id')
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     date_created = db.Column(
         db.DateTime,
         default=db.func.current_timestamp())
@@ -68,7 +68,7 @@ class WowCharacter(db.Model, BaseSerializerMixin):
     average_ilvl = db.Column(db.Integer)
     equipped_ilvl = db.Column(db.Integer)
 
-    def __init__(self, id: int, name: str, realm_id: int, faction: WowFaction,
+    def __init__(self, id: str, name: str, realm_id: int, faction: WowFaction,
                  klass_id: int, active_spec_id: int,
                  average_ilvl: int, equipped_ilvl: int):
         self.id = id
