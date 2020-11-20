@@ -34,7 +34,7 @@ export class HeaderComponent implements OnChanges {
   constructor(private readonly router: Router, private readonly userService: UserService) {}
 
   ngOnChanges() {
-    const guilds = this.profile?.relationships ?? [];
+    const guilds = this.profile?.guilds ?? [];
     if (this.profile && guilds.length && !this.selectedGuild) {
       this.selectedGuild = guilds[0].guild;
 
