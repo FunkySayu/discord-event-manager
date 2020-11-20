@@ -16,31 +16,12 @@ limitations under the License.
 """
 
 
-from enum import Enum
 from pytz import utc, timezone
-from typing import Type
-from wtforms import Form, DateTimeField, StringField, SelectField, validators
+from wtforms import Form, DateTimeField, StringField, validators
 
+from api.common.forms import EnumField
 from api.mod_guild.guild import Guild
 from api.mod_event.event import Event, EventRepetitionFrequency
-
-
-class EnumField(SelectField):
-    """Form field checking the sent data against the values of an Enum."""
-
-    def __init__(self, *args, enum: Type[Enum], **kwargs):
-        self.enum = enum
-        kwargs['choices'] = self._choices()
-        kwargs['coerce'] = self._coerce
-        super().__init__(*args, **kwargs)
-
-    def _choices(self):
-        """Returns the list of possible values of the enum."""
-        return [(choice, choice.name) for choice in self.enum]
-
-    def _coerce(self, item):
-        """Converts the value to its enum."""
-        return item if isinstance(item, self.enum) else self.enum(item)
 
 
 class EventCreationForm(Form):
