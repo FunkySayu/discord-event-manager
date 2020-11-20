@@ -40,7 +40,7 @@ export declare interface UserProfile {
   username?: string;
   discriminator?: string;
   icon_url?: string;
-  relationships?: GuildRelationship[];
+  guilds?: GuildRelationship[];
 }
 
 /** Response to the authentication check. */
