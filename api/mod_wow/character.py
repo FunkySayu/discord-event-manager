@@ -74,13 +74,14 @@ class WowCharacter(db.Model, BaseSerializerMixin):
         data = handler.get_character_profile_summary(
             realm.region.value, realm.region.profile_namespace, realm.slug,
             name, locale='en_US')
+        klass = WowPlayableClass.get_or_create(handler, data['character_class']['id'])
         return cls(
             id=str(data['id']),
             name=data['name'],
             realm_id=realm.id,
             realm=realm,
             faction=WowFaction(data['faction']['type']),
-            klass_id=data['character_class']['id'],
+            klass=klass,
             active_spec_id=data['active_spec']['id'],
             average_ilvl=data['average_item_level'],
             equipped_ilvl=data['equipped_item_level'])
