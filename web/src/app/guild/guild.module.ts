@@ -25,6 +25,7 @@ import {RouterModule} from '@angular/router';
 
 import {EventsModule} from 'src/app/events/events.module';
 import {AppCommonModule} from '../common/common.module';
+import {WowModule} from 'src/app/wow/wow.module';
 
 import {GuildProfileComponent} from './guild-profile.component';
 import {GuildService} from './guild.service';
@@ -41,6 +42,7 @@ import {GuildEventTableModule} from './event-table/event-table.module';
     HttpClientModule,
     MatDialogModule,
     RouterModule,
+    WowModule,
   ],
   exports: [GuildProfileComponent],
   providers: [GuildService],

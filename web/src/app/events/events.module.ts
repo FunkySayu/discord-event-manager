@@ -24,11 +24,7 @@ import {EventsService} from './events.service';
 import {EventCreationDialogComponent} from './event-creation-dialog.component';
 
 @NgModule({
-  imports: [
-    AppCommonModule,
-    CommonModule,
-    HttpClientModule,
-  ],
+  imports: [AppCommonModule, CommonModule, HttpClientModule],
   providers: [EventsService],
   declarations: [EventCreationDialogComponent],
   entryComponents: [EventCreationDialogComponent],

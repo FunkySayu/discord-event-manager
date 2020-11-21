@@ -21,7 +21,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {BehaviorSubject} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 
+import {CharacterSelectionDialogComponent} from 'src/app/wow/character-selection-dialog/character-selection-dialog.component';
 import {Event} from 'src/app/events/events.service';
+
 import {GuildService, Guild} from './guild.service';
 
 /** Routed component presenting the profile of a guild. */
@@ -55,5 +57,14 @@ export class GuildProfileComponent {
     // handler somewhere.
     await this.guildService.createEvent(guild.id, event).toPromise();
     this.reloader$.next();
+  }
+
+  /** Associates a character to the current user. */
+  associateCharacter() {
+    const dialogRef = this.dialog.open(CharacterSelectionDialogComponent, {data: {}});
+
+    dialogRef.afterClosed().subscribe(data => {
+      console.log('data', data);
+    });
   }
 }
