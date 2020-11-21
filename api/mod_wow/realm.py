@@ -19,6 +19,7 @@ limitations under the License.
 """
 
 from flask_sqlalchemy import BaseQuery
+from typing import Optional
 from wowapi import WowApi
 from pytz import timezone
 
@@ -57,13 +58,6 @@ class WowRealm(db.Model, BaseSerializerMixin):
     region = db.Column(db.Enum(Region))
     timezone_name = db.Column(db.String)
 
-    def __init__(self, id: int, name: str, slug: str, region: Region, timezone_name: str):
-        self.id = id
-        self.name = name
-        self.slug = slug
-        self.region = region
-        self.timezone_name = timezone_name
-
     @property
     def timezone(self):
         """Returns the timezone object of this realm."""
@@ -73,4 +67,18 @@ class WowRealm(db.Model, BaseSerializerMixin):
     def create_from_api(cls, handler: WowApi, region: Region, realm_slug: str) -> WowRealm:
         """Creates a WowPlayableClass from the data returned by the WoW API"""
         data = handler.get_realm(region.value, region.dynamic_namespace, realm_slug, locale='en_US')
-        return cls(data['id'], data['name'], data['slug'], region, data['timezone'])
+        realm = cls()
+        realm.id = data['id']
+        realm.name = data['name']
+        realm.slug = data['slug']
+        realm.region = region
+        realm.timezone_name = data['timezone']
+        return realm
+
+    @classmethod
+    def get_or_create(cls, handler: WowApi, region: Region, realm_slug: str) -> WowRealm:
+        """Try to get a WowRealm from the database or create it from the API."""
+        realm: Optional[WowRealm] = cls.query.filter_by(region=region, slug=realm_slug).one_or_none()
+        if realm is None:
+            realm = cls.create_from_api(handler, region, realm_slug)
+        return realm

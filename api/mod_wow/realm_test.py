@@ -20,6 +20,7 @@ import json
 import os
 import unittest.mock
 
+from api.common.testing import DatabaseTestFixture
 from api.mod_wow.realm import WowRealm
 from api.mod_wow.region import Region
 
@@ -29,7 +30,7 @@ TESTDATA_DIR = os.path.join(
     'testdata')
 
 
-class TestWowPlayableSpecModel(unittest.TestCase):
+class TestWowPlayableSpecModel(DatabaseTestFixture, unittest.TestCase):
     """Checks creation of a wow playable spec."""
 
     @classmethod
@@ -44,11 +45,33 @@ class TestWowPlayableSpecModel(unittest.TestCase):
         mock = unittest.mock.MagicMock()
         mock.get_realm.return_value = self.REALM_DATA
 
-        spec = WowRealm.create_from_api(mock, Region.eu, 'argent-dawn')
+        realm = WowRealm.create_from_api(mock, Region.eu, 'argent-dawn')
 
         mock.get_realm.assert_called_with('eu', 'dynamic-eu', 'argent-dawn', locale='en_US')
-        self.assertEqual(spec.id, 536)
-        self.assertEqual(spec.name, 'Argent Dawn')
-        self.assertEqual(spec.slug, 'argent-dawn')
-        self.assertEqual(spec.region, Region.eu)
-        self.assertEqual(spec.timezone_name, 'Europe/Paris')
+        self.assertEqual(realm.id, 536)
+        self.assertEqual(realm.name, 'Argent Dawn')
+        self.assertEqual(realm.slug, 'argent-dawn')
+        self.assertEqual(realm.region, Region.eu)
+        self.assertEqual(realm.timezone_name, 'Europe/Paris')
+
+    def test_get_or_create_queries_api(self):
+        """Tests the realm is queried if not available in database."""
+        mock = unittest.mock.MagicMock()
+        mock.get_realm.return_value = self.REALM_DATA
+
+        realm = WowRealm.get_or_create(mock, Region.eu, 'argent-dawn')
+
+        mock.get_realm.assert_called_with('eu', 'dynamic-eu', 'argent-dawn', locale='en_US')
+        self.assertEqual(realm.id, 536)
+
+    def test_get_or_create_uses_cache(self):
+        """Tests the realm is queried from database if available there."""
+        mock = unittest.mock.MagicMock()
+        mock.get_realm.return_value = self.REALM_DATA
+        stored_realm = WowRealm(id=536, slug='argent-dawn', region=Region.eu)
+        self.db.session.add(stored_realm)
+
+        realm = WowRealm.get_or_create(mock, Region.eu, 'argent-dawn')
+
+        mock.get_realm.assert_not_called()
+        self.assertEqual(realm.id, 536)
