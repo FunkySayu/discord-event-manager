@@ -15,14 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from wowapi import WowApi
-
 from api.common.forms import EnumField
 from wtforms import Form, StringField
 
 from api.mod_wow.region import Region
-from api.mod_wow.character import WowCharacter
-from api.mod_wow.realm import WowRealm
 
 
 class CharacterAssociationForm(Form):
@@ -30,19 +26,3 @@ class CharacterAssociationForm(Form):
     region = EnumField('Repetition frequency', enum=Region)
     character_slug = StringField('Character Slug')
     realm_slug = StringField('Realm Slug')
-
-    def get_character(self, handler: WowApi) -> WowCharacter:
-        """Converts the data provided in the form to an event."""
-        realm = WowRealm.query.filter_by(
-            region=self.region.data, slug=self.realm_slug.data).one_or_none()
-        if realm is None:
-            realm = WowRealm.create_from_api(
-                handler, self.region.data, self.realm_slug.data)
-
-        character = WowCharacter.query.filter_by(
-            realm_id=realm.id, name=self.character_slug.data).one_or_none()
-        if character is None:
-            character = WowCharacter.create_from_api(
-                handler, realm, self.character_slug.data)
-
-        return character
