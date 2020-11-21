@@ -105,7 +105,7 @@ class WowPlayableClass(db.Model, BaseSerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String)
-    specs = db.relationship('WowPlayableSpec', uselist=True, back_populates='klass')
+    specs = db.relationship(WowPlayableSpec, uselist=True, back_populates='klass')
 
     @classmethod
     def create_from_api(cls, handler: WowApi, class_id: int) -> WowPlayableClass:

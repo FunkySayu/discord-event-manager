@@ -56,9 +56,9 @@ $content-size-max: 1800px;
         text-align: center;
 
         h1 {
+          @include subtitle-1;
           width: 100%;
           max-width: 200px;
-          @include subtitle-1;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
