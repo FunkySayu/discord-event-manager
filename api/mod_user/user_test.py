@@ -129,9 +129,7 @@ class TestUser(DatabaseTestFixture, unittest.TestCase):
     def test_can_own_one_character(self):
         """Checks if the user can own a single character."""
         self.db.session.add(User('123456789'))
-        self.db.session.add(
-            WowCharacter('987654321', 'Funkypewpew', 13,
-                         WowFaction.alliance, 13, 13, 13, 13))
+        self.db.session.add(WowCharacter(id='987654321', name='Funkypewpew'))
 
         relationship = UserOwnsCharacters('123456789', '987654321')
         self.db.session.add(relationship)
@@ -139,3 +137,4 @@ class TestUser(DatabaseTestFixture, unittest.TestCase):
         actual = User.query.filter_by(id='123456789').first()
         self.assertEqual(len(actual.characters), 1)
         self.assertEqual(actual.characters[0].character.id, '987654321')
+        self.assertEqual(actual.characters[0].character.name, 'Funkypewpew')

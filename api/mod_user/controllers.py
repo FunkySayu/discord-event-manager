@@ -22,6 +22,8 @@ from config.blizzard import get_wow_handler
 from api.mod_auth.session import get_discord_session
 from api.mod_user.user import User, UserOwnsCharacters
 from api.mod_user.forms import CharacterAssociationForm
+from api.mod_wow.character import WowCharacter
+from api.mod_wow.realm import WowRealm
 
 mod_user = Blueprint('user', __name__, url_prefix='/api/user')
 
@@ -42,7 +44,9 @@ def add_character(user_id: str):
     if not form.validate():
         return jsonify(error='Invalid request', form_errors=form.errors), 400
 
-    character = form.get_character(get_wow_handler())
+    handler = get_wow_handler()
+    realm = WowRealm.get_or_create(handler, form.region.data, form.realm_slug.data)
+    character = WowCharacter.get_or_create(handler, realm, form.character_slug.data)
     user = User.query.filter_by(id=user_id).one_or_none()
     if user is None:
         return jsonify(error='User not found'), 404
