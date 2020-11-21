@@ -17,12 +17,34 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatIconModule} from '@angular/material/icon';
 
 import {AvatarComponent} from './avatar/avatar.component';
 
+/** Angular material modules used across the whole application. */
+const APP_WIDE_MATERIAL_DEPENDENCIES = [
+  MatButtonModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatSelectModule,
+  ReactiveFormsModule,
+]
+
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, ...APP_WIDE_MATERIAL_DEPENDENCIES],
   declarations: [AvatarComponent],
-  exports: [AvatarComponent],
+  exports: [AvatarComponent, ...APP_WIDE_MATERIAL_DEPENDENCIES],
 })
 export class AppCommonModule {}
