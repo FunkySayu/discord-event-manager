@@ -46,7 +46,7 @@ class WowCharacter(db.Model, BaseSerializerMixin):
     query: BaseQuery
 
     # Serialization options
-    serialize_rules = ('-klass_id', '-active_spec_id','-realm_id')
+    serialize_rules = ('-klass_id', '-realm_id')
 
     id = db.Column(db.String, primary_key=True)
     date_created = db.Column(
