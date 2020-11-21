@@ -26,6 +26,7 @@ limitations under the License.
 
 from enum import Enum
 from wowapi import WowApi
+from typing import Optional
 
 from flask_sqlalchemy import BaseQuery
 
@@ -76,18 +77,21 @@ class WowPlayableSpec(db.Model, BaseSerializerMixin):
     klass_id = db.Column(db.Integer, db.ForeignKey('wow_classes.id'))
     klass = db.relationship('WowPlayableClass', uselist=False, back_populates='specs')
 
-    def __init__(self, id: int, name: str, role: WowRole):
-        self.id = id
-        self.name = name
-        self.role = role
-
     @classmethod
     def create_from_api(cls, handler: WowApi, spec_id: int) -> WowPlayableSpec:
         """Creates a WowPlayableClass from the data returned by the WoW API"""
         data = handler.get_playable_specialization(
             DEFAULT_REGION.value, DEFAULT_REGION.static_namespace, spec_id,
             locale='en_US')
-        return cls(data['id'], data['name'], WowRole(data['role']['type']))
+        return cls(id=data['id'], name=data['name'], role=WowRole(data['role']['type']))
+
+    @classmethod
+    def get_or_create(cls, handler: WowApi, spec_id: int) -> WowPlayableSpec:
+        """Try to get a WowPlayableSpec from the database or create it from the API."""
+        spec: Optional[WowPlayableSpec] = cls.query.filter_by(id=spec_id).one_or_none()
+        if spec is None:
+            spec = cls.create_from_api(handler, spec_id)
+        return spec
 
 
 class WowPlayableClass(db.Model, BaseSerializerMixin):
@@ -123,8 +127,14 @@ class WowPlayableClass(db.Model, BaseSerializerMixin):
         data = handler.get_playable_class(
             DEFAULT_REGION.value, DEFAULT_REGION.static_namespace, class_id,
             locale='en_US')
-        klass = cls()
-        klass.id = data['id']
-        klass.name = data['name']
+        klass = cls(id=data['id'], name=data['name'])
         klass.specs = [WowPlayableSpec.create_from_api(handler, spec['id']) for spec in data['specializations']]
+        return klass
+
+    @classmethod
+    def get_or_create(cls, handler: WowApi, class_id: int) -> WowPlayableClass:
+        """Try to get a WowPlayableClass from the database or create it from the API."""
+        klass: Optional[WowPlayableClass] = cls.query.filter_by(id=class_id).one_or_none()
+        if klass is None:
+            klass = cls.create_from_api(handler, class_id)
         return klass
