@@ -57,7 +57,6 @@ class TestWowPlayableSpecModel(DatabaseTestFixture, unittest.TestCase):
         self.assertEqual(character.name, 'Funkypewpew')
         self.assertEqual(character.realm_id, 536)
         self.assertEqual(character.faction, WowFaction.alliance)
-        self.assertEqual(character.klass_id, 3)
         self.assertEqual(character.active_spec_id, 253)
         self.assertEqual(character.average_ilvl, 136)
         self.assertEqual(character.equipped_ilvl, 135)
