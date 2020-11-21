@@ -27,6 +27,7 @@ from config.flask import database_file
 from api.app import app, db
 from api.mod_wow.region import Region
 from api.mod_wow.realm import WowRealm
+from api.mod_wow.static import WowPlayableClass
 
 
 parser = argparse.ArgumentParser(
@@ -48,7 +49,18 @@ def preload_realms():
 
     with app.app_context():
         for region, slug in tqdm(realms):
-            db.session.add(WowRealm.create_from_api(handler, region, slug))
+            db.session.add(WowRealm.get_or_create(handler, region, slug))
+        db.session.commit()
+
+
+def preload_classes():
+    """Lists all specializations available and preload them in database."""
+    handler = get_wow_handler()
+
+    class_index = handler.get_playable_class_index(Region.us.value, Region.us.static_namespace)
+    with app.app_context():
+        for class_ref in tqdm(class_index['classes']):
+            db.session.add(WowPlayableClass.get_or_create(handler, class_ref['id']))
         db.session.commit()
 
 
@@ -65,6 +77,8 @@ def main():
 
     logging.info("Preloading realms...")
     preload_realms()
+    logging.info("Preloading classes...")
+    preload_classes()
 
 
 if __name__ == "__main__":

@@ -18,6 +18,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+from typing import Optional
 from wowapi import WowApi
 
 from flask_sqlalchemy import BaseQuery
@@ -67,18 +68,6 @@ class WowCharacter(db.Model, BaseSerializerMixin):
     average_ilvl = db.Column(db.Integer)
     equipped_ilvl = db.Column(db.Integer)
 
-    def __init__(self, id: str, name: str, realm_id: int, faction: WowFaction,
-                 klass_id: int, active_spec_id: int,
-                 average_ilvl: int, equipped_ilvl: int):
-        self.id = id
-        self.name = name
-        self.realm_id = realm_id
-        self.faction = faction
-        self.klass_id = klass_id
-        self.active_spec_id = active_spec_id
-        self.average_ilvl = average_ilvl
-        self.equipped_ilvl = equipped_ilvl
-
     @classmethod
     def create_from_api(cls, handler: WowApi, realm: WowRealm, name: str) -> WowCharacter:
         """Retrieves data about a character from the wow API."""
@@ -86,11 +75,21 @@ class WowCharacter(db.Model, BaseSerializerMixin):
             realm.region.value, realm.region.profile_namespace, realm.slug,
             name, locale='en_US')
         return cls(
-            data['id'],
-            data['name'],
-            realm.id,
-            WowFaction(data['faction']['type']),
-            data['character_class']['id'],
-            data['active_spec']['id'],
-            data['average_item_level'],
-            data['equipped_item_level'])
+            id=str(data['id']),
+            name=data['name'],
+            realm_id=realm.id,
+            realm=realm,
+            faction=WowFaction(data['faction']['type']),
+            klass_id=data['character_class']['id'],
+            active_spec_id=data['active_spec']['id'],
+            average_ilvl=data['average_item_level'],
+            equipped_ilvl=data['equipped_item_level'])
+
+    @classmethod
+    def get_or_create(cls, handler: WowApi, realm: WowRealm, name: str) -> WowCharacter:
+        """Try to get a WowCharacter from the database or create it from the API."""
+        character: Optional[WowCharacter] = cls.query.filter_by(
+            realm_id=realm.id, name=name.title()).one_or_none()
+        if character is None:
+            character = cls.create_from_api(handler, realm, name)
+        return character
