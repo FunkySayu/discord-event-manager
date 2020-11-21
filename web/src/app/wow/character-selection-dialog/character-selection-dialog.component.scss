@@ -15,17 +15,5 @@
  * limitations under the License.
  */
 
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-
-import {AppCommonModule} from 'src/app/common/common.module';
-import {CharacterSelectionDialogComponent} from './character-selection-dialog/character-selection-dialog.component';
-import {WowService} from './wow.service';
-
-@NgModule({
-  declarations: [CharacterSelectionDialogComponent],
-  imports: [AppCommonModule, HttpClientModule],
-  providers: [WowService],
-  entryComponents: [CharacterSelectionDialogComponent],
-})
-export class WowModule {}
+@import 'src/app/common/colors';
+@import 'src/app/common/typography';

@@ -20,17 +20,14 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-
 /** Represents a World of Warcraft region. */
 export type Region = string;
-
 
 /** The two available factions in WoW. */
 export enum WowFaction {
   HORDE = 'HORDE',
   ALLIANCE = 'ALLIANCE',
 }
-
 
 /** A world of warcraft realm. */
 export declare interface WowRealm {
@@ -40,7 +37,6 @@ export declare interface WowRealm {
   timezone_name?: string;
 }
 
-
 /** A world of warcraft playable speciality of a class. */
 export declare interface WowPlayableSpec {
   name?: string;
@@ -48,13 +44,11 @@ export declare interface WowPlayableSpec {
   klass?: WowPlayableClass;
 }
 
-
 /** A world of warcraft playable class. */
 export declare interface WowPlayableClass {
   name?: string;
   specs?: WowPlayableSpec[];
 }
-
 
 /** A world of warcraft character. */
 export declare interface WowCharacter {
@@ -68,7 +62,6 @@ export declare interface WowCharacter {
   icon_url?: string;
 }
 
-
 /** A sample character for testing. */
 export const SAMPLE_CHARACTER: WowCharacter = {
   name: 'Funkypewpew',
@@ -80,7 +73,6 @@ export const SAMPLE_CHARACTER: WowCharacter = {
   icon_url: 'http://render-eu.worldofwarcraft.com/character/argent-dawn/100/146666340-avatar.jpg',
 };
 
-
 /** Provides access to the WoW related routes. */
 @Injectable({
   providedIn: 'root',
@@ -90,14 +82,14 @@ export class WowService {
 
   /** Get all regions supported by the application. */
   getRegions(): Observable<Region[]> {
-    return this.http.get<{regions: Region[]}>('/api/wow/region/').pipe(
-      map(response => response?.regions ?? []));
+    return this.http.get<{regions: Region[]}>('/api/wow/region/').pipe(map(response => response?.regions ?? []));
   }
 
   /** Get the world of warcraft realms associated with a region. */
   getRealms(region: Region): Observable<WowRealm[]> {
-    return this.http.get<{realms: WowRealm[]}>(`/api/wow/region/${region}/realm/`).pipe(
-      map(response => response?.realms ?? []));
+    return this.http
+      .get<{realms: WowRealm[]}>(`/api/wow/region/${region}/realm/`)
+      .pipe(map(response => response?.realms ?? []));
   }
 
   /** Gets a character from the world of warcraft api. */

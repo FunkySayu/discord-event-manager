@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>
+  <span>Associate a character</span>
+  <span class="spacer"></span>
+  <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <section>
+      <mat-form-field appearance="standard">
+        <mat-label>Region</mat-label>
+        <input matInput required formControlName="region" />
+      </mat-form-field>
+    </section>
+
+    <section>
+      <mat-form-field appearance="standard">
+        <mat-label>Realm</mat-label>
+        <input matInput required formControlName="realm" />
+      </mat-form-field>
+    </section>
+
+    <section>
+      <mat-form-field appearance="standard">
+        <mat-label>Character name</mat-label>
+        <input matInput required formControlName="character" />
+      </mat-form-field>
+    </section>
+  </form>
+
+  <pre>{{ debug$ | async | json }}</pre>
+</mat-dialog-content>

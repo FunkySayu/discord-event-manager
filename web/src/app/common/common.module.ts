@@ -30,7 +30,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {AvatarComponent} from './avatar/avatar.component';
 
 /** Angular material modules used across the whole application. */
-const APP_WIDE_MATERIAL_DEPENDENCIES = [
+export const APP_WIDE_MATERIAL_DEPENDENCIES = [
   MatButtonModule,
   MatDatepickerModule,
   MatDialogModule,
@@ -40,11 +40,11 @@ const APP_WIDE_MATERIAL_DEPENDENCIES = [
   MatNativeDateModule,
   MatSelectModule,
   ReactiveFormsModule,
-]
+];
 
 @NgModule({
   imports: [CommonModule, ...APP_WIDE_MATERIAL_DEPENDENCIES],
   declarations: [AvatarComponent],
-  exports: [AvatarComponent, ...APP_WIDE_MATERIAL_DEPENDENCIES],
+  exports: [AvatarComponent, CommonModule, ...APP_WIDE_MATERIAL_DEPENDENCIES],
 })
 export class AppCommonModule {}
