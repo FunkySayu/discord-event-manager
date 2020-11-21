@@ -64,13 +64,6 @@ class WowPlayableSpec(db.Model, BaseSerializerMixin):
     serialize_rules = ('-klass', '-klass_id')
 
     id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(
-        db.DateTime,
-        default=db.func.current_timestamp())
-    date_modified = db.Column(
-        db.DateTime,
-        default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String)
     role = db.Column(db.Enum(WowRole))
@@ -110,13 +103,6 @@ class WowPlayableClass(db.Model, BaseSerializerMixin):
     serialize_rules = ('-wow_guild_id',)
 
     id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(
-        db.DateTime,
-        default=db.func.current_timestamp())
-    date_modified = db.Column(
-        db.DateTime,
-        default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String)
     specs = db.relationship('WowPlayableSpec', uselist=True, back_populates='klass')

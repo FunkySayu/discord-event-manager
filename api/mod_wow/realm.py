@@ -19,7 +19,7 @@ limitations under the License.
 """
 
 from flask_sqlalchemy import BaseQuery
-from typing import Optional
+from typing import List, Optional
 from wowapi import WowApi
 from pytz import timezone
 
@@ -45,13 +45,6 @@ class WowRealm(db.Model, BaseSerializerMixin):
     serialize_rules = ('-timezone',)
 
     id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(
-        db.DateTime,
-        default=db.func.current_timestamp())
-    date_modified = db.Column(
-        db.DateTime,
-        default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String)
     slug = db.Column(db.String)
@@ -82,3 +75,12 @@ class WowRealm(db.Model, BaseSerializerMixin):
         if realm is None:
             realm = cls.create_from_api(handler, region, realm_slug)
         return realm
+
+    @classmethod
+    def load_realms_for_region(cls, handler: WowApi, region: Region) -> List[WowRealm]:
+        """Get all realms for a given region."""
+        index = handler.get_realm_index(region.value, region.dynamic_namespace)
+        realms = []
+        for realm in index['realms']:
+            realms.append(WowRealm.get_or_create(handler, region, realm['slug']))
+        return realms
