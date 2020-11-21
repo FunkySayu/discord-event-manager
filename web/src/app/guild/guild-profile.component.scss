@@ -16,6 +16,7 @@
  */
 
 @import 'src/app/common/colors';
+@import 'src/app/common/typography';
 
 $content-size-max: 1800px;
 
@@ -28,58 +29,39 @@ $content-size-max: 1800px;
 
   // High level guild description.
 
-  aside#guild-card {
-    width: 30%;
+  aside {
+    width: 300px;
+    min-width: 300px;
     max-width: 300px;
     box-sizing: border-box;
     margin: 0 4px;
 
-    .avatar-container {
-      height: 100px;
-      width: 100px;
-      padding: 5px;
-      margin: auto;
-      border-radius: 1000px;
-      position: relative;
-      background-color: $white;
-      z-index: 99;
+    .guild-card {
+      display: flex;
+      flex-direction: row;
 
       app-avatar {
-        height: 90px;
-        width: 90px;
+        display: block;
+        height: 64px;
+        width: 64px;
         border-size: 4px;
       }
-    }
 
-    .card-content {
-      border-top: 2px solid material-color('grey', '300');
-      border-radius: 4px;
-      padding: 20px 5px;
-      position: relative;
-      top: -25px;
-
-      h1 {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        text-align: center;
-        margin: 4px;
-      }
-
-      .role-listing {
+      .guild-description-container {
+        flex-grow: 1;
+        margin-left: 8px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-        flex-direction: row;
+        text-align: center;
 
-        img {
-          width: 20px;
-          height: 20px;
-          margin-left: 4px;
-
-          &:not(:last-child) {
-            margin-right: 16px;
-          }
+        h1 {
+          width: 100%;
+          max-width: 200px;
+          @include subtitle-1;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
       }
     }
@@ -88,15 +70,9 @@ $content-size-max: 1800px;
   // Main container.
 
   div#guild-event-container {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     margin: 0 20px;
-  }
-
-  // User profile in relation to the guild.
-
-  aside#user-card {
-    display: flex;
-    flex-direction: row;
   }
 }

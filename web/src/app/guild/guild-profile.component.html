@@ -1,22 +1,14 @@
 <ng-container *ngIf="guild$ | async as guild">
-  <aside id="guild-card">
-    <div class="avatar-container">
+  <aside>
+    <div class="guild-card">
       <app-avatar [src]="guild.icon_url" [alt]="guild.discord_name"></app-avatar>
-    </div>
-    <div class="card-content">
-      <h1>{{ guild.discord_name }}</h1>
-      <div class="role-listing">
-        <span>42</span>
-        <img src="/assets/blizzard/roles/melee.png" alt="Melee DPS" />
-
-        <span>42</span>
-        <img src="/assets/blizzard/roles/ranged.png" alt="Ranged DPS" />
-
-        <span>42</span>
-        <img src="/assets/blizzard/roles/heal.png" alt="Healers" />
-
-        <span>42</span>
-        <img src="/assets/blizzard/roles/tank.png" alt="Tanks" />
+      <div class="guild-description-container">
+        <h1>{{ guild.discord_name }}</h1>
+        <p *ngIf="guild.wow_guild">
+          <span>{{ guild.wow_guild.realm?.name }}</span>
+          &mdash;
+          <span>{{ guild.wow_guild.name }}</span>
+        </p>
       </div>
     </div>
   </aside>
@@ -32,8 +24,4 @@
       <pre>{{ guild | json }}</pre>
     </section>
   </div>
-
-  <aside id="user-card">
-    <h1>My characters</h1>
-  </aside>
 </ng-container>

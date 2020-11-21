@@ -11,7 +11,7 @@
       </div>
     </button>
     <mat-menu #guildMenu="matMenu">
-      <button *ngFor="let relationship of profile.relationships || []; trackBy: trackByGuildId"
+      <button *ngFor="let relationship of profile.guilds || []; trackBy: trackByGuildId"
               (click)="onGuildSelected(relationship)"
               mat-menu-item>
         <div class="button-wrapper">
