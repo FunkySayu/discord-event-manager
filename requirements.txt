@@ -12,6 +12,7 @@ python-wowapi
 # For web
 flask
 flask_sqlalchemy
+requests_oauthlib
 sqlalchemy_serializer
 wtforms
 WTForms-JSON
