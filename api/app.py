@@ -26,6 +26,7 @@ from api.mod_frontend.controllers import mod_frontend
 from api.mod_guild.controllers import mod_guild
 from api.mod_event.controllers import mod_event
 from api.mod_user.controllers import mod_user
+from api.mod_wow.controllers import mod_wow
 
 db.init_app(app)
 app.register_blueprint(mod_auth)
@@ -33,6 +34,7 @@ app.register_blueprint(mod_frontend)
 app.register_blueprint(mod_guild)
 app.register_blueprint(mod_event)
 app.register_blueprint(mod_user)
+app.register_blueprint(mod_wow)
 
 
 @app.route('/')
