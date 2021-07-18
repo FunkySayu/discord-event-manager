@@ -19,11 +19,13 @@ from flask import session, jsonify
 from requests_oauthlib import OAuth2Session
 
 from config.discord import api_base_url, oauth2_client_id, oauth2_client_secret, scopes
+from config.blizzard import client_id, client_secret
 from config.flask import hostname
 from werkzeug.exceptions import HTTPException
+from api.mod_wow.region import Region
 
 OAUTH2_REDIRECT_URI = f'http://{hostname}/auth/discord/callback'
-
+OAUTH2_BNET_REDIRECT_URI = f'http://{hostname}/auth/bnet/callback'
 
 class RequireAuthenticationError(HTTPException):
     """User attempted an action that requires a missing authentication."""
@@ -31,7 +33,7 @@ class RequireAuthenticationError(HTTPException):
     description = 'Cannot perform that action without an authentication.'
 
 
-def _token_updater(token):
+def _discord_token_updater(token):
     """Callback registering an user OAuth2 token in its session."""
     session['discord_oauth2_token'] = token
 
@@ -49,8 +51,7 @@ def make_session(token=None, state=None) -> OAuth2Session:
             'client_secret': oauth2_client_secret,
         },
         auto_refresh_url=f'{api_base_url}/oauth2/token',
-        token_updater=_token_updater)
-
+        token_updater=_discord_token_updater)
 
 def get_discord_session() -> OAuth2Session:
     """Returns the current session or raise an exception.
@@ -61,3 +62,31 @@ def get_discord_session() -> OAuth2Session:
     if token is None:
         raise RequireAuthenticationError()
     return make_session(token=token)
+
+
+def _bnet_token_updater(token):
+    """Callback registering an user OAuth2 token in its session."""
+    session['bnet_oauth2_token'] = token
+
+
+def make_bnet_session(region: Region, token=None, state=None) -> OAuth2Session:
+    """Creates a OAuth2 session object from one of the 3 provided objects."""
+    return OAuth2Session(
+        client_id=client_id,
+        token=token or session.get('bnet_oauth2_token'),
+        state=state or session.get('bnet_oauth2_state'),
+        scope=['wow.profile'],
+        redirect_uri=OAUTH2_BNET_REDIRECT_URI,
+        token_updater=_bnet_token_updater)
+
+
+def get_bnet_session() -> OAuth2Session:
+    """Returns the current session or raise an exception.
+    
+    Wrapper around make_session to quickly access the session or fail
+    if the user did not do the authentication process.
+    """
+    token = session.get('bnet_oauth2_token')
+    if token is None:
+        raise RequireAuthenticationError()
+    return make_bnet_session(token=token)

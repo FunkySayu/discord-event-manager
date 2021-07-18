@@ -18,7 +18,9 @@ limitations under the License.
 from flask import Blueprint, request, session, redirect, url_for, jsonify
 
 from config.discord import api_base_url, oauth2_client_secret
-from api.mod_auth.session import make_session, get_discord_session, RequireAuthenticationError
+from api.mod_auth.session import get_bnet_session, make_bnet_session, make_session, get_discord_session, RequireAuthenticationError
+from api.mod_wow.region import Region
+from config.blizzard import client_id, client_secret
 
 
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -65,4 +67,52 @@ def check_authentication():
 def discord_logout():
     """Removes the discord tokens from the session."""
     session.pop('discord_oauth2_token')
+    return redirect(url_for('root'))
+
+
+@mod_auth.route('/bnet/oauth')
+def oauth_bnet():
+    """Redirects the user to the Battle.net authentication page."""
+    bnet = make_bnet_session(Region.us)
+    authorization_url, state = bnet.authorization_url(
+        'https://us.battle.net/oauth/authorize')
+    session['bnet_oauth2_state'] = state
+    return redirect(authorization_url)
+
+
+@mod_auth.route('/bnet/callback')
+def bnet_callback():
+    """Callback used when finalizing the authentication on Discord.
+    This callback will redirect the user to the root of the application.
+    """
+    if request.values.get('error'):
+        return request.values['error']
+    bnet = make_bnet_session(Region.us, state=session.get('bnet_oauth2_state'))
+    token = bnet.fetch_token(
+        token_url='https://us.battle.net/oauth/token',
+        include_client_id=True,
+        client_id=client_id,
+        client_secret=client_secret,
+        authorization_response=request.url)
+    session['bnet_oauth2_token'] = token
+    return redirect(url_for('root'))
+
+
+@mod_auth.route('/bnet/is_authenticated')
+def check_bnet_authentication():
+    """Returns a boolean indicating if the user is authenticated."""
+    try:
+        get_bnet_session()
+        return jsonify({'authenticated': True})
+    except RequireAuthenticationError:
+        return jsonify({'authenticated': False})
+
+
+@mod_auth.route('/bnet/logout')
+def bnet_logout():
+    """Removes the discord tokens from the session."""
+    if 'bnet_oauth2_token' in session:
+        session.pop('bnet_oauth2_token')
+    if 'bnet_oauth2_state' in session:
+        session.pop('bnet_oauth2_state')
     return redirect(url_for('root'))
