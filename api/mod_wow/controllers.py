@@ -20,6 +20,9 @@ from typing import Optional
 
 from config.blizzard import get_wow_handler
 from api.base import db
+from api.mod_auth.session import get_bnet_session
+from api.mod_wow.character import WowCharacter
+from api.mod_wow.region import Region
 
 mod_wow = Blueprint('wow', __name__, url_prefix='/api/wow')
 
@@ -27,5 +30,14 @@ mod_wow = Blueprint('wow', __name__, url_prefix='/api/wow')
 @mod_wow.route('/me/characters')
 def get_all_characters():
     """Returns all characters owned by the user, using Blizzard's API. """
-    return jsonify(error="not implemented")
+    handler = get_wow_handler()
+    session = get_bnet_session(Region.eu)
+    characters = WowCharacter.get_logged_user_characters(
+        handler, session.token.get('access_token'), Region.eu)
+    
+    # Save the characters in cache. This will reduce by a margin the
+    # amount of QPS on the WoW API.
+    db.session.add_all(characters)
+    db.session.commit()
+    return jsonify(data=[c.to_dict() for c in characters])
 

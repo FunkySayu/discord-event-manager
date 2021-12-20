@@ -47,4 +47,4 @@ class Region(Enum):
 
 
 # The default region to use for little-region sensitive data.
-DEFAULT_REGION = Region.us
+DEFAULT_REGION = Region.eu

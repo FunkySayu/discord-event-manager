@@ -80,7 +80,7 @@ def make_bnet_session(region: Region, token=None, state=None) -> OAuth2Session:
         token_updater=_bnet_token_updater)
 
 
-def get_bnet_session() -> OAuth2Session:
+def get_bnet_session(region: Region) -> OAuth2Session:
     """Returns the current session or raise an exception.
     
     Wrapper around make_session to quickly access the session or fail
@@ -89,4 +89,4 @@ def get_bnet_session() -> OAuth2Session:
     token = session.get('bnet_oauth2_token')
     if token is None:
         raise RequireAuthenticationError()
-    return make_bnet_session(token=token)
+    return make_bnet_session(region, token=token)
