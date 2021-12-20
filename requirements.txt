@@ -7,14 +7,17 @@ tinydb_serialization
 tinydb
 
 # For Blizzard
-python-wowapi
+#python-wowapi
+# TODO(funkysayu): install directly from the tarball, as the wowapi package has
+# not been updated for a while now.
+https://github.com/lockwooddev/python-wowapi/archive/580ff157db246a8e119e71076183044f818e3b41.tar.gz
 
 # For web
 flask
 flask_sqlalchemy
 requests_oauthlib
 sqlalchemy_serializer
-wtforms
+wtforms==2.3.3
 WTForms-JSON
 werkzeug
 
