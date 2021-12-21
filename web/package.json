@@ -11,10 +11,7 @@
     "check": "gts check",
     "clean": "gts clean",
     "compile": "tsc",
-    "fix": "gts fix",
-    "prepare": "npm.cmd run compile",
-    "pretest": "npm.cmd run compile",
-    "posttest": "npm.cmd run check"
+    "fix": "gts fix"
   },
   "private": true,
   "dependencies": {
@@ -42,7 +39,7 @@
     "@types/node": "^13.11.1",
     "codelyzer": "^6.0.0",
     "gts": "^2.0.2",
-    "jasmine-core": "~3.5.0",
+    "jasmine-core": "~3.8.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
     "karma-chrome-launcher": "~3.1.0",
