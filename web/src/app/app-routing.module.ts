@@ -26,14 +26,23 @@ import {GuildProfileComponent} from './guild/guild-profile.component';
 import {GuildModule} from './guild/guild.module';
 import { OnboardingGuildComponent } from './onboarding/guild/onboarding-guild.component';
 import { OnboardingPlayerComponent } from './onboarding/player/onboarding-player.component';
+import { IsAuthenticatedGuard } from './user/is-authenticated-guard';
 
 const routes: Routes = [
   {path: 'demo/styles-palette', component: StylesDemoComponent},
-  {path: 'guild/:guildId', component: GuildProfileComponent},
   {path: 'landing', component: LandingComponent},
   {path: 'onboarding/guild', component: OnboardingGuildComponent},
   {path: 'onboarding/player', component: OnboardingPlayerComponent},
   {path: '', component: LandingComponent},
+
+  // Guarded paths
+
+  {
+    path: 'guild/:guildId',
+    component: GuildProfileComponent,
+    canActivate: [IsAuthenticatedGuard],
+    data: {isAuthenticatedGuard: {fallback: ['landing']}}
+  },
 ];
 
 @NgModule({
