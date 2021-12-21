@@ -25,9 +25,11 @@ import {GuildModule} from './guild/guild.module';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import { OnboardingGuildComponent } from './onboarding/guild/onboarding-guild.component';
+import { OnboardingPlayerComponent } from './onboarding/player/onboarding-player.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, OnboardingGuildComponent, OnboardingPlayerComponent],
   imports: [AppRoutingModule, BrowserAnimationsModule, BrowserModule, GuildModule, HeaderModule, UserModule],
   providers: [],
   bootstrap: [AppComponent],

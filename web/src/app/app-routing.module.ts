@@ -24,10 +24,15 @@ import {LandingComponent} from './landing/landing.component';
 import {LandingModule} from './landing/landing.module';
 import {GuildProfileComponent} from './guild/guild-profile.component';
 import {GuildModule} from './guild/guild.module';
+import { OnboardingGuildComponent } from './onboarding/guild/onboarding-guild.component';
+import { OnboardingPlayerComponent } from './onboarding/player/onboarding-player.component';
 
 const routes: Routes = [
   {path: 'demo/styles-palette', component: StylesDemoComponent},
   {path: 'guild/:guildId', component: GuildProfileComponent},
+  {path: 'landing', component: LandingComponent},
+  {path: 'onboarding/guild', component: OnboardingGuildComponent},
+  {path: 'onboarding/player', component: OnboardingPlayerComponent},
   {path: '', component: LandingComponent},
 ];
 
