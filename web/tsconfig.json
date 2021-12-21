@@ -7,12 +7,10 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "strictFunctionTypes": true,
-    "noImplicitAny": true,
-    "noImplicitOverride": true
+    "noImplicitAny": true
   },
   "angularCompilerOptions": {
-    "strictTemplates": false,
-    "strictInjectionParameters": true
+    "strictTemplates": false
   },
   "include": [
     "src/**/*.ts",
