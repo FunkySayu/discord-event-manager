@@ -22,10 +22,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 
 import {UserService} from './user.service';
+import { IsAuthenticatedGuard } from './is-authenticated-guard';
 
 @NgModule({
   declarations: [],
   imports: [BrowserModule, CommonModule, HttpClientModule, RouterModule],
-  providers: [UserService],
+  providers: [UserService, IsAuthenticatedGuard],
 })
 export class UserModule {}

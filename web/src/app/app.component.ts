@@ -29,7 +29,7 @@ import {Guild} from './guild/guild.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   selectedGuild?: Guild;
 
   constructor(private readonly userService: UserService, private readonly router: Router) {}
@@ -44,18 +44,6 @@ export class AppComponent implements OnInit {
     // Share the result of the profile.
     shareReplay(1)
   );
-
-  /** Redirects the user on depending of the authentication check. */
-  ngOnInit() {
-    // TODO(funkysayu): this should be a router guard, otherwise we cannot
-    // give a redirection page to the onboarding process without having them
-    // going on the landing page first.
-    this.authenticated$.subscribe(isAuthenticated => {
-      if (!isAuthenticated) {
-        this.router.navigate(['/landing']);
-      }
-    });
-  }
 
   /** Navigates to the guild profile. */
   navigateToGuild(guild?: Guild) {
