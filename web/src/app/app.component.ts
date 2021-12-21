@@ -47,6 +47,9 @@ export class AppComponent implements OnInit {
 
   /** Redirects the user on depending of the authentication check. */
   ngOnInit() {
+    // TODO(funkysayu): this should be a router guard, otherwise we cannot
+    // give a redirection page to the onboarding process without having them
+    // going on the landing page first.
     this.authenticated$.subscribe(isAuthenticated => {
       if (!isAuthenticated) {
         this.router.navigate(['/landing']);

@@ -17,11 +17,12 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
 
 import {LandingComponent} from './landing.component';
 
 @NgModule({
   declarations: [LandingComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule],
 })
 export class LandingModule {}
