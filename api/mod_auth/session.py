@@ -1,6 +1,7 @@
 """Session utilities on Discord."""
 
 from __future__ import annotations
+from re import T
 
 __LICENSE__ = """
 Copyright 2019 Google LLC
@@ -17,6 +18,7 @@ limitations under the License.
 
 from flask import session, jsonify
 from requests_oauthlib import OAuth2Session
+from datetime import datetime
 
 from config.discord import api_base_url, oauth2_client_id, oauth2_client_secret, scopes
 from config.blizzard import client_id, client_secret
@@ -87,6 +89,8 @@ def get_bnet_session(region: Region) -> OAuth2Session:
     if the user did not do the authentication process.
     """
     token = session.get('bnet_oauth2_token')
-    if token is None:
+    if token is None or token['expires_at'] < datetime.timestamp(datetime.now()):
+        session['bnet_oauth2_token'] = None
+        session['bnet_oauth2_state'] = None
         raise RequireAuthenticationError()
     return make_bnet_session(region, token=token)
