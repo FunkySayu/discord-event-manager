@@ -180,7 +180,6 @@ class User(db.Model, BaseSerializerMixin):
             oauth_guild = oauth_by_id[str(guild.id)]
             relationship = UserInGuild.query.filter_by(
                 guild_id=guild.id, user_id=self.id).one_or_none()
-            print('found relationship for', guild.id, self.id, relationship)
             if relationship is None:
                 relationship = UserInGuild(self, guild, Permission.visible)
             if oauth_guild.get('owner'):
