@@ -23,6 +23,7 @@ from api.base import db
 from api.mod_event.event import Event
 from api.mod_guild.guild import Guild, Region, WowGuild
 from api.mod_guild.forms import EventCreationForm
+from api.mod_user.user import UserInGuild, Permission
 
 
 def slugify(name: str) -> str:
@@ -104,3 +105,18 @@ def get_wow_guild(region: str, realm: str, name: str):
         db.session.commit()
 
     return jsonify(guild.to_dict())
+
+
+@mod_guild.route('/<guild_id>/players/<user_id>', methods=['PUT'])
+def register_player_in_guild(guild_id: int, user_id: int):
+    """Mark a user as belonging in a guild."""
+    relationship: Optional[UserInGuild] = UserInGuild.query.filter_by(
+        guild_id=guild_id, user_id=user_id).one_or_none()
+    if relationship is None:
+        return jsonify(error='User does not belong to the selected guild'), 404
+    if relationship.permission == Permission.none:
+        return jsonify(error='User has not the required permission'), 403
+    relationship.is_player = True
+    db.session.add(relationship)
+    db.session.commit()
+    return jsonify(relationship.to_dict())
