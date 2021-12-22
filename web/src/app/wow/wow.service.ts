@@ -17,6 +17,8 @@
 
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 /** All the possible classes for a World of Warcraft character. */
 export enum WowCharacterClass {
@@ -69,4 +71,11 @@ export const SAMPLE_CHARACTER: WowCharacter = {
 })
 export class WowService {
   constructor(private readonly http: HttpClient) {}
+
+  /** Checks if the user is authenticated on BattleNet. */
+  isAuthenticated(): Observable<boolean> {
+    return this.http.get<{authenticated: boolean}>('/auth/bnet/is_authenticated').pipe(
+      map(response => !!response.authenticated),
+    )
+  }
 }
