@@ -21,6 +21,7 @@ import {Observable} from 'rxjs';
 import {map, mapTo} from 'rxjs/operators';
 
 import {Guild} from '../guild/guild.service';
+import { CachedEndpoint } from '../common/http';
 
 /** Permission level of an user over a guild. */
 export declare enum Permission {
@@ -53,11 +54,14 @@ interface AuthCheckResponse {
   providedIn: 'root',
 })
 export class UserService {
+  private readonly userProfile$ = new CachedEndpoint(
+    () => this.http.get<UserProfile>('/api/user'));
+  
   constructor(private readonly http: HttpClient) {}
 
   /** Returns the high level user profile. */
   getUserProfile(): Observable<UserProfile> {
-    return this.http.get<UserProfile>('/api/user');
+    return this.userProfile$.get();
   }
 
   /** Checks if the user is currently authenticated. */

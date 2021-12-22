@@ -35,15 +35,6 @@ export class HeaderComponent implements OnChanges {
 
   ngOnChanges() {
     const guilds = this.profile?.guilds ?? [];
-    if (this.profile && guilds.length && !this.selectedGuild) {
-      this.selectedGuild = guilds[0].guild;
-
-      // Emit the automatic selection on the next cycle, to avoid creating an
-      // Angular error where states are mis-matching.
-      setTimeout(() => {
-        this.selectedGuildChange.emit(guilds[0].guild);
-      });
-    }
   }
 
   onGuildSelected(relationship: GuildRelationship) {
