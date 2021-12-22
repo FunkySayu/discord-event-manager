@@ -19,7 +19,7 @@ from flask import Blueprint, request, session, redirect, url_for, jsonify
 
 from config.discord import api_base_url, oauth2_client_secret
 from api.mod_auth.session import get_bnet_session, make_bnet_session, make_session, get_discord_session, RequireAuthenticationError
-from api.mod_wow.region import Region
+from api.mod_wow.region import DEFAULT_REGION, Region
 from config.blizzard import client_id, client_secret
 
 
@@ -102,7 +102,7 @@ def bnet_callback():
 def check_bnet_authentication():
     """Returns a boolean indicating if the user is authenticated."""
     try:
-        get_bnet_session()
+        get_bnet_session(DEFAULT_REGION)
         return jsonify({'authenticated': True})
     except RequireAuthenticationError:
         return jsonify({'authenticated': False})
