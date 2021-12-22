@@ -30,8 +30,11 @@ from api.mod_wow.character import WowCharacter
 
 class Permission(Enum):
     """Permission level of a user in regards of a guild."""
+    # The user has no visibility over the guild.
     none = 'NONE'
+    # The user belongs to the same discord server than the guild.
     visible = 'VISIBLE'
+    # The user owns this discord server.
     owner = 'OWNER'
 
     @classmethod
@@ -58,6 +61,7 @@ class UserInGuild(db.Model, BaseSerializerMixin):
     guild = db.relationship('Guild', uselist=False)
 
     permission = db.Column(db.Enum(Permission))
+    is_player = db.Column('is_player', db.Boolean)
 
     def __init__(self, user: User, guild: Guild, permission=Permission.none):
         self.user_id = user.id
@@ -174,14 +178,17 @@ class User(db.Model, BaseSerializerMixin):
             tuple(oauth_by_id.keys()))).all()
         for guild in matching:
             oauth_guild = oauth_by_id[str(guild.id)]
-            permission = Permission.visible
+            relationship = UserInGuild.query.filter_by(
+                guild_id=guild.id, user_id=self.id).one_or_none()
+            print('found relationship for', guild.id, self.id, relationship)
+            if relationship is None:
+                relationship = UserInGuild(self, guild, Permission.visible)
             if oauth_guild.get('owner'):
-                permission = Permission.owner
-            relationships.append(UserInGuild(self, guild, permission))
+                relationship.permission = Permission.owner
+            relationships.append(relationship)
 
+        self.guilds = relationships
         # User is now complete. Remove all previous relationships and
         # update them.
-        db.session.query(UserInGuild).filter_by(user_id=self.id).delete()
         db.session.add(self)
-        db.session.add_all(relationships)
         db.session.commit()
