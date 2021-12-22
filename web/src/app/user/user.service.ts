@@ -37,7 +37,7 @@ export declare interface GuildRelationship {
 
 /** A Discord user. */
 export declare interface UserProfile {
-  id?: number;
+  id?: string;
   username?: string;
   discriminator?: string;
   icon_url?: string;
