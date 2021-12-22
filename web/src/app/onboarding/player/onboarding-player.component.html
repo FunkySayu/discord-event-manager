@@ -1,1 +1,60 @@
-<p>player works!</p>
+<h1>Get started with WoWrganizer!</h1>
+<p>
+    This one-time process will help the bot link your Discord profile with your
+    World of Warcraft characters. It takes about 5 minutes and you will never
+    hear about it again!
+</p>
+<main>
+    <!-- TODO(funkysayu): Rework that as a separate component. -->
+    <section 
+            [class.future]="currentStep < Steps.DISCORD_AUTHENTICATION"
+            [class.current]="currentStep == Steps.DISCORD_AUTHENTICATION"
+            [class.done]="currentStep > Steps.DISCORD_AUTHENTICATION">
+        <div class="header">
+            <h2>Link with Discord</h2>
+        </div>
+        <div *ngIf="currentStep == Steps.DISCORD_AUTHENTICATION" class="content">
+            <div class="panel">
+                <a mat-button href="/auth/discord/oauth" class="login">
+                    <div class="button-wrapper">
+                        <img src="assets/logos/discord-white.png" alt="discord logo" />
+                        <span>Log in</span>
+                    </div>
+                </a>
+                <p>
+                    We link your Discord account to enable you to directly
+                    interact with WoWrganizer from within Discord.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section 
+            [class.future]="currentStep < Steps.DISCORD_ASSOCIATION"
+            [class.current]="currentStep == Steps.DISCORD_ASSOCIATION"
+            [class.done]="currentStep > Steps.DISCORD_ASSOCIATION">
+        <div class="header">
+            <h2>Select your guild's discord</h2>
+        </div>
+        <div *ngIf="currentStep == Steps.DISCORD_ASSOCIATION" class="content">
+            <p>Select a guild you want to associate with.</p>
+            <button mat-button [matMenuTriggerFor]="guildMenu" class="guild-selection">
+                <div class="button-wrapper">
+                <app-avatar [src]="selectedGuild?.icon_url" [alt]="selectedGuild?.discord_name"></app-avatar>
+                <span>{{ selectedGuild?.discord_name }}</span>
+                <mat-icon class="subtle">keyboard_arrow_down</mat-icon>
+                </div>
+            </button>
+            <mat-menu #guildMenu="matMenu">
+                <button *ngFor="let relationship of selectedUser.guilds || []"
+                        (click)="onGuildSelected(relationship)"
+                        mat-menu-item>
+                <div class="button-wrapper">
+                    <app-avatar [src]="relationship.guild?.icon_url" [alt]="relationship.guild?.discord_name"></app-avatar>
+                    <span>{{ relationship.guild?.discord_name }}</span>
+                </div>
+                </button>
+            </mat-menu>
+        </div>
+    </section>
+</main>

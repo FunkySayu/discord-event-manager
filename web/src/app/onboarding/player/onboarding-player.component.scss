@@ -1,0 +1,46 @@
+
+
+// TODO(funkysayu): make a palette.
+$discord-color: #7289DA;
+$white: #fff;
+$red: #F44336;
+$grey: #888;
+
+.button-wrapper {
+    display: flex;
+    align-items: center;
+  
+    app-avatar,
+    img {
+      margin: 0 6px 0 -4px;
+      width: 24px;
+      height: 24px;
+    }
+  
+    mat-icon {
+      margin: 0 6px 0 6px;
+      height: 20px;
+      width: 20px;
+      font-size: 20px;
+  
+      &.subtle {
+        color: $grey;
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+      }
+    }
+  
+    app-avatar:last-child,
+    img:last-child,
+    mat-icon:last-child {
+      margin-right: -4px;
+    }
+  
+    app-avatar:first-child,
+    img:first-child,
+    mat-icon:first-child {
+      margin-left: -4px;
+    }
+  }
+  
