@@ -8,4 +8,6 @@ credentials.json
 secrets.cfg
 generated.cfg
 venv/*
+lib/*
 *.swp
+pyvenv.cfg

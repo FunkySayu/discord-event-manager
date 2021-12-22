@@ -1,0 +1,6 @@
+*
+-.gitignore
+-main.py
+-preload_data.py
+-print_roster.py
+-run_all_test.py
