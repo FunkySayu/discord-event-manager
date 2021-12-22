@@ -15,7 +15,9 @@
  * limitations under the License.
  */
 
-import {HttpHeaders} from '@angular/common/http';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { shareReplay, switchMap } from 'rxjs/operators';
 
 /** Http options shared across the application. */
 export const HTTP_OPTIONS = {
@@ -24,3 +26,25 @@ export const HTTP_OPTIONS = {
     Accept: 'application/json',
   }),
 };
+
+/**
+ * Provides a cached endpoint interface, avoiding re-issuing requests
+ * if a result was already available.
+ */
+export class CachedEndpoint<T> {
+  /** Every emission on this subject will force a reset on the cache. */
+  private readonly resetor$ = new BehaviorSubject<void>(undefined);
+  /** Observable on the request. */
+  private readonly data$ = this.resetor$.pipe(
+    // Request the data when the resetor is triggered.
+    switchMap(() => this.requestor()),
+    // Share the last result.
+    shareReplay(1));
+
+  constructor(private readonly requestor: () => Observable<T>) {}
+
+  /** Returns an observable on the data. */
+  get(): Observable<T> {
+    return this.data$;
+  }
+}

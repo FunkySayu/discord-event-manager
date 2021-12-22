@@ -27,13 +27,14 @@ import {GuildModule} from './guild/guild.module';
 import { OnboardingGuildComponent } from './onboarding/guild/onboarding-guild.component';
 import { OnboardingPlayerComponent } from './onboarding/player/onboarding-player.component';
 import { IsAuthenticatedGuard } from './user/is-authenticated-guard';
+import { RedirectToFirstGuildGuard } from './user/redirect-to-first-guild-guard';
 
 const routes: Routes = [
   {path: 'demo/styles-palette', component: StylesDemoComponent},
   {path: 'landing', component: LandingComponent},
   {path: 'onboarding/guild', component: OnboardingGuildComponent},
   {path: 'onboarding/player', component: OnboardingPlayerComponent},
-  {path: '', component: LandingComponent},
+  {path: '', component: LandingComponent, canActivate: [RedirectToFirstGuildGuard]},
 
   // Guarded paths
 
