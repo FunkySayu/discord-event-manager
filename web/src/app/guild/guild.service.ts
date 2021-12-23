@@ -46,4 +46,9 @@ export class GuildService {
   createEvent(guildId: string, event: Event): Observable<Event> {
     return this.http.put<Event>(`/api/guilds/${guildId}/events`, event, HTTP_OPTIONS);
   }
+
+  /** Associates a user to a guild. */
+  registerPlayer(guildId: string, userId: string) {
+    return this.http.put(`/api/guilds/${guildId}/players/${userId}`, {}, HTTP_OPTIONS);
+  }
 }
