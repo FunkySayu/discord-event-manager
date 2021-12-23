@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Guild } from '../../guild/guild.service';
+import { Guild, GuildService } from '../../guild/guild.service';
 import { GuildRelationship, UserProfile, UserService } from '../../user/user.service';
-import { WowService } from '../../wow/wow.service';
+import { WowCharacter, WowService } from '../../wow/wow.service';
 
 
 /** Onboarding process steps. */
@@ -26,12 +26,18 @@ export class OnboardingPlayerComponent implements OnInit {
   currentStep = Steps.LOADING;
   /** Whether the current step is loading. */
   loading = false;
-  /** The current user selected. */
+
+  /** The current user. */
   selectedUser?: UserProfile;
   /** The current guild selected. */
   selectedGuild?: Guild;
+  /** User's available characters. */
+  availableCharacters?: WowCharacter[];
 
-  constructor(private readonly userService: UserService, private readonly wowService: WowService) { }
+  constructor(
+    private readonly userService: UserService,
+    private readonly guildService: GuildService,
+    private readonly wowService: WowService) { }
 
   ngOnInit() {
     this.loadNextStep();
@@ -48,7 +54,9 @@ export class OnboardingPlayerComponent implements OnInit {
   private readonly TRANSITIONS = new Map<Steps, {loader: () => Promise<boolean>, next: Steps}>([
     [Steps.LOADING, {loader: () => this.loadDiscordAuthentication(), next: Steps.DISCORD_AUTHENTICATION}],
     [Steps.DISCORD_AUTHENTICATION, {loader: () => this.loadDiscordAssociation(), next: Steps.DISCORD_ASSOCIATION}],
-    [Steps.DISCORD_ASSOCIATION, {loader: () => this.loadBattlenetAuthentication(), next: Steps.BATTLENET_AUTHENTICATION}]
+    [Steps.DISCORD_ASSOCIATION, {loader: () => this.loadBattlenetAuthentication(), next: Steps.BATTLENET_AUTHENTICATION}],
+    [Steps.BATTLENET_AUTHENTICATION, {loader: () => this.loadCharacterAssociation(), next: Steps.CHARACTER_ASSOCIATION}],
+    [Steps.CHARACTER_ASSOCIATION, {loader: () => this.finalizeCharacterAssociation(), next: Steps.COMPLETED}]
   ]);
 
   /** Loads the next step. */
@@ -84,6 +92,24 @@ export class OnboardingPlayerComponent implements OnInit {
 
   /** Loads the battlenet authentication step. Simply returns true if the user is authenticated. */
   async loadBattlenetAuthentication(): Promise<boolean> {
+    if (!this.selectedGuild?.id || !this.selectedUser?.id) {
+      console.error('Provided guild/user does not have an id')
+      return Promise.resolve(false);
+    }
+    await firstValueFrom(this.guildService.registerPlayer(
+      this.selectedGuild?.id, this.selectedUser?.id));
+
+    return firstValueFrom(this.wowService.isAuthenticated());
+  }
+
+  /** Loads the user's characters. */
+  async loadCharacterAssociation(): Promise<boolean> {
+    this.availableCharacters = await firstValueFrom(this.wowService.getLoggedUserCharacters());
+    return Promise.resolve(false);
+  }
+
+  /** Finalizes the characer association. */
+  async finalizeCharacterAssociation(): Promise<boolean> {
     return Promise.resolve(true);
   }
 }

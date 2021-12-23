@@ -57,4 +57,30 @@
             </mat-menu>
         </div>
     </section>
+
+    <section 
+            [class.future]="currentStep < Steps.BATTLENET_AUTHENTICATION"
+            [class.current]="currentStep == Steps.BATTLENET_AUTHENTICATION"
+            [class.done]="currentStep > Steps.BATTLENET_AUTHENTICATION">
+        <div class="header">
+            <h2>Login with Battle.net</h2>
+        </div>
+        <div *ngIf="currentStep == Steps.BATTLENET_AUTHENTICATION" class="content">
+            <a href="/auth/bnet/oauth">
+                <button mat-button>Login with Battle.net</button>
+            </a>
+        </div>
+    </section>
+
+    <section 
+            [class.future]="currentStep < Steps.CHARACTER_ASSOCIATION"
+            [class.current]="currentStep == Steps.CHARACTER_ASSOCIATION"
+            [class.done]="currentStep > Steps.CHARACTER_ASSOCIATION">
+        <div class="header">
+            <h2>Select your characters</h2>
+        </div>
+        <div *ngIf="currentStep == Steps.CHARACTER_ASSOCIATION" class="content">
+            <pre>{{availableCharacters | json}}</pre>
+        </div>
+    </section>
 </main>

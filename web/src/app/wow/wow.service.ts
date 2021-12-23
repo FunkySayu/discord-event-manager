@@ -18,7 +18,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 /** All the possible classes for a World of Warcraft character. */
 export enum WowCharacterClass {
@@ -77,5 +77,12 @@ export class WowService {
     return this.http.get<{authenticated: boolean}>('/auth/bnet/is_authenticated').pipe(
       map(response => !!response.authenticated),
     )
+  }
+
+  /** Returns the characters pulled from the Battle.net OAuth API. */
+  getLoggedUserCharacters() {
+    return this.http.get<{data: WowCharacter[]}>('/api/wow/me/characters').pipe(
+      map(response => response.data ?? []),
+    );
   }
 }
