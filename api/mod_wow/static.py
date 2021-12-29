@@ -74,6 +74,7 @@ class WowPlayableSpec(db.Model, BaseSerializerMixin):
 
     name = db.Column(db.String)
     role = db.Column(db.Enum(WowRole))
+    icon_url = db.Column(db.String)
     klass_id = db.Column(db.Integer, db.ForeignKey('wow_classes.id'))
     klass = db.relationship('WowPlayableClass', uselist=False, back_populates='specs')
 
@@ -83,7 +84,12 @@ class WowPlayableSpec(db.Model, BaseSerializerMixin):
         data = handler.get_playable_specialization(
             DEFAULT_REGION.value, DEFAULT_REGION.static_namespace, spec_id,
             locale='en_US')
-        return cls(id=data['id'], name=data['name'], role=WowRole(data['role']['type']))
+        media = handler.get_playable_specialization_media(
+            DEFAULT_REGION.value, DEFAULT_REGION.static_namespace, spec_id,
+            locale='en_US')
+        icon_url = next(m['value'] for m in media['assets'] if m['key'] == 'icon')
+        return cls(id=data['id'], name=data['name'], icon_url=icon_url,
+                   role=WowRole(data['role']['type']))
 
     @classmethod
     def get_or_create(cls, handler: WowApi, spec_id: int) -> WowPlayableSpec:
@@ -119,6 +125,7 @@ class WowPlayableClass(db.Model, BaseSerializerMixin):
         onupdate=db.func.current_timestamp())
 
     name = db.Column(db.String)
+    icon_url = db.Column(db.String)
     specs = db.relationship('WowPlayableSpec', uselist=True, back_populates='klass')
 
     @classmethod
@@ -127,7 +134,11 @@ class WowPlayableClass(db.Model, BaseSerializerMixin):
         data = handler.get_playable_class(
             DEFAULT_REGION.value, DEFAULT_REGION.static_namespace, class_id,
             locale='en_US')
-        klass = cls(id=data['id'], name=data['name'])
+        media = handler.get_playable_class_media(
+            DEFAULT_REGION.value, DEFAULT_REGION.static_namespace, class_id,
+            locale='en_US')
+        icon_url = next(m['value'] for m in media['assets'] if m['key'] == 'icon')
+        klass = cls(id=data['id'], name=data['name'], icon_url=icon_url)
         klass.specs = [WowPlayableSpec.create_from_api(handler, spec['id']) for spec in data['specializations']]
         return klass
 
