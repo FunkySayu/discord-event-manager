@@ -49,3 +49,9 @@ class EventCreationForm(Form):
         return Event(
             guild, self.title.data, date,
             self.description.data, self.repetition.data)
+
+class CharacterRegistrationForm(Form):
+    """Field checker for creating an event."""
+    character_id = StringField('CharacterId', [
+        validators.DataRequired(),
+    ])

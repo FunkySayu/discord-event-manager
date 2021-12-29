@@ -21,9 +21,11 @@ from typing import Optional
 from config.blizzard import get_wow_handler
 from api.base import db
 from api.mod_event.event import Event
-from api.mod_guild.guild import Guild, Region, WowGuild
+from api.mod_guild.guild import AssociatedCharacter, Guild, Region, WowGuild
 from api.mod_guild.forms import EventCreationForm
-from api.mod_user.user import UserInGuild, Permission
+from api.mod_user.user import User, UserInGuild, Permission
+from api.mod_wow.character import WowCharacter
+from api.mod_auth.session import get_discord_session
 
 
 def slugify(name: str) -> str:
@@ -120,3 +122,39 @@ def register_player_in_guild(guild_id: int, user_id: int):
     db.session.add(relationship)
     db.session.commit()
     return jsonify(relationship.to_dict())
+
+@mod_guild.route('/<guild_id>/player/<user_id>/characters')
+def get_player_characters(guild_id: int, user_id: int):
+    """Retrieves the list of playable characters for the given user."""
+    relationship: Optional[UserInGuild] = UserInGuild.query.filter_by(
+        guild_id=guild_id, user_id=user_id).one_or_none()
+    if relationship is None:
+        return jsonify(error='User does not belong to the selected guild'), 404
+    return jsonify(data=relationship.characters)
+
+@mod_guild.route('/<guild_id>/players/<user_id>/characters/<character_id>', methods=['PUT'])
+def register_player_characters(guild_id: int, user_id: int, character_id: int):
+    """Registers some characters as playable for the guild."""
+    user_in_guild: Optional[UserInGuild] = UserInGuild.query.filter_by(
+        guild_id=guild_id, user_id=user_id).one_or_none()
+    if user_in_guild is None:
+        return jsonify(error='User does not belong to the selected guild'), 404
+    # The character must belong to the user.
+    character: Optional[WowCharacter] = next(
+        (c.character for c in user_in_guild.user.characters
+        if str(c.character.id) == str(character_id)), None)
+    if character is None:
+        return jsonify(error=f'Character ${character_id} does not belong to user ${user_id}'), 404
+    # If the character is already registered for this guild, just update it.
+    association = None
+    for associated_character in user_in_guild.associated_characters:
+        if associated_character.character.id == character.id:
+            association = association.character
+            break
+    if association is None:
+        association = AssociatedCharacter()
+        association.user_in_guild = user_in_guild
+        association.character_id = character_id
+    db.session.add(association)
+    db.session.commit()
+    return jsonify(character=character)
