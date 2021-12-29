@@ -1,7 +1,6 @@
 """Session utilities on Discord."""
 
 from __future__ import annotations
-from re import T
 
 __LICENSE__ = """
 Copyright 2019 Google LLC
