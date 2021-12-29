@@ -51,4 +51,17 @@ export class GuildService {
   registerPlayer(guildId: string, userId: string) {
     return this.http.put(`/api/guilds/${guildId}/players/${userId}`, {}, HTTP_OPTIONS);
   }
+
+  /** Associates a character to a guild the player is part of. */
+  addCharacterAssociation(guildId: string, userId: string, characterId: string) {
+    return this.http.put(
+      `/api/guilds/${guildId}/players/${userId}/characters/${characterId}`,
+      {}, HTTP_OPTIONS);
+  }
+
+  /** Associates a character to a guild the player is part of. */
+  removeCharacterAssociation(guildId: string, userId: string, characterId: string) {
+    return this.http.delete(
+      `/api/guilds/${guildId}/players/${userId}/characters/${characterId}`, HTTP_OPTIONS);
+  }
 }

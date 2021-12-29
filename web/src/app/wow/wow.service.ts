@@ -45,6 +45,7 @@ export enum WowRole {
 
 /** A world of warcraft character. */
 export declare interface WowCharacter {
+  id?: string;
   name?: string;
   realm?: string;
   class?: WowCharacterClass;

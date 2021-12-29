@@ -48,17 +48,33 @@ export class OnboardingPlayerComponent implements OnInit {
     this.loadNextStep();
   }
 
-  private readonly selection = new Set<string>();
+  /** List of selected characters. */
+  private readonly selectedCharacters = new Set<string>();
+  /** List of characters waiting backend validation. */
+  private readonly loadingCharacters = new Set<string>();
 
   isCharacterSelected(character: WowCharacter) {
-    return this.selection.has(character.name ?? '');
+    return this.selectedCharacters.has(character.name ?? '');
   }
 
-  changeCharacterSelection(character: WowCharacter, selected: boolean) {
-    if (selected) {
-      this.selection.add(character.name ?? '');
-    } else {
-      this.selection.delete(character.name ?? '')
+  async changeCharacterSelection(character: WowCharacter, selected: boolean) {
+    if (!this.selectedGuild || !this.selectedUser) {
+      return;
+    }
+
+    this.loadingCharacters.add(character.name ?? '');
+    try {
+      if (selected) {
+        await firstValueFrom(this.guildService.addCharacterAssociation(
+          this.selectedGuild.id, this.selectedUser.id, character.id));
+        this.selectedCharacters.add(character.name ?? '');
+      } else {
+        await firstValueFrom(this.guildService.removeCharacterAssociation(
+          this.selectedGuild.id, this.selectedUser.id, character.id));
+        this.selectedCharacters.delete(character.name ?? '');
+      }
+    } finally {
+      this.loadingCharacters.delete(character.name ?? '');
     }
   }
 
