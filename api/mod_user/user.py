@@ -98,14 +98,6 @@ class UserOwnsCharacters(db.Model, BaseSerializerMixin):
         self.user_id = user_id
         self.character_id = character_id
 
-    @classmethod
-    def get_or_create(cls, user_id: str, character_id: str) -> UserOwnsCharacters:
-        """Gets the existing relationship or creates it."""
-        result = cls.query.filter_by(user_id=user_id, character_id=character_id).one_or_none()
-        if result is not None:
-            return result
-        return cls(user_id, character_id)
-
 
 class User(db.Model, BaseSerializerMixin):
     """A Discord user.
