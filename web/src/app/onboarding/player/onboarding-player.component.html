@@ -79,7 +79,18 @@
         <div class="header">
             <h2>Select your characters</h2>
         </div>
-        <div *ngIf="currentStep == Steps.CHARACTER_ASSOCIATION" class="content">
+        <div *ngIf="currentStep == Steps.CHARACTER_ASSOCIATION" class="content checkbox-wrapper">
+            <mat-checkbox *ngFor="let character of availableCharacters"
+                          [checked]="isCharacterSelected(character)"
+                          (change)="changeCharacterSelection(character, $event.checked)">
+                <div class="character-wrap">
+                    <img [src]="character.klass.icon_url" alt="Class icon" />
+                    <div class="character-description">
+                        <span class="character-name">{{ character.name }}</span>
+                        <small class="character-ilvl">{{ character.klass.name }} - {{ character.equipped_ilvl }} ilvl</small>
+                    </div>
+                </div>
+            </mat-checkbox>
             <pre>{{availableCharacters | json}}</pre>
         </div>
     </section>

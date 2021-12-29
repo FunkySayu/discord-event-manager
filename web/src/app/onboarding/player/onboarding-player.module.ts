@@ -20,6 +20,7 @@ import {CommonModule} from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
 
 import {OnboardingPlayerComponent} from './onboarding-player.component';
@@ -28,6 +29,6 @@ import { AppCommonModule } from '../../common/common.module';
 @NgModule({
   declarations: [OnboardingPlayerComponent],
   exports: [OnboardingPlayerComponent],
-  imports: [AppCommonModule, CommonModule, MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule],
+  imports: [AppCommonModule, CommonModule, MatButtonModule, MatCheckboxModule, MatIconModule, MatMenuModule, MatToolbarModule],
 })
 export class OnboardingPlayerModule {}
