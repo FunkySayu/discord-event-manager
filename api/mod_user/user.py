@@ -50,6 +50,8 @@ class UserInGuild(db.Model, BaseSerializerMixin):
     serialize_rules = (
         # Avoid duplicated entries.
         '-user_id', '-guild_id',
+        # Circular encoding
+        '-associated_characters.user_in_guild',
     )
 
     user_id = db.Column('user_id', db.Integer,
@@ -79,6 +81,9 @@ class UserOwnsCharacters(db.Model, BaseSerializerMixin):
     serialize_rules = (
         # Avoid duplicated entries.
         '-user_id', '-wow_character_id',
+        # Circular encoding
+        '-user.characters',
+        '-character.user',
     )
 
     user_id = db.Column('user_id', db.String,
@@ -92,6 +97,14 @@ class UserOwnsCharacters(db.Model, BaseSerializerMixin):
     def __init__(self, user_id: str, character_id: str):
         self.user_id = user_id
         self.character_id = character_id
+
+    @classmethod
+    def get_or_create(cls, user_id: str, character_id: str) -> UserOwnsCharacters:
+        """Gets the existing relationship or creates it."""
+        result = cls.query.filter_by(user_id=user_id, character_id=character_id).one_or_none()
+        if result is not None:
+            return result
+        return cls(user_id, character_id)
 
 
 class User(db.Model, BaseSerializerMixin):
@@ -135,8 +148,8 @@ class User(db.Model, BaseSerializerMixin):
     avatar = db.Column(db.String)
 
     # Relationships
-    guilds = db.relationship('UserInGuild', uselist=True)
-    characters = db.relationship('UserOwnsCharacters', uselist=True)
+    guilds = db.relationship('UserInGuild', uselist=True, back_populates='user')
+    characters = db.relationship('UserOwnsCharacters', uselist=True, back_populates='user')
 
     def __init__(self, id: str):
         self.id = id
@@ -150,7 +163,7 @@ class User(db.Model, BaseSerializerMixin):
         return str(discord.Asset(state=None, url=url))
 
     @classmethod
-    def from_oauth_discord(cls, session: OAuth2Session):
+    def from_oauth_discord(cls, session: OAuth2Session) -> User:
         """Gets the values from the Discord record of a guild."""
         oauth_user = session.get(api_base_url + '/users/@me').json()
         # Try to retrieve the latest record of the user, otherwise
