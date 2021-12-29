@@ -149,7 +149,7 @@ def register_player_characters(guild_id: int, user_id: int, character_id: int):
     association = None
     for associated_character in user_in_guild.associated_characters:
         if associated_character.character.id == character.id:
-            association = association.character
+            association = associated_character.character
             break
     if association is None:
         association = AssociatedCharacter()
@@ -157,4 +157,14 @@ def register_player_characters(guild_id: int, user_id: int, character_id: int):
         association.character_id = character_id
     db.session.add(association)
     db.session.commit()
-    return jsonify(character=character)
+    return jsonify(character=character.to_dict())
+
+@mod_guild.route('/<guild_id>/players/<user_id>/characters/<character_id>', methods=['DELETE'])
+def unregister_player_characters(guild_id: int, user_id: int, character_id: int):
+    """Registers some characters as playable for the guild."""
+    association: Optional[AssociatedCharacter] = AssociatedCharacter.query.filter_by(
+        guild_id=guild_id, user_id=user_id, character_id=character_id).one_or_none()
+    if association is None:
+        return jsonify(error='Character was not registered for this guild & player'), 404
+    db.session.delete(association)
+    return jsonify(character=association.character.to_dict())
