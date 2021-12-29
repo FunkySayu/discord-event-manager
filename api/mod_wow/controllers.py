@@ -20,9 +20,10 @@ from typing import Optional
 
 from config.blizzard import get_wow_handler
 from api.base import db
-from api.mod_auth.session import get_bnet_session
+from api.mod_auth.session import get_bnet_session, get_discord_session
 from api.mod_wow.character import WowCharacter
-from api.mod_wow.region import Region
+from api.mod_wow.region import DEFAULT_REGION, Region
+from api.mod_user.user import User, UserOwnsCharacters
 
 mod_wow = Blueprint('wow', __name__, url_prefix='/api/wow')
 
@@ -31,13 +32,23 @@ mod_wow = Blueprint('wow', __name__, url_prefix='/api/wow')
 def get_all_characters():
     """Returns all characters owned by the user, using Blizzard's API. """
     handler = get_wow_handler()
-    session = get_bnet_session(Region.eu)
+    bnet_session = get_bnet_session(DEFAULT_REGION)
+    discord_session = get_discord_session()
     characters = WowCharacter.get_logged_user_characters(
-        handler, session.token.get('access_token'), Region.eu)
+        handler, bnet_session.token.get('access_token'), DEFAULT_REGION)
+    
+    # Create the relationship with the user, if not already existing.
+    user = User.from_oauth_discord(discord_session)
+    relationships = []
+    for character in characters:
+        existing = UserOwnsCharacters.query.filter_by(
+            user_id=user.id, character_id=character.id).one_or_none()
+        if existing is None:
+            relationships.append(UserOwnsCharacters(user.id, character.id))
     
     # Save the characters in cache. This will reduce by a margin the
     # amount of QPS on the WoW API.
-    db.session.add_all(characters)
+    db.session.add_all(relationships)
     db.session.commit()
     return jsonify(data=[c.to_dict() for c in characters])
 
