@@ -49,6 +49,7 @@ def get_all_characters():
     # Save the characters in cache. This will reduce by a margin the
     # amount of QPS on the WoW API.
     db.session.add_all(relationships)
+    db.session.add_all(characters)
     db.session.commit()
     return jsonify(data=[c.to_dict() for c in characters])
 
