@@ -81,6 +81,38 @@ class Guild(db.Model, BaseSerializerMixin):
         self.bot_present = True
 
 
+class AssociatedCharacter(db.Model, BaseSerializerMixin):
+    """A character belonging to a player associated to a WoW guild."""
+    __tablename__ = 'associated_character'
+
+    # Serialization options
+    serialize_rules = (
+        '-user_id',
+        '-guild_id',
+        '-character_id',
+        # Remove circular dependency from the relationships.
+        '-character.associated_user_in_guild',
+        '-user_in_guild.associated_characters',
+    )
+
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('user_in_guild.user_id'),
+                        primary_key=True)
+    guild_id = db.Column(db.Integer,
+                         db.ForeignKey('user_in_guild.guild_id'),
+                         primary_key=True)
+    character_id = db.Column(db.Integer,
+                             db.ForeignKey('wow_characters.id'),
+                             primary_key=True)
+
+    user_in_guild = db.relationship(
+        'UserInGuild',
+        foreign_keys=[user_id, guild_id],
+        backref='associated_characters',
+        uselist=False,
+        primaryjoin="(AssociatedCharacter.user_id == UserInGuild.user_id) & (AssociatedCharacter.guild_id == UserInGuild.guild_id)")
+    character = db.relationship('WowCharacter')
+
 class WowGuild(db.Model, BaseSerializerMixin):
     """A World of Warcraft guild.
 
