@@ -50,7 +50,7 @@ export declare interface WowCharacter {
   class?: WowCharacterClass;
   role?: WowRole;
   speciality?: string;
-  ilvl?: number;
+  equipped_ilvl?: number;
   icon_url?: string;
 }
 
@@ -61,7 +61,7 @@ export const SAMPLE_CHARACTER: WowCharacter = {
   class: WowCharacterClass.HUNTER,
   role: WowRole.DPS,
   speciality: 'Marksmanship',
-  ilvl: 430,
+  equipped_ilvl: 430,
   icon_url: 'http://render-eu.worldofwarcraft.com/character/argent-dawn/100/146666340-avatar.jpg',
 };
 
