@@ -48,6 +48,20 @@ export class OnboardingPlayerComponent implements OnInit {
     this.loadNextStep();
   }
 
+  private readonly selection = new Set<string>();
+
+  isCharacterSelected(character: WowCharacter) {
+    return this.selection.has(character.name ?? '');
+  }
+
+  changeCharacterSelection(character: WowCharacter, selected: boolean) {
+    if (selected) {
+      this.selection.add(character.name ?? '');
+    } else {
+      this.selection.delete(character.name ?? '')
+    }
+  }
+
   // Steps loader.
 
   /** All transitions and callbacks to load them. */
